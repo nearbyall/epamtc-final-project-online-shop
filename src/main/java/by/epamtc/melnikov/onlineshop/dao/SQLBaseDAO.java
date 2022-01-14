@@ -11,13 +11,13 @@ import org.apache.logging.log4j.Logger;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.dao.pool.ConnectionPool;
 
-public abstract class BaseDAO {
+public abstract class SQLBaseDAO {
 	
-	private static final Logger logger = LogManager.getLogger(BaseDAO.class);
+	private static final Logger logger = LogManager.getLogger(SQLBaseDAO.class);
 
     protected final ConnectionPool pool;
 
-    protected BaseDAO(){
+    protected SQLBaseDAO(){
         pool = ConnectionPool.getInstance();
     }
 

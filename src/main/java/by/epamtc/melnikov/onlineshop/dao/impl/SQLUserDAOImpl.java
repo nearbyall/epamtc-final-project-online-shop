@@ -17,13 +17,13 @@ import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.builder.UserBuilder;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
-import by.epamtc.melnikov.onlineshop.dao.BaseDAO;
+import by.epamtc.melnikov.onlineshop.dao.SQLBaseDAO;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.dao.pool.exception.ConnectionPoolException;
 import by.epamtc.melnikov.onlineshop.dao.sql.SQLQueriesStorage;
 import by.epamtc.melnikov.onlineshop.dao.UserDAO;
 
-public class SQLUserDAOImpl extends BaseDAO implements UserDAO{
+public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 
 	private final static Logger logger = LogManager.getLogger(SQLUserDAOImpl.class);
 	

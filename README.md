@@ -1,2 +1,1 @@
-# multithreading-task-jwd
-multithreaded application using shared resources.
+# epamtc-final-project-online-shop

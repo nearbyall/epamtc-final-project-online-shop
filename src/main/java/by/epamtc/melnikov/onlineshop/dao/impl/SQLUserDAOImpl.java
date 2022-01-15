@@ -129,36 +129,36 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 			 preparedStatement.setInt(5, user.getId());
 			 preparedStatement.executeUpdate();
 		} catch (SQLIntegrityConstraintViolationException e) {
-            //throw new DAOException("query.user.registration.emailAlreadyExist", e);
+			//throw new DAOException("query.user.registration.emailAlreadyExist", e);
 			//mobile is already exists
-        } catch (SQLException | ConnectionPoolException e) {
-            logger.warn(String.format("User %s profile update error", user), e);
-            throw new DAOException("service.commonError", e);
-        }
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("User %s profile update error", user), e);
+			throw new DAOException("service.commonError", e);
+		}
 		
 		return null;
 	}
 	
-    private User extractFoundedUserFromResultSet(ResultSet resultSet) throws SQLException, DAOException {
-        if (resultSet.next()) {
-            return constructUserByResultSet(resultSet);
-        } else {
-            throw new DAOException("query.user.getUser.userNotFound");
-        }
-    }
+	private User extractFoundedUserFromResultSet(ResultSet resultSet) throws SQLException, DAOException {
+		if (resultSet.next()) {
+			return constructUserByResultSet(resultSet);
+		} else {
+			throw new DAOException("query.user.getUser.userNotFound");
+		}
+	}
     
-    private User constructUserByResultSet(ResultSet resultSet) throws SQLException {
-        return new UserBuilder().withId(resultSet.getInt("users.id"))
-                .withUserType(UserType.getTypeById(resultSet.getInt("users.roleId")))
-                .withEmail(resultSet.getString("users.email"))
-                .withPasswordEncrypted(resultSet.getString("users.passwordEncrypted"))
-                .withName(resultSet.getNString("users.name"))
-                .withSurname(resultSet.getNString("users.surname"))
-                .withMobile(resultSet.getString("users.mobile"))
-                .withStatusType(StatusType.getTypeById(resultSet.getInt("users.statusId")))
-                .withRegisteredAt(resultSet.getTimestamp("users.registeredAt"))
-                .withLastLoginAt(resultSet.getTimestamp("users.lastLoginAt"))
-                .build();
-    }
+	private User constructUserByResultSet(ResultSet resultSet) throws SQLException {
+		return new UserBuilder().withId(resultSet.getInt("users.id"))
+				.withUserType(UserType.getTypeById(resultSet.getInt("users.roleId")))
+				.withEmail(resultSet.getString("users.email"))
+				.withPasswordEncrypted(resultSet.getString("users.passwordEncrypted"))
+				.withName(resultSet.getNString("users.name"))
+				.withSurname(resultSet.getNString("users.surname"))
+				.withMobile(resultSet.getString("users.mobile"))
+				.withStatusType(StatusType.getTypeById(resultSet.getInt("users.statusId")))
+				.withRegisteredAt(resultSet.getTimestamp("users.registeredAt"))
+				.withLastLoginAt(resultSet.getTimestamp("users.lastLoginAt"))
+				.build();
+	}
 
 }

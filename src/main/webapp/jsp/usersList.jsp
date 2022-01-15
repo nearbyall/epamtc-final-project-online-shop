@@ -31,6 +31,7 @@
                                 <form class="ban-form" action="Controller" method="post">
                                     <input type="hidden" name="action" value="banUser">
                                     <input type="hidden" name="userID" value="${user.id}">
+                                    <input type="hidden" name="email" value="${user.email}">
                                     <input type="hidden" name="redirectPageCommand" value="allUsersList">
                                     <c:if test = "${user.isBanned()}">
                                         <input class="btn" type="submit" value=<fmt:message bundle="${locale}" key="admin.btn.unbanUser"/>>

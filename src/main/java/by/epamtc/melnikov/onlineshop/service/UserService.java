@@ -17,4 +17,6 @@ public interface UserService {
 	
 	User updateUserProfileData(User user) throws ServiceException;
 	
+	User updateUserBanStatus(User user) throws ServiceException;
+	
 }

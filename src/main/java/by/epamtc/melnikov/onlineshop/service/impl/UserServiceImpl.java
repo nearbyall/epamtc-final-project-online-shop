@@ -148,4 +148,23 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+
+	@Override
+	public User updateUserBanStatus(User user) throws ServiceException {
+		
+		if (user == null) {
+			logger.warn("User is null");
+			throw new ServiceException("service.commonError");
+		}
+		try {
+			userDAO.updateUserBanStatus(user);
+			//TODO send mail
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		} 
+		
+		return user;
+		
+	}
+
 }

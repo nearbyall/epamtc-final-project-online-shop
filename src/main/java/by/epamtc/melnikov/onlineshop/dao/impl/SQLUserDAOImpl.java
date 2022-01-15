@@ -139,6 +139,23 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 		return null;
 	}
 	
+	@Override
+	public User updateUserBanStatus(User user) throws DAOException {
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_USER_BAN_STATUS)) {
+			 preparedStatement.setBigDecimal(1, new BigDecimal(user.getStatus().getId()));
+			 preparedStatement.setBigDecimal(2, new BigDecimal(user.getId()));
+			 preparedStatement.executeUpdate();
+		} catch(SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("User %s ban status update error", user), e);
+			throw new DAOException("service.commonError", e);
+		}
+		
+		return user;
+		
+	}
+	
 	private User extractFoundedUserFromResultSet(ResultSet resultSet) throws SQLException, DAOException {
 		if (resultSet.next()) {
 			return constructUserByResultSet(resultSet);

@@ -12,9 +12,9 @@ public class SQLQueriesStorage {
 	public static final String UPDATE_USER_PROFILE_DATA = "UPDATE users SET passwordEncrypted = (?), name = (?), surname = (?)," +
 			"  mobile = (?) WHERE id = (?)";
     
-	public static final String UPDATE_USER_BAN_STATUS = "UPDATE user SET is_banned = (?) WHERE id = (?)";
+	public static final String UPDATE_USER_BAN_STATUS = "UPDATE users SET statusId = (?) WHERE id = (?)";
 
-	public static final String INSERT_PRODUCT = "INSERT INTO book (uuid, genre_uuid, language_uuid, publisher_uuid, " +
+	public static final String INSERT_PRODUCT = "INSERT INTO products (uuid, genre_uuid, language_uuid, publisher_uuid, " +
 			"author_uuid, title, publish_year, pages_quantity, description) value (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private SQLQueriesStorage() {}

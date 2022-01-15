@@ -15,4 +15,6 @@ public interface UserDAO {
 	
 	User updateProfileUserData(User user) throws DAOException;
 	
+	User updateUserBanStatus(User user) throws DAOException;
+	
 }

@@ -45,10 +45,10 @@ public class UserServiceImpl implements UserService {
 			user.setEncryptedPassword(hashGenerator.generateHash(user.getEncryptedPassword()));
 			userDAO.registration(user);
 		} catch (UtilException e) {
-            logger.warn(e.getMessage(), e);
-            throw new ServiceException("service.commonError", e);
+			logger.warn(e.getMessage(), e);
+			throw new ServiceException("service.commonError", e);
 		} catch (DAOException e) {
-            throw new ServiceException(e.getMessage(), e);
+			throw new ServiceException(e.getMessage(), e);
 		}
 			
 		return user;
@@ -58,29 +58,29 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User logInByPassword(String email, String password) throws ServiceException {
 		
-        if (StringUtils.isAnyBlank(email, password)) {
-            logger.info("invalid input values");
-            throw new ServiceException("service.commonError");
-        }
+		if (StringUtils.isAnyBlank(email, password)) {
+			logger.info("invalid input values");
+			throw new ServiceException("service.commonError");
+		}
 		
-        try {
-            User user = userDAO.findUserByEmail(email);
-            if (hashGenerator.validatePassword(password, user.getEncryptedPassword())) {
-            	/* check banned status
-                if (user.getBanned()) {
-                    throw new LibraryServiceException("validation.user.login.isBanned");
-                }
-                */
-                return user;
-            } else {
-                throw new ServiceException("validation.user.login.incorrect");
-            }
-        } catch (UtilException e) {
-            logger.warn(e.getMessage(), e);
-            throw new ServiceException("service.commonError", e);
-        } catch (DAOException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+		try {
+			User user = userDAO.findUserByEmail(email);
+			if (hashGenerator.validatePassword(password, user.getEncryptedPassword())) {
+				/* check banned status
+				if (user.getBanned()) {
+					throw new LibraryServiceException("validation.user.login.isBanned");
+				}
+				 */
+				return user;
+			} else {
+				throw new ServiceException("validation.user.login.incorrect");
+			}
+		} catch (UtilException e) {
+			logger.warn(e.getMessage(), e);
+			throw new ServiceException("service.commonError", e);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
 
 	}
 	
@@ -138,11 +138,11 @@ public class UserServiceImpl implements UserService {
 			user.setEncryptedPassword(hashGenerator.generateHash(user.getEncryptedPassword()));
 			userDAO.updateProfileUserData(user);
 		} catch (UtilException e) {
-            logger.warn(e.getMessage(), e);
-            throw new ServiceException("service.commonError", e);
-        } catch (DAOException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+			logger.warn(e.getMessage(), e);
+			throw new ServiceException("service.commonError", e);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
 		
 		return user;
 		

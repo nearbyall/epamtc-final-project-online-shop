@@ -38,7 +38,7 @@ public interface UserDAO {
 	 * Retrieves and returns {@link List} of {@link User}'s into data source
 	 * If no such users contains into data source returns empty {@link List} collection
 	 * 
-	 * @return {@link List} of {@link User}'s
+	 * @return {@link List} of {@link User}s
 	 * @throws DAOException if an error occurs while getting a <tt>user</tt>
 	 */
 	List<User> findAllUsers() throws DAOException;
@@ -62,5 +62,15 @@ public interface UserDAO {
 	 * @throws DAOException if an error occurs while writing a <tt>user</tt>
 	 */
 	User updateUserBanStatus(User user) throws DAOException;
+	
+	/**
+	 * Update balance of {@link User} in data source.
+	 * Throws DAOException if an error occurs while writing a <tt>user</tt>
+	 * 
+	 * @param user {@link User} that balance is updating
+	 * @return an {@link User} which has been updated
+	 * @throws DAOException if an error occurs while writing a <tt>user</tt>
+	 */
+	User updateUserBalance(User user) throws DAOException;
 	
 }

@@ -3,20 +3,24 @@ package by.epamtc.melnikov.onlineshop.controller.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandAllUsersList;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandBanUser;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandLogIn;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandLogOut;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandOpenMainPage;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandOpenProfilePage;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandRegistration;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandSwitchLanguage;
-import by.epamtc.melnikov.onlineshop.controller.command.impl.CommandUpdateUserInfo;
+import by.epamtc.melnikov.onlineshop.controller.command.impl.user.*;
+import by.epamtc.melnikov.onlineshop.controller.command.impl.admin.*;
+import by.epamtc.melnikov.onlineshop.controller.command.impl.guest.*;
 
+/**
+ * The class serves as a repository of commands that are placed in the HashMap collection.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandProvider {
-
+	
+	/** */
 	Map<String, Command> commands = new HashMap<>();
 	
+	/**
+	 * 
+	 */
 	public CommandProvider() {
 		// put commands
 		commands.put("openMainPage", new CommandOpenMainPage());
@@ -28,8 +32,21 @@ public class CommandProvider {
 		commands.put("updateUserInfo", new CommandUpdateUserInfo());
 		commands.put("allUsersList", new CommandAllUsersList());
 		commands.put("banUser", new CommandBanUser());
+		commands.put("addProductCategory", new CommandAddProductCategory());
+		commands.put("addProductPage", new CommandAddProductPage());
+		commands.put("addProductCategoryPage", new CommandAddProductCategoryPage());
+		commands.put("topUpBalancePage", new CommandTopUpBalancePage());
+		commands.put("topUpBalance", new CommandTopUpBalance());
 	}
 	
+	/**
+	 * Finds a command matching the given name
+	 * 
+	 * @param commandName 
+	 * @return <tt>command</tt> the implementation of interface {@link Command}
+	 * that matches the given <tt>commandName</tt>. 
+	 * Command {@link CommandOpenMainPage} if command was not found by given <tt>commandName</tt>
+	 */
 	public Command getCommand(String commandName) {
 		
 		Command command = commands.get(commandName);
@@ -39,6 +56,7 @@ public class CommandProvider {
 		}
 		
 		return command;
+		
 	}
 	
 }

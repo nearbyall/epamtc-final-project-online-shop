@@ -7,6 +7,7 @@
 <fmt:setLocale value="${lang}" />
 <fmt:setBundle basename="localization" var="locale"/>
 <fmt:setBundle basename="exceptionMessages" var="exc_msg"/>
+<fmt:setBundle basename="regexp" var="regexp"/>
 
 <!DOCTYPE html>
 <html lang=&{lang}>
@@ -16,26 +17,26 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
     <title><fmt:message bundle="${locale}" key="header.home"/></title>
 </head>
-<body>
+<body background="${pageContext.request.contextPath}/images/bg.jpg">
 <header>
 
     <ul>
     
 		<li>
-			<a href="${pageContext.request.contextPath}/jsp/main.jsp">
+			<a href="${pageContext.request.contextPath}/jsp/guest/main.jsp">
             		<fmt:message bundle="${locale}" key="header.home"/>
 			</a>
 		</li>
 
 		<c:if test="${role.equals('guest')}">
 			<li>
-				<a class="active" href="${pageContext.request.contextPath}/jsp/login.jsp">
+				<a class="active" href="${pageContext.request.contextPath}/jsp/guest/login.jsp">
 					<fmt:message bundle="${locale}" key="header.login"/>
             	</a>
             </li>
             
             <li>
-            	<a class="active" href="${pageContext.request.contextPath}/jsp/registration.jsp">
+            	<a class="active" href="${pageContext.request.contextPath}/jsp/guest/registration.jsp">
                 	<fmt:message bundle="${locale}" key="header.registration"/>
             	</a>
             </li>
@@ -50,6 +51,9 @@
             </a></li>
             <li><a href="${pageContext.request.contextPath}/Controller?action=userOrdersPage&recordsPerPage=10&currentPage=1">
                 <fmt:message bundle="${locale}" key="header.userOrdersPage"/>
+            </a></li>
+            <li><a href="${pageContext.request.contextPath}/Controller?action=topUpBalancePage">
+                <fmt:message bundle="${locale}" key="header.userBalance"/> <c:if test="${not empty user_registration_data}"> ${user_registration_data.balance} </c:if>
             </a></li>
         </c:if>
         
@@ -73,6 +77,7 @@
                 </div>
             </li>
         </c:if>
+        
      </ul>
      
      <c:if test="${role.equals('admin')}">
@@ -97,14 +102,17 @@
                             </form>
                         </div>
                     </li>
-                    <li><a href="${pageContext.request.contextPath}/Controller?action=adminPage">
+                    <li><a href="${pageContext.request.contextPath}/Controller?action=onlineUsersPage">
                         <fmt:message bundle="${locale}" key="admin.onlineUserList" />
                     </a></li>
                     <li><a href="${pageContext.request.contextPath}/Controller?action=allUsersList&recordsPerPage=10&currentPage=1">
                         <fmt:message bundle="${locale}" key="admin.usersList" />
                     </a></li>
-                    <li><a href="${pageContext.request.contextPath}/Controller?action=addBookPage">
+                    <li><a href="${pageContext.request.contextPath}/Controller?action=addProductPage">
                         <fmt:message bundle="${locale}" key="admin.addProduct" />
+                    </a></li>
+                    <li><a href="${pageContext.request.contextPath}/Controller?action=addProductCategoryPage">
+                        <fmt:message bundle="${locale}" key="admin.addProductCategory" />
                     </a></li>
                     <li><a href="${pageContext.request.contextPath}/Controller?action=openOrdersPage&recordsPerPage=10&currentPage=1">
                         <fmt:message bundle="${locale}" key="admin.orders" />

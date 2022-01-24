@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
     <title><fmt:message bundle="${locale}" key="header.home"/></title>
 </head>
-<body background="${pageContext.request.contextPath}/images/bg.jpg">
+<body background="${pageContext.request.contextPath}/img/bg.jpg">
 <header>
 
     <ul>

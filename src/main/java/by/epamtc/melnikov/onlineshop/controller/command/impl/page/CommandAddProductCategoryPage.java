@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.page;
 
 import java.io.IOException;
 
@@ -6,11 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
 
-public class CommandOpenProfilePage implements Command {
+public class CommandAddProductCategoryPage implements Command {
 
 	@Override
 	public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
@@ -19,9 +20,10 @@ public class CommandOpenProfilePage implements Command {
 		CommandResult result = new CommandResult();
 		
 		result.setDirection(Direction.FORWARD);
-		result.setPage("/jsp/profile.jsp");
+		result.setPage(PageStorage.ADD_PRODUCT_CATEGORY);
 		
 		return result;
+		
 	}
 
 }

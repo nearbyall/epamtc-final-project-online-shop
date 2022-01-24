@@ -18,13 +18,16 @@
     <servlet-name>Controller</servlet-name>
     <url-pattern>/Controller</url-pattern>
     <url-pattern>/jsp/Controller</url-pattern>
+    <url-pattern>/jsp/admin/Controller</url-pattern>
+    <url-pattern>/jsp/user/Controller</url-pattern>
+    <url-pattern>/jsp/guest/Controller</url-pattern>
   </servlet-mapping>
   
   <jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
-			<include-prelude>/jsp/header.jsp</include-prelude>
-			<include-coda>/jsp/footer.jsp</include-coda>
+			<include-prelude>/jsp/include/header.jsp</include-prelude>
+			<include-coda>/jsp/include/footer.jsp</include-coda>
 		</jsp-property-group>
 	</jsp-config>
   

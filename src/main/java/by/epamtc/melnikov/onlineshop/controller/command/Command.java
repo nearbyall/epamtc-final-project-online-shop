@@ -28,7 +28,7 @@ public interface Command {
     }
 
     default String getRedirectURL(HttpServletRequest request, String page) {
-        return request.getContextPath() + request.getServletPath() + "?" + JSPAttributeStorage.COMMAND + "=" + page;
+        return request.getContextPath() + "/Controller" + "?" + JSPAttributeStorage.COMMAND + "=" + page;
     }
 	
 }

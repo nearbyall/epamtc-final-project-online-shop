@@ -6,6 +6,7 @@ import java.util.Map;
 import by.epamtc.melnikov.onlineshop.controller.command.impl.user.*;
 import by.epamtc.melnikov.onlineshop.controller.command.impl.admin.*;
 import by.epamtc.melnikov.onlineshop.controller.command.impl.guest.*;
+import by.epamtc.melnikov.onlineshop.controller.command.impl.page.*;
 
 /**
  * The class serves as a repository of commands that are placed in the HashMap collection.

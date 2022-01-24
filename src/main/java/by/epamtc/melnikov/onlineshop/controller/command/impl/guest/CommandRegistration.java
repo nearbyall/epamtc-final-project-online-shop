@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.guest;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -12,6 +12,7 @@ import by.epamtc.melnikov.onlineshop.bean.builder.UserBuilder;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
@@ -37,10 +38,11 @@ public class CommandRegistration implements Command {
 			request.getSession().setAttribute("role", "user");
 			request.getSession().setAttribute(JSPAttributeStorage.USER_EMAIL, user.getEmail());
 			request.getSession().setAttribute(JSPAttributeStorage.USER_REGISTRATION_DATA, user);
-			result.setPage("/jsp/main.jsp");
+			result.setPage(PageStorage.HOME);
+			//TODO REDIRECT F9
 		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());
-			result.setPage("/jsp/registration.jsp");
+			result.setPage(PageStorage.REGISTRATION);
 		}
 		
 		return result;

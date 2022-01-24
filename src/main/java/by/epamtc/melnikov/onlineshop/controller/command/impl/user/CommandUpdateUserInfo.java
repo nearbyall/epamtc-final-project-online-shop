@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.user;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
@@ -32,7 +33,7 @@ public class CommandUpdateUserInfo implements Command {
 			updatedUser = userService.findUserByEmail(email);
 		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());
-			result.setPage("/jsp/profile.jsp");
+			result.setPage(PageStorage.PROFILE);
 			result.setDirection(Direction.FORWARD);
 			return result;
 		}
@@ -41,11 +42,12 @@ public class CommandUpdateUserInfo implements Command {
 			updateUserInfo(request, updatedUser);
 			userService.updateUserProfileData(updatedUser);
 			result.setDirection(Direction.FORWARD);
-			result.setPage("/jsp/main.jsp");
+			result.setPage(PageStorage.HOME);
+			//TODO F9 protection
 		} catch (ServiceException e) {
             setUserInfoToRequest(request, updatedUser);
             setErrorMessage(request, e.getMessage());
-            result.setPage("/jsp/profile.jsp");
+            result.setPage(PageStorage.PROFILE);
 			result.setDirection(Direction.FORWARD);
 			return result;
         }

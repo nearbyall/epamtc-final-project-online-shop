@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.dao;
+package by.epamtc.melnikov.onlineshop.dao.sql;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,15 +1,16 @@
 package by.epamtc.melnikov.onlineshop.dao;
 
+import by.epamtc.melnikov.onlineshop.dao.impl.SQLProductDAOImpl;
 import by.epamtc.melnikov.onlineshop.dao.impl.SQLUserDAOImpl;
 
 public class DAOProvider {
 
-	private final UserDAO userDAO;
-	//more fields
-	
+	private UserDAO userDAO;
+	private ProductDAO productDAO;
+
 	private DAOProvider() {
 		userDAO = new SQLUserDAOImpl();
-		//more init
+		productDAO = new SQLProductDAOImpl();
 	}
 	
 	private static class DAOProviderHolder {
@@ -23,6 +24,17 @@ public class DAOProvider {
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
-	//more getters
+	
+	public ProductDAO getProductDAO() {
+		return productDAO;
+	}
+
+	public void setUserDAO(UserDAO userDAO) {
+		this.userDAO = userDAO;
+	}
+
+	public void setProductDAO(ProductDAO productDAO) {
+		this.productDAO = productDAO;
+	}
 	
 }

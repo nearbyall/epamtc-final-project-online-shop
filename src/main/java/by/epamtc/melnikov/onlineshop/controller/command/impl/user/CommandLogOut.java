@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.user;
 
 import java.io.IOException;
 
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
@@ -31,7 +32,7 @@ public class CommandLogOut implements Command {
 		
 		request.getSession().setAttribute("lang", "en");
 		
-		result.setPage("/jsp/main.jsp");
+		result.setPage(PageStorage.HOME);
 		return result;
 		
 	}

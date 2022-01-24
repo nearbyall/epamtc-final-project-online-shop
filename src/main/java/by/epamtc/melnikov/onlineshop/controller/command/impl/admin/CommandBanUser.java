@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.admin;
 
 import java.io.IOException;
 
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
@@ -32,7 +33,7 @@ public class CommandBanUser implements Command {
 			user = userService.findUserByEmail(email);
 		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());
-			result.setPage("/jsp/main.jsp");
+			result.setPage(PageStorage.USERS_LIST);
 			result.setDirection(Direction.FORWARD);
 			return result;
 		}
@@ -46,7 +47,7 @@ public class CommandBanUser implements Command {
 		} catch (ServiceException e) {
 			user.setStatus(getReversedUserStatusType(user.getStatus()));
 			setErrorMessage(request, e.getMessage());
-			result.setPage("/jsp/main.jsp");
+			result.setPage(PageStorage.USERS_LIST);
 			result.setDirection(Direction.FORWARD);
 		}
 		return result;

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,6 +56,14 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 		
 		return category;
 		
+	}
+
+	@Override
+	public List<ProductCategory> findAllProductCategories() throws DAOException {
+		
+		
+		
+		return null;
 	}
 
 }

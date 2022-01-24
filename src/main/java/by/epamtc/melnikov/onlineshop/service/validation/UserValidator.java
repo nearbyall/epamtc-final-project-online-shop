@@ -24,7 +24,7 @@ public class UserValidator {
         
 	}
 
-	private void validateMobile(String mobile) throws ValidatorException {
+	public void validateMobile(String mobile) throws ValidatorException {
 		if (StringUtils.isBlank(mobile) || !mobile.matches(PHONE_REGEX)) {
 			throw new ValidatorException("validation.user.registration.phone");
 		}

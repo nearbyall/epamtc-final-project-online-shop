@@ -25,6 +25,10 @@ public class JSPAttributeStorage {
     public static final String USER_ROLE = "role";
     public static final String USER_ID = "userID";
 
+    public final static String PRODUCT_CATEGORY_NAME = "categoryName";
+    
+    public final static String FILE = "file";
+    
     public static final String PAGINATION_CURRENT_PAGE = "currentPage";
     public static final String PAGINATION_RECORDS_PER_PAGE = "recordsPerPage";
     public static final String PAGINATION_PAGES_QUANTITY = "pagesQuantity";

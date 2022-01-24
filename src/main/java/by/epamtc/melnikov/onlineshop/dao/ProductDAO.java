@@ -1,5 +1,7 @@
 package by.epamtc.melnikov.onlineshop.dao;
 
+import java.util.List;
+
 import by.epamtc.melnikov.onlineshop.bean.Product;
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
@@ -32,5 +34,14 @@ public interface ProductDAO {
 	 * @throws DAOException if an error occurs while writing a <tt>category</tt>
 	 */
 	ProductCategory addProductCategory(ProductCategory category) throws DAOException;
+	
+	/**
+	 * Retrieves and returns {@link List} of {@link ProductCategory}s into data source
+	 * If no such categories contains into data source returns empty {@link List} collection
+	 * 
+	 * @return {@link List} of {@link ProductCategory}s
+	 * @throws DAOException if an error occurs while getting a <tt>category</tt>
+	 */
+	List<ProductCategory> findAllProductCategories() throws DAOException;
 	
 }

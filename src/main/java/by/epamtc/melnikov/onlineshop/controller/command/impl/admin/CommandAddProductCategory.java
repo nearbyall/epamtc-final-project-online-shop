@@ -2,9 +2,7 @@ package by.epamtc.melnikov.onlineshop.controller.command.impl.admin;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,20 +19,21 @@ import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
-import by.epamtc.melnikov.onlineshop.dao.DAOProvider;
-import by.epamtc.melnikov.onlineshop.dao.ProductDAO;
-import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
+import by.epamtc.melnikov.onlineshop.service.ProductService;
+import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
+import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
 public class CommandAddProductCategory implements Command {
 
+	private static final ProductService productService = ServiceProvider.getInstance().getProductService();
+	
 	private static final String UPLOAD_DIRECTORY = "productCategortImg";
 	private static final int THRESHOLD_SIZE 	= 1024 * 1024 * 3; 	// 3MB
 	private static final int MAX_FILE_SIZE 		= 1024 * 1024 * 40; // 40MB
 	private static final int MAX_REQUEST_SIZE 	= 1024 * 1024 * 50; // 50MB
 	
 	@Override
-	public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
 		List<FileItem> formItems;
@@ -53,12 +52,7 @@ public class CommandAddProductCategory implements Command {
 		upload.setSizeMax(MAX_REQUEST_SIZE);
 		
 		if (!ServletFileUpload.isMultipartContent(request)) {
-			/*
-			PrintWriter writer = response.getWriter();
-			writer.println("Request does not contain upload data");
-			writer.flush();
-			*/
-			//TODO
+			//TODO request does not contain upload data
 		}
 		
 		if (!uploadDirectory.exists()) {
@@ -68,13 +62,13 @@ public class CommandAddProductCategory implements Command {
 		try {
 			formItems = upload.parseRequest(request);
 			for (FileItem fileItem : formItems) {
-				if (fileItem.getFieldName().equals("categoryName")) {
+				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_CATEGORY_NAME)) {
 					categoryName = fileItem.getString();
 				}
 				if (fileItem.getFieldName().equals(JSPAttributeStorage.REDIRECT_PAGE_COMMAND)) {
 					redirectCommand = fileItem.getString();
 				}
-				if (fileItem.getFieldName().equals("file")) {
+				if (fileItem.getFieldName().equals(JSPAttributeStorage.FILE)) {
 					String fileName = new File(fileItem.getName()).getName();
 					filePath = uploadPath + File.separator + fileName;
 					File storeFile = new File(filePath);
@@ -82,17 +76,18 @@ public class CommandAddProductCategory implements Command {
 				}
 			}
 		} catch (Exception e) {
-			//TODO uploading exc
+			setErrorMessage(request, "service.commonError");
+			result.setPage(PageStorage.ADD_PRODUCT_CATEGORY);
+			result.setDirection(Direction.FORWARD);
 		}
 		
-		ProductDAO dao = DAOProvider.getInstance().getProductDAO();
 		ProductCategory category = new ProductCategory(categoryName, filePath);
 		try {
-			dao.addProductCategory(category);
+			productService.addProductCategory(category);
             String redirectURL = getRedirectURL(request, redirectCommand);
             result.setPage(redirectURL);
             result.setDirection(Direction.REDIRECT);
-		} catch (DAOException e) {
+		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());
 			result.setPage(PageStorage.ADD_PRODUCT_CATEGORY);
 			result.setDirection(Direction.FORWARD);

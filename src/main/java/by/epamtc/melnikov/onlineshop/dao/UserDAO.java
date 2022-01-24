@@ -35,7 +35,7 @@ public interface UserDAO {
 	User findUserByEmail(String email) throws DAOException;
 	
 	/**
-	 * Retrieves and returns {@link List} of {@link User}'s into data source
+	 * Retrieves and returns {@link List} of {@link User}s into data source
 	 * If no such users contains into data source returns empty {@link List} collection
 	 * 
 	 * @return {@link List} of {@link User}s

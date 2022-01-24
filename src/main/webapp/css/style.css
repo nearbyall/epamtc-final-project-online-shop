@@ -323,14 +323,14 @@ td form .btn,
     margin: 10px 0;
 }
 
-.form-wrapper-search fieldset .book-select_wrapper ,
-.form-wrapper .fieldset .book-select_wrapper {
+.form-wrapper-search fieldset .product-select_wrapper ,
+.form-wrapper .fieldset .product-select_wrapper {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
 }
 
-.form-wrapper .fieldset .book-select_wrapper button {
+.form-wrapper .fieldset .product-select_wrapper button {
     padding: 5px 5px;
     font-size: 15px;
     border: 0;
@@ -398,17 +398,17 @@ th:first-child, td:first-child {
     text-align: left;
 }
 
-.form-wrapper fieldset .book-select_wrapper {
+.form-wrapper fieldset .product-select_wrapper {
     display: flex;
     justify-content: space-between;
 }
 
-.form-wrapper fieldset .book-select_wrapper input {
+.form-wrapper fieldset .product-select_wrapper input {
     height: 50px;
     font-size: large;
 }
 
-.form-wrapper fieldset .book-select_wrapper .book-select {
+.form-wrapper fieldset .product-select_wrapper .product-select {
     border: 1px solid #d5dbd9;
     width: 200px;
     height: 20px;
@@ -418,7 +418,7 @@ th:first-child, td:first-child {
     vertical-align: top;
 }
 
-.search-wrapper .search-form #book-search-form {
+.search-wrapper .search-form #product-search-form {
     max-width: none;
     width: 80%;
     vertical-align: top;
@@ -470,7 +470,7 @@ nav .pagination li a,
     margin-bottom: 15px;
 }
 
-.content .book-search {
+.content .product-search {
     margin: 20px;
     border:1px solid #ccc;
     background: #1bbc9b;

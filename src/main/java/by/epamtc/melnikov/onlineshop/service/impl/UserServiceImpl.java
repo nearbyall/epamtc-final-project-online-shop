@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			validator.validateUser(user);
 		} catch (ValidatorException e) {
-			logger.info(String.format("invalid %s %n update data %s", user.toString(), e.getMessage()));
+			logger.info(String.format("invalid %s %n update data %s", user, e.getMessage()));
 			throw new ServiceException(e.getMessage(), e);
 		}
 		

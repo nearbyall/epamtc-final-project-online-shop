@@ -2,8 +2,11 @@ package by.epamtc.melnikov.onlineshop.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,6 +29,11 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
     /** Field responsible for the uniqueness of {@link ProductCategory}'s imgPath in the database */
     private static final String UNIQUE_IMG_PATH_MESSAGE = "product_categories.imgPath_UNIQUE";
 	
+    /** Field contains the column name of {@link ProductCategory}'s name*/
+    private static final String PRODUCT_CATEGORY_NAME_COLUMN_NAME = "product_categories.name";
+    /** Field contains the column name of {@link ProductCategory}'s imgPath*/
+    private static final String PRODUCT_CATEGORY_IMG_PATH_COLUMN_NAME = "product_categories.imgPath";
+    
 	@Override
 	public Product addProduct(Product product) throws DAOException {
 		// TODO Auto-generated method stub
@@ -35,8 +43,8 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 	@Override
 	public ProductCategory addProductCategory(ProductCategory category) throws DAOException {
 		
-		try(Connection connection = pool.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.INSERT_PRODUCT_CATEGORY)) {
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.INSERT_PRODUCT_CATEGORY)) {
 			preparedStatement.setString(1, category.getName());
 			preparedStatement.setString(2, category.getImgPath());
 			preparedStatement.executeUpdate();
@@ -61,9 +69,44 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 	@Override
 	public List<ProductCategory> findAllProductCategories() throws DAOException {
 		
+		List<ProductCategory> categories;
 		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ALL_PRODUCT_CATEGORIES);
+			 ResultSet resultSet = preparedStatement.executeQuery()) {
+			
+			if (!resultSet.isBeforeFirst()) {
+				logger.info("Categories is empty");
+				categories = Collections.emptyList();
+			} else {
+				resultSet.last();
+				int listSize = resultSet.getRow();
+				resultSet.beforeFirst();
+				categories = new ArrayList<>(listSize);
+				while (resultSet.next()) {
+					categories.add(constructProductCategoryByResultSet(resultSet));
+				}
+			}
+			
+		} catch (SQLException | ConnectionPoolException e) {
+            logger.warn("Categories List finding error", e);
+            throw new DAOException("service.commonError", e);
+        }
 		
-		return null;
+		return categories;
+		
 	}
 
+	/**
+	 * 
+	 * @param resultSet
+	 * @return
+	 */
+	private ProductCategory constructProductCategoryByResultSet(ResultSet resultSet) throws SQLException {
+		ProductCategory category = new ProductCategory();
+		category.setName(resultSet.getString(PRODUCT_CATEGORY_NAME_COLUMN_NAME));
+		category.setImgPath(resultSet.getString(PRODUCT_CATEGORY_IMG_PATH_COLUMN_NAME));
+		return category;
+	}
+	
 }

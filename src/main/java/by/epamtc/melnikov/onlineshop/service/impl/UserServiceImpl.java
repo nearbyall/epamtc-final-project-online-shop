@@ -167,4 +167,23 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+
+	@Override
+	public User updateUserBalance(User user) throws ServiceException {
+	
+		if (user == null) {
+			logger.warn("User is null");
+			throw new ServiceException("service.commonError");
+		}
+		
+		try {
+			userDAO.updateUserBalance(user);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return user;
+		
+	}
+
 }

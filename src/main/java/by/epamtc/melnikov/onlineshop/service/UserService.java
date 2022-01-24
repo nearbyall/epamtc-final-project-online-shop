@@ -19,4 +19,6 @@ public interface UserService {
 	
 	User updateUserBanStatus(User user) throws ServiceException;
 	
+	User updateUserBalance(User user) throws ServiceException;
+	
 }

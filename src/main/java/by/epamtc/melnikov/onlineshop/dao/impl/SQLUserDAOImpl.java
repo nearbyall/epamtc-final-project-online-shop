@@ -188,8 +188,19 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 	
 	@Override
 	public User updateUserBalance(User user) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_USER_BALANCE)) {
+			preparedStatement.setDouble(1, user.getBalance());
+			preparedStatement.setBigDecimal(2, new BigDecimal(user.getId()));
+			preparedStatement.executeUpdate();
+		} catch(SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("User %s balance update error", user), e);
+			throw new DAOException("service.commonError", e);
+		}
+		
+		return user;
+		
 	}
 	
 	/**

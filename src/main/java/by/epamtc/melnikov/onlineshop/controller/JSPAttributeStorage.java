@@ -25,6 +25,11 @@ public class JSPAttributeStorage {
     public static final String USER_ROLE = "role";
     public static final String USER_ID = "userID";
 
+    public static final String CARD_NUMBER = "cardNumber";
+    public static final String CARD_DATE = "cardDate";
+    public static final String CARD_CVV = "cardCVV";
+    public static final String CARD_SUMM = "cardSumm";
+    
     public final static String PRODUCT_CATEGORY_NAME = "categoryName";
     
     public final static String FILE = "file";

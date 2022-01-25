@@ -39,12 +39,12 @@ public class Controller extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-        try {
-            ConnectionPool.getInstance().init();
-        } catch (ConnectionPoolException e) {
-            logger.fatal(e);
-            throw new RuntimeException(e);
-        }
+		try {
+			ConnectionPool.getInstance().init();
+		} catch (ConnectionPoolException e) {
+			logger.fatal(e);
+			throw new RuntimeException(e);
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

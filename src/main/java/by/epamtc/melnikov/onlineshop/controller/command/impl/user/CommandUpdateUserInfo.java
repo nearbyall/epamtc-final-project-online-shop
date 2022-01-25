@@ -28,8 +28,7 @@ public class CommandUpdateUserInfo implements Command {
 	private static final UserService userService = ServiceProvider.getInstance().getUserService();
 	
 	@Override
-	public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
 		
@@ -54,9 +53,9 @@ public class CommandUpdateUserInfo implements Command {
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);
 		} catch (ServiceException e) {
-            //setUserInfoToRequest(request, updatedUser);
-            setErrorMessage(request, e.getMessage());
-            result.setPage(PageStorage.PROFILE);
+			//setUserInfoToRequest(request, updatedUser);
+			setErrorMessage(request, e.getMessage());
+			result.setPage(PageStorage.PROFILE);
 			result.setDirection(Direction.FORWARD);
 			return result;
         }
@@ -66,19 +65,19 @@ public class CommandUpdateUserInfo implements Command {
 		
 	}
 	
-    private void updateUserInfo(HttpServletRequest request, User currentUser) {
-        String password = request.getParameter(JSPAttributeStorage.USER_PASSWORD);
-        String phoneNumber = request.getParameter(JSPAttributeStorage.USER_MOBILE).trim();
-        String name = request.getParameter(JSPAttributeStorage.USER_FIRST_NAME);
-        String surname = request.getParameter(JSPAttributeStorage.USER_LAST_NAME);
-        currentUser.setEncryptedPassword(password);
-        currentUser.setMobile(phoneNumber);
-        currentUser.setName(name);
-        currentUser.setSurname(surname);
-    }
+	private void updateUserInfo(HttpServletRequest request, User currentUser) {
+		String password = request.getParameter(JSPAttributeStorage.USER_PASSWORD);
+		String phoneNumber = request.getParameter(JSPAttributeStorage.USER_MOBILE).trim();
+		String name = request.getParameter(JSPAttributeStorage.USER_FIRST_NAME);
+		String surname = request.getParameter(JSPAttributeStorage.USER_LAST_NAME);
+		currentUser.setEncryptedPassword(password);
+		currentUser.setMobile(phoneNumber);
+		currentUser.setName(name);
+		currentUser.setSurname(surname);
+	}
 
-    private void setUserInfoToRequest(HttpServletRequest request, User user) {
-        request.setAttribute(JSPAttributeStorage.USER_DATA, user);
-    }
+	private void setUserInfoToRequest(HttpServletRequest request, User user) {
+		request.setAttribute(JSPAttributeStorage.USER_DATA, user);
+	}
     
 }

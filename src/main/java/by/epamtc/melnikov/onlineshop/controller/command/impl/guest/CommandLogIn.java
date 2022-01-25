@@ -50,8 +50,8 @@ public class CommandLogIn implements Command {
 			result.setDirection(Direction.REDIRECT);
 		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());
-            result.setPage(PageStorage.LOG_IN);
-            result.setDirection(Direction.FORWARD);
+			result.setPage(PageStorage.LOG_IN);
+			result.setDirection(Direction.FORWARD);
 		}
 		
 		return result;

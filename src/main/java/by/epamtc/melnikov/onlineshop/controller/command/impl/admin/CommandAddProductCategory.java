@@ -93,9 +93,9 @@ public class CommandAddProductCategory implements Command {
 		ProductCategory category = new ProductCategory(categoryName, filePath);
 		try {
 			productService.addProductCategory(category);
-            String redirectURL = getRedirectURL(request, redirectCommand);
-            result.setPage(redirectURL);
-            result.setDirection(Direction.REDIRECT);
+			String redirectURL = getRedirectURL(request, redirectCommand);
+			result.setPage(redirectURL);
+			result.setDirection(Direction.REDIRECT);
 		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());
 			result.setPage(PageStorage.ADD_PRODUCT_CATEGORY);

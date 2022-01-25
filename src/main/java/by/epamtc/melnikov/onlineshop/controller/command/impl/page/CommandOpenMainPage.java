@@ -25,6 +25,7 @@ public class CommandOpenMainPage implements Command {
 	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
+		
 		result.setDirection(Direction.FORWARD);
 
 		if (request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE) == null) {
@@ -35,6 +36,7 @@ public class CommandOpenMainPage implements Command {
 		request.getSession().setAttribute(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE, "en");
 		
 		result.setPage(PageStorage.HOME);
+		
 		return result;
 		
 	}

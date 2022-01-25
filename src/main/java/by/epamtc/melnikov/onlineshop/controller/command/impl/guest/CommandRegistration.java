@@ -35,7 +35,7 @@ public class CommandRegistration implements Command {
 	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
-		result.setDirection(Direction.FORWARD);
+		
 
 		User user = constructUser(request);
 		
@@ -53,10 +53,9 @@ public class CommandRegistration implements Command {
 			result.setDirection(Direction.REDIRECT);
 			
 		} catch (ServiceException e) {
-			
 			setErrorMessage(request, e.getMessage());
 			result.setPage(PageStorage.REGISTRATION);
-			
+			result.setDirection(Direction.FORWARD);
 		}
 		
 		return result;

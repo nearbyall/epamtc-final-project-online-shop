@@ -29,8 +29,7 @@ public class CommandBanUser implements Command {
 	private final static UserService userService = ServiceProvider.getInstance().getUserService();
 	
 	@Override
-	public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
 		

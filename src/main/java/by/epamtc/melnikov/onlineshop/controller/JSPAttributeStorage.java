@@ -1,7 +1,8 @@
 package by.epamtc.melnikov.onlineshop.controller;
 
 /**
- * 
+ * The class needed to store attributes of jsp pages.
+ * Includes one private constructor.
  * 
  * @author nearbyall
  *

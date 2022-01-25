@@ -21,8 +21,7 @@ import by.epamtc.melnikov.onlineshop.controller.command.Direction;
 public class CommandAddProductPage implements Command {
 
 	@Override
-	public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
 		

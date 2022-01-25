@@ -48,15 +48,11 @@ public class CommandProvider {
 	 * Command {@link CommandOpenMainPage} if command was not found by given <tt>commandName</tt>
 	 */
 	public Command getCommand(String commandName) {
-		
 		Command command = commands.get(commandName);
-		
 		if (command == null) {
 			command = new CommandOpenMainPage();
 		}
-		
 		return command;
-		
 	}
 	
 }

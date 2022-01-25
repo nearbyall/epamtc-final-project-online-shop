@@ -27,8 +27,7 @@ public class CommandSwitchLanguage implements Command{
 	private static final int COOKIE_MAX_AGE_21_DAY = 60*60*24*21;
 	
 	@Override
-	public CommandResult execute(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
 

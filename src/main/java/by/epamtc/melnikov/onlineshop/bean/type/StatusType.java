@@ -3,12 +3,18 @@ package by.epamtc.melnikov.onlineshop.bean.type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Enum that defines the state of the {@link User} in the system.
+ * 
+ * @author nearbyall
+ *
+ */
 public enum StatusType {
 
 	VALID(1, "valid"),
 	BANNED(2, "banned");
 	
-	private static final Logger logger = LogManager.getLogger(StatusType.class);
+	private static final Logger logger = LogManager.getLogger();
 	
 	private final int id;
 	private final String status;
@@ -34,8 +40,8 @@ public enum StatusType {
 			}
 		}
 		
-        logger.warn(String.format("Role with id: %d is not found", id));
-        throw new EnumConstantNotPresentException(StatusType.class, String.format("Status with id: %d is not found", id));
+		logger.warn(String.format("Role with id: %d is not found", id));
+		throw new EnumConstantNotPresentException(StatusType.class, String.format("Status with id: %d is not found", id));
 		
 	}
 	

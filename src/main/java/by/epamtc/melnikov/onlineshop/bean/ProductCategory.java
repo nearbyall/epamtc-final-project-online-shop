@@ -5,11 +5,17 @@ import java.io.Serializable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Java bean class which describes the product category
+ * 
+ * @author nearbyall
+ *
+ */
 public class ProductCategory implements Serializable, Comparable<Object> {
 
 	private static final long serialVersionUID = -8130539624873091423L;
 	
-	private static final Logger logger = LogManager.getLogger(ProductCategory.class);
+	private static final Logger logger = LogManager.getLogger();
 	
 	private String name;
 	private String imgPath;

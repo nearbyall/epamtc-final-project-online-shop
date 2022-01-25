@@ -6,6 +6,13 @@ import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 
+/**
+ * Realization of the pattern Builder. 
+ * Builds a {@link User} from the received parameters.
+ * 
+ * @author nearbyall
+ *
+ */
 public class UserBuilder {
 
 	private User user;

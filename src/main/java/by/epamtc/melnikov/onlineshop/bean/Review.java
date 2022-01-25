@@ -1,11 +1,11 @@
 package by.epamtc.melnikov.onlineshop.bean;
 
 /**
- * Java bean class which describes the order.
+ * Java bean class which describes the review.
  * 
  * @author nearbyall
  *
  */
-public class Order {
+public class Review {
 
 }

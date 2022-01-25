@@ -6,6 +6,12 @@ import java.sql.Timestamp;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 
+/**
+ * Java bean class which describes the user.
+ * 
+ * @author nearbyall
+ *
+ */
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 2248522943128116980L;
@@ -26,7 +32,6 @@ public class User implements Serializable {
 
 	public User(int id, StatusType status, UserType role, String name, String surname, String mobile, String email,
 			String encryptedPassword, Timestamp registeredAt, Timestamp lastLoginAt, double balance) {
-		super();
 		this.id = id;
 		this.status = status;
 		this.role = role;

@@ -3,13 +3,20 @@ package by.epamtc.melnikov.onlineshop.bean.type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Enum that defines the {@link User}'s role in the system. 
+ * Each role has its own rights and opportunities.
+ * 
+ * @author nearbyall
+ *
+ */
 public enum UserType {
 	
 	USER(1, "user"),
 	ADMIN(2, "admin"),
 	GUEST(3, "guest");
 	
-	private static final Logger logger = LogManager.getLogger(UserType.class);
+	private static final Logger logger = LogManager.getLogger();
 	
 	private final int id;
 	private final String name;
@@ -35,8 +42,8 @@ public enum UserType {
 			}
 		}
 		
-        logger.warn(String.format("Role with id: %d is not found", id));
-        throw new EnumConstantNotPresentException(UserType.class, String.format("Role with id: %d is not found", id));
+		logger.warn(String.format("Role with id: %d is not found", id));
+		throw new EnumConstantNotPresentException(UserType.class, String.format("Role with id: %d is not found", id));
 		
 	}
 	

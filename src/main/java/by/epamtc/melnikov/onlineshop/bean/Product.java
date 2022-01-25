@@ -3,6 +3,12 @@ package by.epamtc.melnikov.onlineshop.bean;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+/**
+ * Java bean class which describes the product.
+ * 
+ * @author nearbyall
+ *
+ */
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 146249767363491758L;

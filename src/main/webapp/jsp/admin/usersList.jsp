@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <main class="content">
     <div class="table_content-wrapper">
+    
         <c:if test="${not empty exception_msg}">
             <div class="error-message">
                 <p>
@@ -9,6 +10,7 @@
                 </p>
             </div>
         </c:if>
+        
         <c:if test="${empty exception_msg}">
             <table id="users-list">
                 <tr>

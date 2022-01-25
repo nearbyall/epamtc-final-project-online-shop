@@ -1,5 +1,6 @@
 
 <main class="content">
+
     <c:if test="${not empty exception_msg}">
         <div class="error-message">
             <p>
@@ -7,6 +8,7 @@
             </p>
         </div>
     </c:if>
+    
     <section>
         <div id="grid">
             <div class="grid-item"><h4> Product 1 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>

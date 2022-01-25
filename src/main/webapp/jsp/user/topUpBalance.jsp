@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <main class="content">
+
     <c:if test="${not empty exception_msg}">
         <div class="error-message">
             <p>
@@ -8,6 +9,7 @@
             </p>
         </div>
     </c:if>
+    
     <form class="form-wrapper" method="post" action="Controller" id="user-info-form">
         <fieldset class="fieldset">
         

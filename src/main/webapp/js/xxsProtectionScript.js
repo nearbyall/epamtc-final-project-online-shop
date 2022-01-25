@@ -22,11 +22,7 @@ const xssProtectionListener = (emenent) => {
     }, false);
 }
 
-
-
 const submitButtons = document.querySelectorAll('.submit');
-
-
 
 submitButtons.forEach(function(button) {
     xssProtectionListener(button);

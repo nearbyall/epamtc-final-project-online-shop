@@ -23,7 +23,7 @@
     <url-pattern>/jsp/guest/Controller</url-pattern>
   </servlet-mapping>
   
-  <jsp-config>
+	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
 			<include-prelude>/jsp/include/header.jsp</include-prelude>

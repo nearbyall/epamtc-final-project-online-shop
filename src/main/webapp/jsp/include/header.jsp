@@ -102,21 +102,27 @@
                             </form>
                         </div>
                     </li>
+                    
                     <li><a href="${pageContext.request.contextPath}/Controller?action=onlineUsersPage">
                         <fmt:message bundle="${locale}" key="admin.onlineUserList" />
                     </a></li>
+                    
                     <li><a href="${pageContext.request.contextPath}/Controller?action=allUsersList&recordsPerPage=10&currentPage=1">
                         <fmt:message bundle="${locale}" key="admin.usersList" />
                     </a></li>
+                    
                     <li><a href="${pageContext.request.contextPath}/Controller?action=addProductPage">
                         <fmt:message bundle="${locale}" key="admin.addProduct" />
                     </a></li>
+                    
                     <li><a href="${pageContext.request.contextPath}/Controller?action=addProductCategoryPage">
                         <fmt:message bundle="${locale}" key="admin.addProductCategory" />
                     </a></li>
+                    
                     <li><a href="${pageContext.request.contextPath}/Controller?action=openOrdersPage&recordsPerPage=10&currentPage=1">
                         <fmt:message bundle="${locale}" key="admin.orders" />
                     </a></li>
+                    
                 </ul>
             </div>
         </div>

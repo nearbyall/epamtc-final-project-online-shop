@@ -9,6 +9,7 @@
 <fmt:setBundle basename="exceptionMessages" var="exc_msg"/>
 
 <main class="content">
+
     <c:if test="${not empty exception_msg}">
         <div class="error-message">
             <p>
@@ -16,6 +17,7 @@
             </p>
         </div>
     </c:if>
+    
     <form class="form-wrapper" method="post" action="Controller" id="register-form">
     
         <fieldset class="fieldset">

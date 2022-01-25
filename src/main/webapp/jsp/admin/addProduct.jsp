@@ -11,6 +11,7 @@
     <div class="form-wrapper" id="component-form">
     
         <form class="fieldset" method="post" action="Controller?action=addProductCategory" enctype="multipart/form-data">
+        
             <legend class="title">
                 <fmt:message bundle="${locale}" key="product.btn.addProduct.category"/>
             </legend>

@@ -16,6 +16,13 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for updating user info process.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandUpdateUserInfo implements Command {
 
 	private static final UserService userService = ServiceProvider.getInstance().getUserService();
@@ -41,18 +48,20 @@ public class CommandUpdateUserInfo implements Command {
 		try {
 			updateUserInfo(request, updatedUser);
 			userService.updateUserProfileData(updatedUser);
-			result.setDirection(Direction.FORWARD);
-			result.setPage(PageStorage.HOME);
-			//TODO F9 protection
+			setUserInfoToRequest(request, updatedUser);
+			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectURL = getRedirectURL(request, redirectCommand);
+			result.setPage(redirectURL);
+			result.setDirection(Direction.REDIRECT);
 		} catch (ServiceException e) {
-            setUserInfoToRequest(request, updatedUser);
+            //setUserInfoToRequest(request, updatedUser);
             setErrorMessage(request, e.getMessage());
             result.setPage(PageStorage.PROFILE);
 			result.setDirection(Direction.FORWARD);
 			return result;
         }
 		
-		request.getSession().setAttribute(JSPAttributeStorage.USER_REGISTRATION_DATA, updatedUser);
+		request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, updatedUser);
 		return result;
 		
 	}
@@ -69,7 +78,7 @@ public class CommandUpdateUserInfo implements Command {
     }
 
     private void setUserInfoToRequest(HttpServletRequest request, User user) {
-        request.setAttribute(JSPAttributeStorage.USER_REGISTRATION_DATA, user);
+        request.setAttribute(JSPAttributeStorage.USER_DATA, user);
     }
     
 }

@@ -23,11 +23,18 @@ import by.epamtc.melnikov.onlineshop.service.ProductService;
 import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for adding the product category {@link ProductCategory}.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandAddProductCategory implements Command {
 
 	private static final ProductService productService = ServiceProvider.getInstance().getProductService();
 	
-	private static final String UPLOAD_DIRECTORY = "productCategortImg";
+	private static final String UPLOAD_DIRECTORY = "productCategoryImg";
 	private static final int THRESHOLD_SIZE 	= 1024 * 1024 * 3; 	// 3MB
 	private static final int MAX_FILE_SIZE 		= 1024 * 1024 * 40; // 40MB
 	private static final int MAX_REQUEST_SIZE 	= 1024 * 1024 * 50; // 50MB
@@ -52,7 +59,9 @@ public class CommandAddProductCategory implements Command {
 		upload.setSizeMax(MAX_REQUEST_SIZE);
 		
 		if (!ServletFileUpload.isMultipartContent(request)) {
-			//TODO request does not contain upload data
+			setErrorMessage(request, "uploading.uploadDataIsNotExist");
+			result.setPage(PageStorage.ADD_PRODUCT_CATEGORY);
+			result.setDirection(Direction.FORWARD);
 		}
 		
 		if (!uploadDirectory.exists()) {

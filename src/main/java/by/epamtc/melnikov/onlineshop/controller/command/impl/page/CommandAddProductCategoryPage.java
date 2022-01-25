@@ -11,6 +11,13 @@ import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for open {@link PageStorage#ADD_PRODUCT_CATEGORY} page.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandAddProductCategoryPage implements Command {
 
 	@Override

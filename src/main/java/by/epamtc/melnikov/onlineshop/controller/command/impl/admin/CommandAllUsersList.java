@@ -17,6 +17,13 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * finding all users {@link User} and displaying them to the administrator.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandAllUsersList implements Command {
 
 	private static final UserService userService = ServiceProvider.getInstance().getUserService();

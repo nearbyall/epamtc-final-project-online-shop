@@ -1,5 +1,12 @@
 package by.epamtc.melnikov.onlineshop.controller;
 
+/**
+ * The class needed to store URLs of jsp pages.
+ * Includes one private constructor.
+ * 
+ * @author nearbyall
+ *
+ */
 public class PageStorage {
 
 	private PageStorage() {}

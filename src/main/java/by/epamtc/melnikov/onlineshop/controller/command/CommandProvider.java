@@ -9,21 +9,20 @@ import by.epamtc.melnikov.onlineshop.controller.command.impl.guest.*;
 import by.epamtc.melnikov.onlineshop.controller.command.impl.page.*;
 
 /**
- * The class serves as a repository of commands that are placed in the HashMap collection.
+ * The class serves as a repository of commands the {@link Command} that are placed in the HashMap collection.
  * 
  * @author nearbyall
  *
  */
 public class CommandProvider {
 	
-	/** */
+	/** Collection which includes {@link Command}s */
 	Map<String, Command> commands = new HashMap<>();
 	
 	/**
-	 * 
+	 * The constructor in which the {@link Command} interface implementations are added to the {@link Map} commands
 	 */
 	public CommandProvider() {
-		// put commands
 		commands.put("openMainPage", new CommandOpenMainPage());
 		commands.put("registration", new CommandRegistration());
 		commands.put("logOut", new CommandLogOut());

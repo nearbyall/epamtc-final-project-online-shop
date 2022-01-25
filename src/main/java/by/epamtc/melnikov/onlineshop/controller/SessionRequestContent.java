@@ -11,24 +11,30 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * The class needed to retrieve attributes and parameters from {@link HttpServletRequest} and then store them
+ * 
+ * @author nearbyall
+ *
+ */
 public class SessionRequestContent {
 
-	private Map<String, Object> reqAttributes;
-	private Map<String, String[]> reqParameters;
+	private Map<String, Object> requestAttributes;
+	private Map<String, String[]> requestParameters;
 	private Map<String, Object> sessionAttributes;
-	private static final Logger log = LogManager.getLogger(SessionRequestContent.class);
+	private static final Logger log = LogManager.getLogger();
 
-	public SessionRequestContent(HttpServletRequest req) {
+	public SessionRequestContent(HttpServletRequest request) {
 		sessionAttributes = new HashMap<>();
-		reqAttributes = new HashMap<>();
+		requestAttributes = new HashMap<>();
 		try {
-			reqParameters = req.getParameterMap();
-			Enumeration<String> reqAttributeNames = req.getAttributeNames();
+			requestParameters = request.getParameterMap();
+			Enumeration<String> reqAttributeNames = request.getAttributeNames();
 			while (reqAttributeNames.hasMoreElements()) {
 				String attributeName = reqAttributeNames.nextElement();
-				reqAttributes.put(attributeName, req.getAttribute(attributeName));
+				requestAttributes.put(attributeName, request.getAttribute(attributeName));
 			}
-			HttpSession currentSession = req.getSession(false);
+			HttpSession currentSession = request.getSession(false);
 			if (currentSession != null) {
 				Enumeration<String> sessionAttributeNames = currentSession.getAttributeNames();
 				while (sessionAttributeNames.hasMoreElements()) {
@@ -42,11 +48,11 @@ public class SessionRequestContent {
 	}
 
 	public boolean checkRequestAttribute(String attrName) {
-		return reqAttributes.containsKey(attrName);
+		return requestAttributes.containsKey(attrName);
 	}
 
 	public boolean checkRequestParameter(String attrName) {
-		return reqParameters.containsKey(attrName);
+		return requestParameters.containsKey(attrName);
 	}
 
 	public boolean checkSessionAttribute(String attrName) {
@@ -54,19 +60,19 @@ public class SessionRequestContent {
 	}
 
 	public Object getRequestAttribute(String key) {
-		return reqAttributes.get(key);
+		return requestAttributes.get(key);
 	}
 
 	public Map<String, Object> getRequestAttributes() {
-		return reqAttributes;
+		return requestAttributes;
 	}
 
 	public String[] getRequestParameter(String key) {
-		return reqParameters.get(key);
+		return requestParameters.get(key);
 	}
 
 	public Map<String, String[]> getRequestParameters() {
-		return reqParameters;
+		return requestParameters;
 	}
 
 	public Object getSessionAttribute(String key) {
@@ -76,10 +82,10 @@ public class SessionRequestContent {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		Set<String> keys = reqAttributes.keySet();
+		Set<String> keys = requestAttributes.keySet();
 		for (String key : keys)
 			sb.append("\nRequest attribute: key = " + key + " value = " + getRequestAttribute(key));
-		keys = reqParameters.keySet();
+		keys = requestParameters.keySet();
 		for (String key : keys)
 			sb.append("\nRequest parameter: key = " + key + " value = " + getRequestParameter(key)[0]);
 		keys = sessionAttributes.keySet();

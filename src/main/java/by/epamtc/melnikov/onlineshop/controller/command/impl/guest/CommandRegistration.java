@@ -20,6 +20,13 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for registration process.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandRegistration implements Command {
 
 	private static final UserService userService = ServiceProvider.getInstance().getUserService();
@@ -34,15 +41,22 @@ public class CommandRegistration implements Command {
 		
 		try {
 			userService.registration(user);
-			//set attribute user.getRole
-			request.getSession().setAttribute("role", "user");
+
 			request.getSession().setAttribute(JSPAttributeStorage.USER_EMAIL, user.getEmail());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_REGISTRATION_DATA, user);
-			result.setPage(PageStorage.HOME);
-			//TODO REDIRECT F9
+			request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
+			request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
+			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
+
+			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectURL = getRedirectURL(request, redirectCommand);
+			result.setPage(redirectURL);
+			result.setDirection(Direction.REDIRECT);
+			
 		} catch (ServiceException e) {
+			
 			setErrorMessage(request, e.getMessage());
 			result.setPage(PageStorage.REGISTRATION);
+			
 		}
 		
 		return result;

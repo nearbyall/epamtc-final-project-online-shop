@@ -17,6 +17,13 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for changing the ban status of the user {@link User}.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandBanUser implements Command {
 
 	private final static UserService userService = ServiceProvider.getInstance().getUserService();

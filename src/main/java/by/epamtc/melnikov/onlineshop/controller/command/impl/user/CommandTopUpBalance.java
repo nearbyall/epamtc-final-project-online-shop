@@ -16,6 +16,13 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for top up balance process.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandTopUpBalance implements Command {
 
 	public static final UserService userService = ServiceProvider.getInstance().getUserService();
@@ -25,21 +32,21 @@ public class CommandTopUpBalance implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		User user = (User) request.getSession().getAttribute(JSPAttributeStorage.USER_REGISTRATION_DATA);
+		User user = (User) request.getSession().getAttribute(JSPAttributeStorage.USER_DATA);
 		String cardNumber = request.getParameter(JSPAttributeStorage.CARD_NUMBER);
 		String cardDate = request.getParameter(JSPAttributeStorage.CARD_DATE);
 		String cardCVV = request.getParameter(JSPAttributeStorage.CARD_CVV);
 		String cardSumm = request.getParameter(JSPAttributeStorage.CARD_SUMM);
 		
 		/*
-		 * Check card validity
+		 * TODO Check card validity
 		 */
 		
 		user.setBalance(Double.parseDouble(cardSumm) + user.getBalance());
 		
 		try {
 			user = userService.updateUserBalance(user);
-			request.getSession().setAttribute(JSPAttributeStorage.USER_REGISTRATION_DATA, user);
+			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
 			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);

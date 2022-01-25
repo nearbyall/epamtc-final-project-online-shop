@@ -16,13 +16,19 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for log in process.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandLogIn implements Command {
 
 	private static final UserService userService = ServiceProvider.getInstance().getUserService();
 	
 	@Override
-	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
+	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CommandResult result = new CommandResult();
 		
@@ -30,13 +36,18 @@ public class CommandLogIn implements Command {
 		String password = request.getParameter(JSPAttributeStorage.USER_PASSWORD);
 		
 		try {
+			
 			User user = userService.logInByPassword(email, password);
+			
 			request.getSession().setAttribute(JSPAttributeStorage.USER_EMAIL, email);
 			request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
 			request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_REGISTRATION_DATA, user);
-            result.setPage(PageStorage.HOME);
-            result.setDirection(Direction.FORWARD);
+			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
+			
+			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectURL = getRedirectURL(request, redirectCommand);
+			result.setPage(redirectURL);
+			result.setDirection(Direction.REDIRECT);
 		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());
             result.setPage(PageStorage.LOG_IN);

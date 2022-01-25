@@ -24,7 +24,7 @@ import by.epamtc.melnikov.onlineshop.dao.sql.SQLQueriesStorage;
 import by.epamtc.melnikov.onlineshop.dao.UserDAO;
 
 /**
- * SQL {@link UserDAO} interface implementation
+ * SQL {@link UserDAO} interface implementation.
  * 
  * @author nearbyall
  *

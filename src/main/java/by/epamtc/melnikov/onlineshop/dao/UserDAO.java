@@ -29,7 +29,7 @@ public interface UserDAO {
 	 * If no such <tt>user</tt> contains into data source throws DAOException.
 	 * 
 	 * @param email {@link User}'s email
-	 * @return an {@link User}
+	 * @return an {@link User} which has been found
 	 * @throws DAOException if an error occurs while getting a <tt>user</tt>
 	 */
 	User findUserByEmail(String email) throws DAOException;
@@ -38,7 +38,7 @@ public interface UserDAO {
 	 * Retrieves and returns {@link List} of {@link User}s into data source.
 	 * If no such users contains into data source returns empty {@link List} collection.
 	 * 
-	 * @return {@link List} of {@link User}s
+	 * @return {@link List} of {@link User}s which has been found
 	 * @throws DAOException if an error occurs while getting a <tt>user</tt>
 	 */
 	List<User> findAllUsers() throws DAOException;
@@ -57,7 +57,7 @@ public interface UserDAO {
 	 * Updates ban status of {@link User} in a data source.
 	 * Throws DAOException if an error occurs while writing a <tt>user</tt>.
 	 * 
-	 * @param user {@link User} that information is updating
+	 * @param user {@link User} that ban status is updating
 	 * @return an {@link User} which has been updated
 	 * @throws DAOException if an error occurs while writing a <tt>user</tt>
 	 */

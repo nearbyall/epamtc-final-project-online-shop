@@ -15,9 +15,16 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.util.exception.UtilException;
 
+/**
+ * The class that is needed to hash the data. 
+ * The PBKDF2WithHmacSHA1 algorithm is used.
+ * 
+ * @author nearbyall
+ *
+ */
 public class HashGenerator {
 
-	private static final Logger LOGGER = LogManager.getLogger(HashGenerator.class);
+	private static final Logger LOGGER = LogManager.getLogger();
 
 	private static final int ENCRYPTION_ITERATIONS = 1024;
 	private static final int KEY_LENGTH = 128;

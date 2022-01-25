@@ -5,6 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.service.validation.exception.ValidatorException;
 
+/**
+ * The class needed to validate data associated with
+ * the {@link User} using regular expressions.
+ * 
+ * @author nearbyall
+ *
+ */
 public class UserValidator {
 
 	private static final String PASSWORD_REGEX = "^[\\w-]{8,16}$";

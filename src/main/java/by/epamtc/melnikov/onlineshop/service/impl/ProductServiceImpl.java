@@ -15,9 +15,15 @@ import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 import by.epamtc.melnikov.onlineshop.service.validation.ProductValidator;
 import by.epamtc.melnikov.onlineshop.service.validation.exception.ValidatorException;
 
+/**
+ * {@link ProductService} interface implementation.
+ * 
+ * @author nearbyall
+ *
+ */
 public class ProductServiceImpl implements ProductService {
 
-	private final static Logger logger = LogManager.getLogger(ProductServiceImpl.class);
+	private final static Logger logger = LogManager.getLogger();
 	
 	private final ProductDAO productDAO;
 	private final ProductValidator validator;

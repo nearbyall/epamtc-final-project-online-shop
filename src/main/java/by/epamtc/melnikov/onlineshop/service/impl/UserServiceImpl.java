@@ -17,9 +17,15 @@ import by.epamtc.melnikov.onlineshop.service.validation.exception.ValidatorExcep
 import by.epamtc.melnikov.onlineshop.util.HashGenerator;
 import by.epamtc.melnikov.onlineshop.util.exception.UtilException;
 
+/**
+ * {@link UserService} interface implementation.
+ * 
+ * @author nearbyall
+ *
+ */
 public class UserServiceImpl implements UserService {
 
-	private final static Logger logger = LogManager.getLogger(UserServiceImpl.class);
+	private final static Logger logger = LogManager.getLogger();
 	
 	private final UserDAO userDAO;
 	private final UserValidator validator;

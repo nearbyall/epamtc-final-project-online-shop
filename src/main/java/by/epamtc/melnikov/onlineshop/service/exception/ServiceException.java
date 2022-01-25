@@ -1,5 +1,12 @@
 package by.epamtc.melnikov.onlineshop.service.exception;
 
+/**
+ * A class that inherits from {@link Exception}.
+ * Describes an exception that can throws in Service layer.
+ * 
+ * @author nearbyall
+ *
+ */
 public class ServiceException extends Exception {
 
 	private static final long serialVersionUID = -1837669697625386831L;

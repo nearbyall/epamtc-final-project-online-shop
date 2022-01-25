@@ -1,5 +1,12 @@
 package by.epamtc.melnikov.onlineshop.service.validation.exception;
 
+/**
+ * A class that inherits from {@link Exception}.
+ * Describes an exception that can throws in validation package.
+ * 
+ * @author nearbyall
+ *
+ */
 public class ValidatorException extends Exception {
 
 	private static final long serialVersionUID = -5222852599955752746L;

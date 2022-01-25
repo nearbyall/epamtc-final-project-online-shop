@@ -3,6 +3,13 @@ package by.epamtc.melnikov.onlineshop.service;
 import by.epamtc.melnikov.onlineshop.service.impl.ProductServiceImpl;
 import by.epamtc.melnikov.onlineshop.service.impl.UserServiceImpl;
 
+/**
+ * The class serves as a repository of implementations of Service interfaces
+ * like {@link UserService} and {@link ProductService}.
+ * 
+ * @author nearbyall
+ *
+ */
 public class ServiceProvider {
 
 	private final UserService userService;

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -8,18 +8,20 @@
 <fmt:setBundle basename="localization" var="locale"/>
     
 <c:if test="${not empty exception_msg}">
-    <div class="error-message">
-        <p>
-            <fmt:message bundle="${exc_msg}"  key="${exception_msg}"/>
-        </p>
-    </div>
+	<div class="error-message">
+		<p>
+			<fmt:message bundle="${exc_msg}"  key="${exception_msg}"/>
+		</p>
+	</div>
 </c:if>
 <main class="content">
     <form class="form-wrapper" method="post" action="Controller" id="login-form">
     
         <fieldset class="fieldset">
         
+        	<input type="hidden" name="redirectPageCommand" value="openMainPage">
             <input type="hidden" name="action" value="logIn">
+            
             <legend class="title">
                 <fmt:message bundle="${locale}" key="login.legend"/>
             </legend>

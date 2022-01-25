@@ -10,7 +10,9 @@
     </c:if>
     <form class="form-wrapper" method="post" action="Controller" id="user-info-form">
         <fieldset class="fieldset">
+        
             <input type="hidden" name="action" value="updateUserInfo">
+            <input type="hidden" name="redirectPageCommand" value="profilePage">
             
             <legend class="title">
                 <fmt:message  bundle="${locale}" key="profile.legend"/>

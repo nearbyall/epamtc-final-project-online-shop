@@ -19,6 +19,7 @@
 *.tar.gz
 *.rar
 
+# bin path
 /bin/
 
 # eclipse project file

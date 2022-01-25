@@ -20,6 +20,7 @@
     
         <fieldset class="fieldset">
         
+			<input type="hidden" name="redirectPageCommand" value="openMainPage">        
             <input type="hidden" name="action" value="registration"/>
             
             <legend class="title">

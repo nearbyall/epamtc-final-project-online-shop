@@ -31,7 +31,7 @@ import by.epamtc.melnikov.onlineshop.dao.UserDAO;
  */
 public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 
-	private final static Logger logger = LogManager.getLogger(SQLUserDAOImpl.class);
+	private final static Logger logger = LogManager.getLogger();
 	
 	/** Field responsible for the uniqueness of {@link User}'s email in the database */
     private static final String UNIQUE_EMAIL_MESSAGE = "users.email_UNIQUE";

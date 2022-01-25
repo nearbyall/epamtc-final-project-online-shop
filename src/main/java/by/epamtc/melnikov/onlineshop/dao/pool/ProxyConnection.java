@@ -19,6 +19,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * 
+ * @author nearbyall
+ *
+ */
 public class ProxyConnection implements Connection {
 	
 	private final Connection connection;

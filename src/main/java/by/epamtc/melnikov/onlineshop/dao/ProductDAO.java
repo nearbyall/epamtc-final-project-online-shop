@@ -37,7 +37,7 @@ public interface ProductDAO {
 	
 	/**
 	 * Retrieves and returns {@link List} of {@link ProductCategory}s into data source
-	 * If no such categories contains into data source returns empty {@link List} collection
+	 * If no such categories contains into data source returns empty {@link List} collection.
 	 * 
 	 * @return {@link List} of {@link ProductCategory}s
 	 * @throws DAOException if an error occurs while getting a <tt>category</tt>

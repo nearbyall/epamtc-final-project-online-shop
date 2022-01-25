@@ -4,16 +4,22 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.dao.pool.ConnectionPool;
 
+/**
+ * Abstraction needed to create SQL implementation of DAO interfaces.
+ * Contains many helper methods for working with the database.
+ * 
+ * @author nearbyall
+ *
+ */
 public abstract class SQLBaseDAO {
 	
-	private static final Logger logger = LogManager.getLogger(SQLBaseDAO.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	protected final ConnectionPool pool;
 
@@ -74,10 +80,6 @@ public abstract class SQLBaseDAO {
 				throw new DAOException("service.commonError", e);
 			}
 		}
-	}
-    
-	private String injectionProtection(String value) {
-		return !StringUtils.isBlank(value) ? value.replace("'", "\\'" ) : value;
 	}
 
 }

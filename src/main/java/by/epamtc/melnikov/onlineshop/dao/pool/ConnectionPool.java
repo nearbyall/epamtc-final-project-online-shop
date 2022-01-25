@@ -22,6 +22,13 @@ import com.mysql.cj.jdbc.Driver;
 
 import by.epamtc.melnikov.onlineshop.dao.pool.exception.ConnectionPoolException;
 
+/**
+ * The class that is responsible for creating and managing a pool of
+ * connections that are ready for use by any thread that needs them. 
+ * 
+ * @author nearbyall
+ *
+ */
 public class ConnectionPool {
 	
 	private static final Logger logger = LogManager.getLogger(ConnectionPool.class);

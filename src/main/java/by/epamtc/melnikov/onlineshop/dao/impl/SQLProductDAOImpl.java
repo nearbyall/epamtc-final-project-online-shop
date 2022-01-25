@@ -20,6 +20,12 @@ import by.epamtc.melnikov.onlineshop.dao.pool.exception.ConnectionPoolException;
 import by.epamtc.melnikov.onlineshop.dao.sql.SQLBaseDAO;
 import by.epamtc.melnikov.onlineshop.dao.sql.SQLQueriesStorage;
 
+/**
+ * SQL {@link ProductDAO} interface implementation
+ * 
+ * @author nearbyall
+ *
+ */
 public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 
 	private final static Logger logger = LogManager.getLogger();
@@ -98,9 +104,12 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 	}
 
 	/**
+	 * Constructs {@link ProductCategory} from <tt>resultSet</tt>.
+	 * Throws SQLException if the column label is not valid
 	 * 
-	 * @param resultSet
-	 * @return
+	 * @param resultSet {@link ResultSet} which includes {@link ProductCategory}
+	 * @return an {@link ProductCategory} which has been constructed
+	 * @throws SQLException if the column label is not valid
 	 */
 	private ProductCategory constructProductCategoryByResultSet(ResultSet resultSet) throws SQLException {
 		ProductCategory category = new ProductCategory();

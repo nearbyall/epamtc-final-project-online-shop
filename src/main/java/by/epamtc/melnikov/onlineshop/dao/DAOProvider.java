@@ -3,6 +3,13 @@ package by.epamtc.melnikov.onlineshop.dao;
 import by.epamtc.melnikov.onlineshop.dao.impl.SQLProductDAOImpl;
 import by.epamtc.melnikov.onlineshop.dao.impl.SQLUserDAOImpl;
 
+/**
+ * The class serves as a repository of implementations of DAO interfaces
+ * like {@link UserDAO} and {@link ProductDAO}.
+ * 
+ * @author nearbyall
+ *
+ */
 public class DAOProvider {
 
 	private UserDAO userDAO;

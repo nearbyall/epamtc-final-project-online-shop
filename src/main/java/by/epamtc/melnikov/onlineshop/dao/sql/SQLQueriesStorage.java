@@ -1,5 +1,12 @@
 package by.epamtc.melnikov.onlineshop.dao.sql;
 
+/**
+ * The class needed to store sql queries.
+ * Includes one private constructor.
+ * 
+ * @author nearbyall
+ *
+ */
 public class SQLQueriesStorage {
 
 	public static final String REGISTER_USER = "INSERT INTO users " +

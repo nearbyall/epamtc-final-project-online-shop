@@ -26,7 +26,7 @@ public interface UserDAO {
 	
 	/**
 	 * Retrieves and returns {@link User}.
-	 * If no such <tt>user</tt> contains into data source throws DAOException
+	 * If no such <tt>user</tt> contains into data source throws DAOException.
 	 * 
 	 * @param email {@link User}'s email
 	 * @return an {@link User}
@@ -35,8 +35,8 @@ public interface UserDAO {
 	User findUserByEmail(String email) throws DAOException;
 	
 	/**
-	 * Retrieves and returns {@link List} of {@link User}s into data source
-	 * If no such users contains into data source returns empty {@link List} collection
+	 * Retrieves and returns {@link List} of {@link User}s into data source.
+	 * If no such users contains into data source returns empty {@link List} collection.
 	 * 
 	 * @return {@link List} of {@link User}s
 	 * @throws DAOException if an error occurs while getting a <tt>user</tt>
@@ -45,7 +45,7 @@ public interface UserDAO {
 	
 	/**
 	 * Updates common information about {@link User} in a data source.
-	 * Throws DAOException if an error occurs while writing a <tt>user</tt>
+	 * Throws DAOException if an error occurs while writing a <tt>user</tt>.
 	 * 
 	 * @param user {@link User} that information is updating
 	 * @return an {@link User} which has been updated
@@ -55,7 +55,7 @@ public interface UserDAO {
 	
 	/**
 	 * Updates ban status of {@link User} in a data source.
-	 * Throws DAOException if an error occurs while writing a <tt>user</tt>
+	 * Throws DAOException if an error occurs while writing a <tt>user</tt>.
 	 * 
 	 * @param user {@link User} that information is updating
 	 * @return an {@link User} which has been updated
@@ -65,7 +65,7 @@ public interface UserDAO {
 	
 	/**
 	 * Update balance of {@link User} in data source.
-	 * Throws DAOException if an error occurs while writing a <tt>user</tt>
+	 * Throws DAOException if an error occurs while writing a <tt>user</tt>.
 	 * 
 	 * @param user {@link User} that balance is updating
 	 * @return an {@link User} which has been updated

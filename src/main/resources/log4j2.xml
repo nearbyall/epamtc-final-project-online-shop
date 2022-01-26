@@ -21,7 +21,8 @@
 		</Appenders>
 		<Loggers>
 		    <Root level="all">
-		        <AppenderRef ref="STDOUT"/>
+		        <AppenderRef ref="File"/>
+		        <AppenderRef ref="STDOUT" level="debug"/>
 		    </Root>
 		</Loggers>
 </Configuration>

@@ -17,13 +17,23 @@ public class ProductCategory implements Serializable, Comparable<Object> {
 	
 	private static final Logger logger = LogManager.getLogger();
 	
+	int id;
 	private String name;
 	private String imgPath;
 	
 	public ProductCategory() {}
 	
+	public ProductCategory(int id) {
+		this.id = id;
+	}
+
 	public ProductCategory(String name, String imgPath) {
-		super();
+		this.name = name;
+		this.imgPath = imgPath;
+	}
+
+	public ProductCategory(int id, String name, String imgPath) {
+		this.id = id;
 		this.name = name;
 		this.imgPath = imgPath;
 	}
@@ -44,15 +54,24 @@ public class ProductCategory implements Serializable, Comparable<Object> {
 		this.imgPath = imgPath;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [name=" + name + ", imgPath=" + imgPath + "]";
+		return getClass().getSimpleName() + " [id=" + id + ", name=" + name + ", imgPath=" + imgPath + "]";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + id;
 		result = prime * result + ((imgPath == null) ? 0 : imgPath.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -67,6 +86,8 @@ public class ProductCategory implements Serializable, Comparable<Object> {
 		if (getClass() != obj.getClass())
 			return false;
 		ProductCategory other = (ProductCategory) obj;
+		if (id != other.id)
+			return false;
 		if (imgPath == null) {
 			if (other.imgPath != null)
 				return false;

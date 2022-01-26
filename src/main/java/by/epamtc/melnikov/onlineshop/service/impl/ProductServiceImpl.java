@@ -35,8 +35,22 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public Product addProduct(Product product) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		try {
+			validator.validateProduct(product);
+		} catch (ValidatorException e) {
+			logger.info(String.format("invalid %s %n product data %s", product, e.getMessage()));
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		try {
+			productDAO.addProduct(product);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return product;
+		
 	}
 
 	@Override
@@ -61,8 +75,17 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<ProductCategory> findAllProductCategories() throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<ProductCategory> categories;
+		
+		try {
+			categories = productDAO.findAllProductCategories();
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return categories;
+		
 	}
 
 }

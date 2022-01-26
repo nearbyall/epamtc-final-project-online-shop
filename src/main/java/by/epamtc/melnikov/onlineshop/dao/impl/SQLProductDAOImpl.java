@@ -1,5 +1,6 @@
 package by.epamtc.melnikov.onlineshop.dao.impl;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,11 +31,17 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 
 	private final static Logger logger = LogManager.getLogger();
 	
+	/** Field responsible for the uniqueness of {@link Product}'s title in the database */
+    private static final String UNIQUE_PRODUCT_TITLE_MESSAGE = "products.title_UNIQUE";
+    /** Field responsible for the uniqueness of {@link Product}'s imgPath in the database */
+    private static final String UNIQUE_PRODUCT_IMG_PATH_MESSAGE = "products.imgPath_UNIQUE";
 	/** Field responsible for the uniqueness of {@link ProductCategory}'s name in the database */
     private static final String UNIQUE_NAME_MESSAGE = "product_categories.name_UNIQUE";
     /** Field responsible for the uniqueness of {@link ProductCategory}'s imgPath in the database */
     private static final String UNIQUE_IMG_PATH_MESSAGE = "product_categories.imgPath_UNIQUE";
 	
+    /** Field contains the column name of {@link ProductCategory}'s id*/
+    private static final String PRODUCT_CATEGORY_ID_COLUMN_NAME = "product_categories.id";
     /** Field contains the column name of {@link ProductCategory}'s name*/
     private static final String PRODUCT_CATEGORY_NAME_COLUMN_NAME = "product_categories.name";
     /** Field contains the column name of {@link ProductCategory}'s imgPath*/
@@ -42,8 +49,34 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
     
 	@Override
 	public Product addProduct(Product product) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.INSERT_PRODUCT)) {
+			preparedStatement.setString(1, product.getTitle());
+			preparedStatement.setDouble(2, product.getPrice());
+			preparedStatement.setInt(3, product.getCount());
+			preparedStatement.setTimestamp(4, product.getCreatedAt());
+			preparedStatement.setTimestamp(5, product.getUpdatedt());
+			preparedStatement.setString(6, product.getDescription());
+			preparedStatement.setString(7, product.getImgPath());
+			preparedStatement.setBigDecimal(8, new BigDecimal(product.getCategory().getId()));
+			preparedStatement.executeUpdate();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			if (e.getMessage().contains(UNIQUE_PRODUCT_TITLE_MESSAGE)) {
+				throw new DAOException("query.product.category.addition.nameAlreadyExist", e);
+			}
+			if (e.getMessage().contains(UNIQUE_PRODUCT_IMG_PATH_MESSAGE)) {
+				throw new DAOException("query.product.category.addition.imgPathAlreadyExist", e);
+			}
+			logger.warn(String.format("ProductCategory %s addition common error", product), e);
+			throw new DAOException("query.product.category.addition.commonError", e);
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("ProductCategory %s addition common error", product), e);
+			throw new DAOException("query.product.category.addition.commonError", e);
+		}
+		
+		return product;
+		
 	}
 
 	@Override
@@ -56,16 +89,16 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			preparedStatement.executeUpdate();
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getMessage().contains(UNIQUE_NAME_MESSAGE)) {
-				throw new DAOException("query.product.category.addition.nameAlreadyExist", e);
+				throw new DAOException("query.product.addition.titleAlreadyExist", e);
 			}
 			if (e.getMessage().contains(UNIQUE_IMG_PATH_MESSAGE)) {
-				throw new DAOException("query.product.category.addition.imgPathAlreadyExist", e);
+				throw new DAOException("query.product.addition.imgPathAlreadyExist", e);
 			}
-			logger.warn(String.format("ProductCategory %s addition common error", category), e);
-			throw new DAOException("query.product.category.addition.commonError", e);
+			logger.warn(String.format("Product %s addition common error", category), e);
+			throw new DAOException("query.product.addition.commonError", e);
 		} catch (SQLException | ConnectionPoolException e) {
-			logger.warn(String.format("ProductCategory %s addition common error", category), e);
-			throw new DAOException("query.product.category.addition.commonError", e);
+			logger.warn(String.format("Product %s addition common error", category), e);
+			throw new DAOException("query.product.addition.commonError", e);
 		}
 		
 		return category;
@@ -80,7 +113,6 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 		try (Connection connection = pool.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ALL_PRODUCT_CATEGORIES);
 			 ResultSet resultSet = preparedStatement.executeQuery()) {
-			
 			if (!resultSet.isBeforeFirst()) {
 				logger.info("Categories is empty");
 				categories = Collections.emptyList();
@@ -113,6 +145,7 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 	 */
 	private ProductCategory constructProductCategoryByResultSet(ResultSet resultSet) throws SQLException {
 		ProductCategory category = new ProductCategory();
+		category.setId(resultSet.getInt(PRODUCT_CATEGORY_ID_COLUMN_NAME));
 		category.setName(resultSet.getString(PRODUCT_CATEGORY_NAME_COLUMN_NAME));
 		category.setImgPath(resultSet.getString(PRODUCT_CATEGORY_IMG_PATH_COLUMN_NAME));
 		return category;

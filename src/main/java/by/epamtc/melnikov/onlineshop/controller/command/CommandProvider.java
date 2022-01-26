@@ -32,6 +32,7 @@ public class CommandProvider {
 		commands.put("updateUserInfo", new CommandUpdateUserInfo());
 		commands.put("allUsersList", new CommandAllUsersList());
 		commands.put("banUser", new CommandBanUser());
+		commands.put("addProduct", new CommandAddProduct());
 		commands.put("addProductCategory", new CommandAddProductCategory());
 		commands.put("addProductPage", new CommandAddProductPage());
 		commands.put("addProductCategoryPage", new CommandAddProductCategoryPage());

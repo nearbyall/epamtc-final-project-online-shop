@@ -72,11 +72,9 @@ public class UserServiceImpl implements UserService {
 		try {
 			User user = userDAO.findUserByEmail(email);
 			if (hashGenerator.validatePassword(password, user.getEncryptedPassword())) {
-				/* check banned status
-				if (user.getBanned()) {
-					throw new LibraryServiceException("validation.user.login.isBanned");
+				if (user.isBanned()) {
+					throw new ServiceException("validation.user.login.isBanned");
 				}
-				 */
 				return user;
 			} else {
 				throw new ServiceException("validation.user.login.incorrect");

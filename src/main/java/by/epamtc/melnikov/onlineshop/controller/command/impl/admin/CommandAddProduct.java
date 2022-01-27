@@ -51,6 +51,7 @@ public class CommandAddProduct implements Command {
 		String filePath = StringUtils.EMPTY;
 		String productTitle = StringUtils.EMPTY;
 		String productDescription = StringUtils.EMPTY;
+		String imgLocalPath = StringUtils.EMPTY;
 		Integer categoryId = null;
 		Integer productCount = null;
 		Double productPrice = null;
@@ -103,6 +104,7 @@ public class CommandAddProduct implements Command {
 					filePath = uploadPath + File.separator + fileName;
 					File storeFile = new File(filePath);
 					fileItem.write(storeFile);
+					imgLocalPath = "/" + UPLOAD_DIRECTORY + "/" + fileName;
 				}
 			}
 		} catch (Exception e) {
@@ -123,7 +125,7 @@ public class CommandAddProduct implements Command {
 				.withCreatedAt(currentTimestamp)
 				.withUpdatedAt(currentTimestamp)
 				.withCategory(new ProductCategory(categoryId))
-				.withImgPath(filePath)
+				.withImgPath(imgLocalPath)
 				.build();
 		
 		try {

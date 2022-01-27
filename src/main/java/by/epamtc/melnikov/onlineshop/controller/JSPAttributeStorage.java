@@ -37,6 +37,7 @@ public class JSPAttributeStorage {
 	public static final String CARD_CVV = "cardCVV";
 	public static final String CARD_SUMM = "cardSumm";
     
+	public static final String PRODUCT_LIST = "products";
 	public static final String PRODUCT_TITLE = "title";
 	public static final String PRODUCT_DESCRIPTION = "description";
 	public static final String PRODUCT_COUNT = "count";

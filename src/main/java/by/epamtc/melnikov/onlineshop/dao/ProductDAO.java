@@ -36,6 +36,19 @@ public interface ProductDAO {
 	ProductCategory addProductCategory(ProductCategory category) throws DAOException;
 	
 	/**
+	 * Retrieves and returns {@link List} of {@link Product}s into data source
+	 * which should be displayed on a specific page <tt>currentPage</tt> with a
+	 * specific number of records <tt>recordsPerPage</tt>.
+	 * If no such products contains into data source returns empty {@link List} collection.
+	 * 
+	 * @param currentPage current client page number
+	 * @param recordsPerPage records per client page
+	 * @return {@link List} of {@link Product}s
+	 * @throws DAOException if an error occurs while getting a <tt>product</tt>
+	 */
+	List<Product> findAllProductsPerPage(int currentPage, int recordsPerPage) throws DAOException;
+	
+	/**
 	 * Retrieves and returns {@link List} of {@link ProductCategory}s into data source
 	 * If no such categories contains into data source returns empty {@link List} collection.
 	 * 
@@ -43,5 +56,13 @@ public interface ProductDAO {
 	 * @throws DAOException if an error occurs while getting a <tt>category</tt>
 	 */
 	List<ProductCategory> findAllProductCategories() throws DAOException;
+	
+	/**
+	 * Retrieves and returns total count of {@link Product}s into data source.
+	 * 
+	 * @return count of {@link Product}s into data source
+	 * @throws DAOException if an error occurs while getting a <tt>products</tt> count
+	 */
+	int findProductsCount() throws DAOException;
 	
 }

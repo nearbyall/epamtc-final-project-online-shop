@@ -74,12 +74,48 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public int findProductsCount() throws ServiceException {
+		
+		try {
+			return productDAO.findProductsCount();
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+	}
+	
+	@Override
+	public List<Product> findAllProductsPerPage(int currentPage, int recordsPerPage) throws ServiceException {
+		
+		if (currentPage < 1 || recordsPerPage < 1) {
+			throw new ServiceException("validation.pagination");
+		}
+		
+		List<Product> products;
+		
+		try {
+			products = productDAO.findAllProductsPerPage(currentPage, recordsPerPage);
+			if (products.isEmpty()) {
+				throw new ServiceException("query.product.getProducts.productsNotFound");
+			}
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return products;
+		
+	}
+	
+	@Override
 	public List<ProductCategory> findAllProductCategories() throws ServiceException {
 		
 		List<ProductCategory> categories;
 		
 		try {
 			categories = productDAO.findAllProductCategories();
+			if (categories.isEmpty()) {
+				throw new ServiceException("query.product.category.getCategories.categoriesNotFound");
+			}
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}

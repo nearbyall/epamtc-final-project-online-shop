@@ -9,6 +9,8 @@ package by.epamtc.melnikov.onlineshop.dao.sql;
  */
 public class SQLQueriesStorage {
 
+	public static final String LIMIT_OFFSET_STATEMENT = " LIMIT ? OFFSET ? ";
+	
 	public static final String REGISTER_USER = "INSERT INTO users " +
 			"(name, surname, mobile, email, passwordEncrypted, registeredAt, lastLoginAt, balance, statusId, roleId) " +
 			"value (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -27,6 +29,16 @@ public class SQLQueriesStorage {
 			"(title, price, count, createdAt, updatedAt, description, imgPath, categoryId) " +
 			"value (?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String INSERT_PRODUCT_CATEGORY = "INSERT INTO product_categories (name, imgPath) value (?, ?)";
+	
+	public static final String FIND_ALL_PRODCUTS = "SELECT products.id, products.title, products.description, products.price, products.imgPath, " +
+			"products.createdAt, products.updatedAt, products.count," +
+			"product_categories.id as \"product_categories.id\", product_categories.name as \"product_categories.name\", product_categories.imgPath as \"product_categories.imgPath\"" +
+			"FROM products " +
+			"LEFT JOIN product_categories ON products.categoryId = product_categories.id ";
+	public static final String FIND_ALL_PRODUCTS_BY_CATEGORY_ID = "";
+	public static final String FIND_PRODUCTS_COUNT = "SELECT COUNT(products.id) FROM products";
+	
+	public static final String FIND_REVIEWS_BY_PRODUCT_ID = "";
 	
 	public static final String FIND_ALL_PRODUCT_CATEGORIES = "SELECT * FROM product_categories";
 	

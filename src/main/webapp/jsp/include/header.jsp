@@ -23,7 +23,7 @@
     <ul>
     
 		<li>
-			<a href="${pageContext.request.contextPath}/jsp/guest/main.jsp">
+			<a href="${pageContext.request.contextPath}/Controller?action=openMainPage">
             		<fmt:message bundle="${locale}" key="header.home"/>
 			</a>
 		</li>

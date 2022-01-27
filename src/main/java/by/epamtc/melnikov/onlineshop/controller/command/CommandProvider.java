@@ -38,6 +38,7 @@ public class CommandProvider {
 		commands.put("addProductCategoryPage", new CommandAddProductCategoryPage());
 		commands.put("topUpBalancePage", new CommandTopUpBalancePage());
 		commands.put("topUpBalance", new CommandTopUpBalance());
+		commands.put("openCatalogPage", new CommandOpenCatalogPage());
 	}
 	
 	/**

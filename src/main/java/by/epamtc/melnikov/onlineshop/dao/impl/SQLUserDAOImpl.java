@@ -52,6 +52,8 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
     private static final String USER_SURNAME_COLUMN_NAME = "users.surname";
     /** Field contains the column name of {@link User}'s mobile*/
     private static final String USER_MOBILE_COLUMN_NAME = "users.mobile";
+    /** Field contains the column name of {@link User}'s balance*/
+    private static final String USER_BALANCE_COLUMN_NAME = "users.balance";
     /** Field contains the column name of {@link User}'s status*/
     private static final String USER_STATUS_ID_COLUMN_NAME = "users.statusId";
     /** Field contains the column name of {@link User}'s registeredAt*/
@@ -166,7 +168,8 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 			throw new DAOException("service.commonError", e);
 		}
 		
-		return null;
+		return user;
+		
 	}
 	
 	@Override
@@ -239,7 +242,8 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 				.withStatusType(StatusType.getTypeById(resultSet.getInt(USER_STATUS_ID_COLUMN_NAME)))
 				.withRegisteredAt(resultSet.getTimestamp(USER_REGISTERED_AT_COLUMN_NAME))
 				.withLastLoginAt(resultSet.getTimestamp(USER_LAST_LOGIN_AT_COLUMN_NAME))
+				.withBalance(resultSet.getDouble(USER_BALANCE_COLUMN_NAME))
 				.build();
 	}
-
+	
 }

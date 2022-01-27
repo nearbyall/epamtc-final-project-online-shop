@@ -9,7 +9,7 @@
         </div>
     </c:if>
     
-   <a class="product-search" href="${pageContext.request.contextPath}/Controller?action=productCatalogPage&recordsPerPage=10&currentPage=1">
+    <a class="product-search" href="${pageContext.request.contextPath}/Controller?action=openCatalogPage&recordsPerPage=9&currentPage=1">
         <fmt:message bundle="${locale}"  key="product.btn.catalog"/>
     </a>
     
@@ -18,9 +18,11 @@
 		    <c:if test="${ empty exception_msg}">
 		    	<c:forEach var="category" items="${categories}">
 		    		<div class="grid-item">
-		    			<a href="">
-		    				<img class="grid-image-item" src="${pageContext.request.contextPath}${category.imgPath}" width="180" height="180" alt="">
-		    			</a>
+		    			<center>
+		    				<a href="${pageContext.request.contextPath}/Controller?action=openCatalogPage&categoryId=${category.id}&recordsPerPage=9&currentPage=1">
+		    					<img class="grid-image-item" align="middle" src="${pageContext.request.contextPath}${category.imgPath}" width="180" height="180" alt="">
+		    				</a>
+		    			</center>
 		    			<h4> 
 		    				${category.name} 
 		    			</h4> 

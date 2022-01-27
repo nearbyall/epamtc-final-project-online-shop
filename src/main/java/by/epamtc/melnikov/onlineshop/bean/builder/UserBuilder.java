@@ -71,6 +71,11 @@ public class UserBuilder {
 		return this;
 	}
 	
+	public UserBuilder withBalance(double balance) {
+		user.setBalance(balance);
+		return this;
+	}
+	
 	public User build() {
 		return user;
 	}

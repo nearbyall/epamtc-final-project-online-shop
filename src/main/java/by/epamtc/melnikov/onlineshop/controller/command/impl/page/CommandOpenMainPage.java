@@ -46,9 +46,6 @@ public class CommandOpenMainPage implements Command {
 			request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, "guest");	
 		}
 		
-		//TODO if language is setted
-		request.getSession().setAttribute(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE, "en");
-		
 		result.setPage(PageStorage.HOME);
 		result.setDirection(Direction.FORWARD);
 		

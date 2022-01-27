@@ -39,6 +39,22 @@ public interface ProductService {
 	ProductCategory addProductCategory(ProductCategory category) throws ServiceException;
 	
 	/**
+	 * Finds total count of {@link Product}s via DAO layer.
+	 * 
+	 * @return count of {@link Product} into data source
+	 * @throws ServiceException if DAO layer throw their {@link DAOException}
+	 */
+	int findProductsCount() throws ServiceException;
+	
+	/**
+	 * Finds all {@link Product}s via DAO layer.
+	 * 
+	 * @return {@link List} of {@link Product}s.
+	 * @throws ServiceException if DAO layer throw their {@link DAOException}
+	 */
+	List<Product> findAllProductsPerPage(int currentPage, int recordsPerPage) throws ServiceException;
+	
+	/**
 	 * Finds all {@link ProductCategory}s via DAO layer.
 	 * 
 	 * @return {@link List} of {@link ProductCategory}s.

@@ -47,6 +47,7 @@ public class CommandAddProductCategory implements Command {
 		String filePath = StringUtils.EMPTY;
 		String categoryName = StringUtils.EMPTY;
 		String redirectCommand = StringUtils.EMPTY;
+		String imgLocalPath = StringUtils.EMPTY;
 		String uploadPath = request.getServletContext().getRealPath("./") + UPLOAD_DIRECTORY;
 		File uploadDirectory = new File(uploadPath);
 		
@@ -83,6 +84,7 @@ public class CommandAddProductCategory implements Command {
 					filePath = uploadPath + File.separator + fileName;
 					File storeFile = new File(filePath);
 					fileItem.write(storeFile);
+					imgLocalPath = "/" + UPLOAD_DIRECTORY + "/" + fileName;
 				}
 			}
 		} catch (Exception e) {
@@ -92,7 +94,7 @@ public class CommandAddProductCategory implements Command {
 			return result;
 		}
 		
-		ProductCategory category = new ProductCategory(categoryName, filePath);
+		ProductCategory category = new ProductCategory(categoryName, imgLocalPath);
 		try {
 			productService.addProductCategory(category);
 			String redirectURL = getRedirectURL(request, redirectCommand);

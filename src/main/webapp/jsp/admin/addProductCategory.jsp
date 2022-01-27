@@ -18,7 +18,7 @@
             
             <label class="product-select_wrapper">
             	<fmt:message bundle="${locale}" key="admin.addition.productCategory.image"/>
-            	<input type="file" name="file" accept=".png" required/>
+            	<input type="file" name="file" accept=".jpg" required/>
             </label>
 			       
             <label class="product-select_wrapper">

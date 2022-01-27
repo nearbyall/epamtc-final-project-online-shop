@@ -9,17 +9,25 @@
         </div>
     </c:if>
     
+   <a class="product-search" href="${pageContext.request.contextPath}/Controller?action=productCatalogPage&recordsPerPage=10&currentPage=1">
+        <fmt:message bundle="${locale}"  key="product.btn.catalog"/>
+    </a>
+    
     <section>
-        <div id="grid">
-            <div class="grid-item"><h4> Product 1 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 2 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 3 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 4 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 5 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 6 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 7 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 8 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-            <div class="grid-item"><h4> Product 9 </h4> <p>A product description is a form of marketing copy used to describe and explain the benefits of your product. In other words, it provides all the information and details of your product on your ecommerce site. </p></div>
-        </div>
+    	<div id="grid">
+		    <c:if test="${ empty exception_msg}">
+		    	<c:forEach var="category" items="${categories}">
+		    		<div class="grid-item">
+		    			<a href="">
+		    				<img class="grid-image-item" src="${pageContext.request.contextPath}${category.imgPath}" width="180" height="180" alt="">
+		    			</a>
+		    			<h4> 
+		    				${category.name} 
+		    			</h4> 
+		    		</div>
+		    	</c:forEach>
+		    </c:if>
+	    </div>
     </section>
+    
 </main>

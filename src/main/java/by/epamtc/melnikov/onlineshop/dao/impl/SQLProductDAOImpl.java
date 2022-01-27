@@ -148,11 +148,11 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			}
 			
 		} catch (SQLException | ConnectionPoolException e) {
-            logger.warn("Products List finding error", e);
-            throw new DAOException("service.commonError", e);
-        } finally {
-        	closeResultSet(resultSet);
-        }
+			logger.warn("Products List finding error", e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
+		}
 		
 		return products;
 		
@@ -180,9 +180,9 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			}
 			
 		} catch (SQLException | ConnectionPoolException e) {
-            logger.warn("Categories List finding error", e);
-            throw new DAOException("service.commonError", e);
-        }
+			logger.warn("Categories List finding error", e);
+			throw new DAOException("service.commonError", e);
+		}
 		
 		return categories;
 		

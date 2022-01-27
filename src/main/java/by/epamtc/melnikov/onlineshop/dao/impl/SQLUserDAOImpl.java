@@ -34,32 +34,32 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 	private final static Logger logger = LogManager.getLogger();
 	
 	/** Field responsible for the uniqueness of {@link User}'s email in the database */
-    private static final String UNIQUE_EMAIL_MESSAGE = "users.email_UNIQUE";
-    /** Field responsible for the uniqueness of {@link User}'s mobile in the database */
-    private static final String UNIQUE_MOBILE_MESSAGE = "users.mobile_UNIQUE";
+	private static final String UNIQUE_EMAIL_MESSAGE = "users.email_UNIQUE";
+	/** Field responsible for the uniqueness of {@link User}'s mobile in the database */
+	private static final String UNIQUE_MOBILE_MESSAGE = "users.mobile_UNIQUE";
     
-    /** Field contains the column name of {@link User}'s id*/
-    private static final String USER_ID_COLUMN_NAME = "users.id";
-    /** Field contains the column name of {@link User}'s role*/
-    private static final String USER_ROLE_ID_COLUMN_NAME = "users.roleId";
-    /** Field contains the column name of {@link User}'s email*/
-    private static final String USER_EMAIL_COLUMN_NAME = "users.email";
-    /** Field contains the column name of {@link User}'s passwordEncrypted*/
-    private static final String USER_PASSWORD_COLUMN_NAME = "users.passwordEncrypted";
-    /** Field contains the column name of {@link User}'s name*/
-    private static final String USER_NAME_COLUMN_NAME = "users.name";
-    /** Field contains the column name of {@link User}'s surname*/
-    private static final String USER_SURNAME_COLUMN_NAME = "users.surname";
-    /** Field contains the column name of {@link User}'s mobile*/
-    private static final String USER_MOBILE_COLUMN_NAME = "users.mobile";
-    /** Field contains the column name of {@link User}'s balance*/
-    private static final String USER_BALANCE_COLUMN_NAME = "users.balance";
-    /** Field contains the column name of {@link User}'s status*/
-    private static final String USER_STATUS_ID_COLUMN_NAME = "users.statusId";
-    /** Field contains the column name of {@link User}'s registeredAt*/
-    private static final String USER_REGISTERED_AT_COLUMN_NAME = "users.registeredAt";
-    /** Field contains the column name of {@link User}'s lastLoginAt*/
-    private static final String USER_LAST_LOGIN_AT_COLUMN_NAME = "users.lastLoginAt";
+	/** Field contains the column name of {@link User}'s id*/
+	private static final String USER_ID_COLUMN_NAME = "users.id";
+	/** Field contains the column name of {@link User}'s role*/
+	private static final String USER_ROLE_ID_COLUMN_NAME = "users.roleId";
+	/** Field contains the column name of {@link User}'s email*/
+	private static final String USER_EMAIL_COLUMN_NAME = "users.email";
+	/** Field contains the column name of {@link User}'s passwordEncrypted*/
+	private static final String USER_PASSWORD_COLUMN_NAME = "users.passwordEncrypted";
+	/** Field contains the column name of {@link User}'s name*/
+	private static final String USER_NAME_COLUMN_NAME = "users.name";
+	/** Field contains the column name of {@link User}'s surname*/
+	private static final String USER_SURNAME_COLUMN_NAME = "users.surname";
+	/** Field contains the column name of {@link User}'s mobile*/
+	private static final String USER_MOBILE_COLUMN_NAME = "users.mobile";
+	/** Field contains the column name of {@link User}'s balance*/
+	private static final String USER_BALANCE_COLUMN_NAME = "users.balance";
+	/** Field contains the column name of {@link User}'s status*/
+	private static final String USER_STATUS_ID_COLUMN_NAME = "users.statusId";
+	/** Field contains the column name of {@link User}'s registeredAt*/
+	private static final String USER_REGISTERED_AT_COLUMN_NAME = "users.registeredAt";
+	/** Field contains the column name of {@link User}'s lastLoginAt*/
+	private static final String USER_LAST_LOGIN_AT_COLUMN_NAME = "users.lastLoginAt";
 	
 	@Override
 	public User registration(User user) throws DAOException {
@@ -81,17 +81,17 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 			
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getMessage().contains(UNIQUE_EMAIL_MESSAGE)) {
-                throw new DAOException("query.user.registration.emailAlreadyExist", e);
-            }
+				throw new DAOException("query.user.registration.emailAlreadyExist", e);
+			}
 			if (e.getMessage().contains(UNIQUE_MOBILE_MESSAGE)) {
-                throw new DAOException("query.user.registration.mobileAlreadyExist", e);
-            }
-            logger.warn(String.format("User %s registration common error", user), e);
-            throw new DAOException("query.user.registration.commonError", e);
-        } catch (SQLException | ConnectionPoolException e) {
-            logger.warn(String.format("User %s registration error", user), e);
-            throw new DAOException("query.user.registration.commonError", e);
-        }
+				throw new DAOException("query.user.registration.mobileAlreadyExist", e);
+			}
+			logger.warn(String.format("User %s registration common error", user), e);
+			throw new DAOException("query.user.registration.commonError", e);
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("User %s registration error", user), e);
+			throw new DAOException("query.user.registration.commonError", e);
+		}
 		
 		return user;
 		
@@ -109,7 +109,7 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 			 return extractFoundedUserFromResultSet(resultSet);
 		} catch (SQLException | ConnectionPoolException e) {
 			logger.warn(String.format("User email: %s, finding error", email), e);
-            throw new DAOException("service.commonError", e);
+			throw new DAOException("service.commonError", e);
 		} finally {
 			closeResultSet(resultSet);
 		}
@@ -138,8 +138,8 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 			}
 			
 		} catch (SQLException | ConnectionPoolException e) {
-            logger.warn("User list finding error", e);
-            throw new DAOException("service.commonError", e);
+			logger.warn("User list finding error", e);
+			throw new DAOException("service.commonError", e);
 		}
 		
 		return users;
@@ -159,10 +159,10 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 			 preparedStatement.executeUpdate();
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getMessage().contains(UNIQUE_MOBILE_MESSAGE)) {
-                throw new DAOException("query.user.registration.mobileAlreadyExist", e);
-            }
-            logger.warn(String.format("User %s updating common error", user), e);
-            throw new DAOException("query.user.updating.commonError", e);
+				throw new DAOException("query.user.registration.mobileAlreadyExist", e);
+			}
+			logger.warn(String.format("User %s updating common error", user), e);
+			throw new DAOException("query.user.updating.commonError", e);
 		} catch (SQLException | ConnectionPoolException e) {
 			logger.warn(String.format("User %s profile update error", user), e);
 			throw new DAOException("service.commonError", e);

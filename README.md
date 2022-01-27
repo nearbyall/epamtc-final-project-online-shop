@@ -7,14 +7,16 @@
 - forget password function (in process)
 - remember me function (in process)
 - registration
-- view catalog list (in process)
+- view categories
+- view catalog list (with pagination context)
 - search catalog (in process)
 - switch language (with saving chosen lang into the cookies) 
 ***
 ### *User:*
 - switch language (with saving chosen lang into the cookies) 
-- view catalog list (in process)
+- view catalog list (with pagination context)
 - search catalog (in process)
+-construct cart (in process)
 - make order (in process)
 - view all own orders list
 - cancel own orders (in process)

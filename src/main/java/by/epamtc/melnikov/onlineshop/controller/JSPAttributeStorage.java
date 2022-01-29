@@ -30,7 +30,7 @@ public class JSPAttributeStorage {
 	public static final String USER_EMAIL = "email";
 	public static final String USER_MOBILE = "mobile";
 	public static final String USER_ROLE = "role";
-	public static final String USER_ID = "userID";
+	public static final String USER_ID = "userId";
 
 	public static final String CARD_NUMBER = "cardNumber";
 	public static final String CARD_DATE = "cardDate";
@@ -38,19 +38,26 @@ public class JSPAttributeStorage {
 	public static final String CARD_SUMM = "cardSumm";
     
 	public static final String PRODUCT_LIST = "products";
+	public static final String PRODUCT = "product";
+	public static final String PRODUCT_ID = "productId";
 	public static final String PRODUCT_TITLE = "title";
 	public static final String PRODUCT_DESCRIPTION = "description";
 	public static final String PRODUCT_COUNT = "count";
 	public static final String PRODUCT_PRICE = "price";
 	
 	public static final String PRODUCT_CATEGORY = "category";
+	public static final String PRODUCT_CATEGORY_ID = "categoryId";
 	public static final String PRODUCT_CATEGORY_NAME = "categoryName";
 	public static final String PRODUCT_CATEGORIES_LIST = "categories";
+	
+	public static final String REVIEW = "review";
+	public static final String REVIEWS_LIST = "reviews";
 	
 	public static final String FILE = "file";
     
 	public static final String PAGINATION_CURRENT_PAGE = "currentPage";
 	public static final String PAGINATION_RECORDS_PER_PAGE = "recordsPerPage";
 	public static final String PAGINATION_PAGES_QUANTITY = "pagesQuantity";
+
 	
 }

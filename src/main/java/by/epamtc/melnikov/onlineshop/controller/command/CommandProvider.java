@@ -23,22 +23,48 @@ public class CommandProvider {
 	 * The constructor in which the {@link Command} interface implementations are added to the {@link Map} commands
 	 */
 	public CommandProvider() {
-		commands.put("openMainPage", new CommandOpenMainPage());
-		commands.put("registration", new CommandRegistration());
-		commands.put("logOut", new CommandLogOut());
-		commands.put("switchLanguage", new CommandSwitchLanguage());
-		commands.put("profilePage", new CommandOpenProfilePage());
+		
+		/*
+		 * Guest commands
+		 */
 		commands.put("logIn", new CommandLogIn());
+		commands.put("registration", new CommandRegistration());
+		commands.put("switchLanguage", new CommandSwitchLanguage());
+		
+		/*
+		 * User commands
+		 */
+		commands.put("logOut", new CommandLogOut());
+		commands.put("profilePage", new CommandOpenProfilePage());
 		commands.put("updateUserInfo", new CommandUpdateUserInfo());
-		commands.put("allUsersList", new CommandAllUsersList());
+		commands.put("topUpBalance", new CommandTopUpBalance());
+		commands.put("writeReview", new CommandWriteReview());
+		commands.put("addProductToCart", new CommandAddProductToCart());
+		commands.put("constructOrder", new CommandConstructOrder());
+		commands.put("deleteProductFromCart", new CommandDeleteProductFromCart());
+		
+		/*
+		 * Admin commands
+		 */
 		commands.put("banUser", new CommandBanUser());
 		commands.put("addProduct", new CommandAddProduct());
 		commands.put("addProductCategory", new CommandAddProductCategory());
-		commands.put("addProductPage", new CommandAddProductPage());
-		commands.put("addProductCategoryPage", new CommandAddProductCategoryPage());
-		commands.put("topUpBalancePage", new CommandTopUpBalancePage());
-		commands.put("topUpBalance", new CommandTopUpBalance());
+		commands.put("confirmOrder", new CommandConfirmOrder());
+		commands.put("editProduct", new CommandEditProduct());
+		
+		/*
+		 * Page commands
+		 */
+		commands.put("openMainPage", new CommandOpenMainPage());
+		commands.put("allUsersList", new CommandOpenAllUsersList());
+		commands.put("addProductPage", new CommandOpenAddProductPage());
+		commands.put("addProductCategoryPage", new CommandOpenAddProductCategoryPage());
+		commands.put("topUpBalancePage", new CommandOpenTopUpBalancePage());
 		commands.put("openCatalogPage", new CommandOpenCatalogPage());
+		commands.put("openCatalogByCategoryPage", new CommandOpenCatalogByCategoryPage());
+		commands.put("openProductPage", new CommandOpenProductPage());
+		commands.put("openEditProductPage", new CommandOpenEditProductPage());
+
 	}
 	
 	/**
@@ -58,6 +84,3 @@ public class CommandProvider {
 	}
 	
 }
-
-
-

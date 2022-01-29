@@ -1,5 +1,9 @@
 # ONLINE SHOP final project
 # Java Web Development. Group 34
+## [DATA BASE INFO](https://github.com/nearbyall/epamtc-final-project-online-shop/tree/master/db) 
+- [scheme.png](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/scheme.png)
+- [script.sql](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/script.sql)
+
 ###### Website visitors are provided with the following services:
 ***
 ### *Guest:*
@@ -9,20 +13,22 @@
 - registration
 - view categories
 - view catalog list (with pagination context)
+- view catalog list by specific category (with pagination context)
 - search catalog (in process)
 - switch language (with saving chosen lang into the cookies) 
 ***
 ### *User:*
 - switch language (with saving chosen lang into the cookies) 
 - view catalog list (with pagination context)
+- view catalog list by specific category (with pagination context)
 - search catalog (in process)
--construct cart (in process)
+- construct cart (in process)
 - make order (in process)
 - view all own orders list
 - cancel own orders (in process)
 - log out
 - update profile data
-- write reviews (in process)
+- write reviews 
 - top up balance
 ***
 ### *Admin:*

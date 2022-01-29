@@ -5,6 +5,10 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+body {
+	background-size: cover;
+}
+
 textarea {
     resize: none;
 }
@@ -438,7 +442,13 @@ nav .pagination li {
 nav .pagination li a,
 .form-wrapper a {
     text-decoration: none;
-    color: #666
+    color: #666;
+}
+
+nav .pagination li a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 1.8em
 }
 
 .content {
@@ -483,4 +493,29 @@ table, .form-wrapper-search {
     width: 90%;
     margin: 60px auto;
     min-width: 1024px;
+}
+
+/*Product*/
+
+.product-content {
+    background: rgba(245, 245, 245, 0.9);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.125);
+    padding: 30px;
+    margin: 120px;
+}
+
+.review-write {
+	background: rgba(245, 245, 245, 0.9);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.125);
+    padding: 30px;
+    margin: 120px;
+}
+
+#review {
+	width: 300px;
+	height: 100px;
+	word-wrap: break-word;
+	white-space: -moz-pre-wrap;
+	white-space: pre-wrap;
+	overflow: auto;
 }

@@ -29,7 +29,7 @@ import by.epamtc.melnikov.onlineshop.dao.UserDAO;
  * @author nearbyall
  *
  */
-public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
+public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO {
 
 	private final static Logger logger = LogManager.getLogger();
 	
@@ -213,7 +213,7 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO{
 	 * @param resultSet {@link ResultSet} which includes {@link User}
 	 * @return an {@link User} which has been extracted
 	 * @throws SQLException @see {@link SQLUserDAOImpl#constructUserByResultSet(ResultSet)}
-	 * @throws DAOException if {@link User}
+	 * @throws DAOException if {@link User} is not found
 	 */
 	private User extractFoundedUserFromResultSet(ResultSet resultSet) throws SQLException, DAOException {
 		if (resultSet.next()) {

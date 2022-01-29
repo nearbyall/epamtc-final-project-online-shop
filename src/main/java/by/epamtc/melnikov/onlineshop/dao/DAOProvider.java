@@ -1,7 +1,6 @@
 package by.epamtc.melnikov.onlineshop.dao;
 
-import by.epamtc.melnikov.onlineshop.dao.impl.SQLProductDAOImpl;
-import by.epamtc.melnikov.onlineshop.dao.impl.SQLUserDAOImpl;
+import by.epamtc.melnikov.onlineshop.dao.impl.*;
 
 /**
  * The class serves as a repository of implementations of DAO interfaces
@@ -14,10 +13,16 @@ public class DAOProvider {
 
 	private UserDAO userDAO;
 	private ProductDAO productDAO;
+	private ReviewDAO reviewDAO;
+	private OrderDAO orderDAO;
+	private CartDAO cartDAO;
 
 	private DAOProvider() {
 		userDAO = new SQLUserDAOImpl();
 		productDAO = new SQLProductDAOImpl();
+		reviewDAO = new SQLReviewDAOImpl();
+		orderDAO = new SQLOrderDAOImpl();
+		cartDAO = new SQLCartDAOImpl();
 	}
 	
 	private static class DAOProviderHolder {
@@ -42,6 +47,30 @@ public class DAOProvider {
 
 	public void setProductDAO(ProductDAO productDAO) {
 		this.productDAO = productDAO;
+	}
+
+	public ReviewDAO getReviewDAO() {
+		return reviewDAO;
+	}
+
+	public void setReviewDAO(ReviewDAO reviewDAO) {
+		this.reviewDAO = reviewDAO;
+	}
+
+	public OrderDAO getOrderDAO() {
+		return orderDAO;
+	}
+
+	public void setOrderDAO(OrderDAO orderDAO) {
+		this.orderDAO = orderDAO;
+	}
+
+	public CartDAO getCartDAO() {
+		return cartDAO;
+	}
+
+	public void setCartDAO(CartDAO cartDAO) {
+		this.cartDAO = cartDAO;
 	}
 	
 }

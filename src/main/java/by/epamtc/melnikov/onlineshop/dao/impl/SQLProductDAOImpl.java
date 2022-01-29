@@ -122,6 +122,28 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 		return category;
 		
 	}
+	
+	@Override
+	public Product findProductById(int id) throws DAOException {
+		
+		Product product = null;
+		ResultSet resultSet = null;
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_PRODUCT_BY_ID)) {
+			preparedStatement.setBigDecimal(1, new BigDecimal(id));
+			resultSet = preparedStatement.executeQuery();
+			product = extractFoundedProductFromResultSet(resultSet);
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn("Product finding error", e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
+		}
+		
+		return product;
+		
+	}
 
 	@Override
 	public List<Product> findAllProductsPerPage(int currentPage, int recordsPerPage) throws DAOException {
@@ -136,7 +158,41 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			resultSet = preparedStatement.executeQuery();
 			if (!resultSet.isBeforeFirst()) {
 				logger.info("Products is empty");
-				products = Collections.emptyList();
+			} else {
+				resultSet.last();
+				int listSize = resultSet.getRow();
+				resultSet.beforeFirst();
+				products = new ArrayList<>(listSize);
+				while (resultSet.next()) {
+					products.add(constructProductByResultSet(resultSet));
+				}
+			}
+			
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn("Products List finding error", e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
+		}
+		
+		return products;
+		
+	}
+	
+	@Override
+	public List<Product> findAllProductsByCategoryIdPerPage(int currentPage, int recordsPerPage, int categoryId) throws DAOException {
+
+		ResultSet resultSet = null;
+		List<Product> products = Collections.emptyList();
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ALL_PRODUCTS_BY_CATEGORY_ID + SQLQueriesStorage.LIMIT_OFFSET_STATEMENT)) {
+			preparedStatement.setBigDecimal(1, new BigDecimal(categoryId));
+			preparedStatement.setInt(2, recordsPerPage);
+			preparedStatement.setInt(3, (currentPage - 1) * recordsPerPage);
+			resultSet = preparedStatement.executeQuery();
+			if (!resultSet.isBeforeFirst()) {
+				logger.info("Products is empty");
 			} else {
 				resultSet.last();
 				int listSize = resultSet.getRow();
@@ -207,6 +263,26 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 
 	}
 	
+	@Override
+	public int findProductsCountByCategoryId(int categoryId) throws DAOException {
+
+		ResultSet resultSet = null;
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_PRODUCTS_COUNT_BY_CATEGORY_ID)) {
+			preparedStatement.setBigDecimal(1, new BigDecimal(categoryId));
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn("Products count finding error", e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
+		}
+		
+	}
+	
 	/**
 	 * Constructs {@link ProductCategory} from <tt>resultSet</tt>.
 	 * Throws SQLException if the column label is not valid
@@ -245,6 +321,23 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 				.withCategory(constructProductCategoryByResultSet(resultSet))
 				.build();
 		
+	}
+	
+	/**
+	 * Extracts founded {@link Product} from <tt>resultSet</tt>.
+	 * Throws SQLException and DAOException.
+	 * 
+	 * @param resultSet {@link ResultSet} which includes {@link Product}
+	 * @return an {@link Product} which has been extracted
+	 * @throws SQLException @see {@link SQLProductDAOImpl#constructProductByResultSet(ResultSet)}
+	 * @throws DAOException if {@link Product} is not found
+	 */
+	private Product extractFoundedProductFromResultSet(ResultSet resultSet) throws SQLException, DAOException {
+		if (resultSet.next()) {
+			return constructProductByResultSet(resultSet);
+		} else {
+			throw new DAOException("query.product.getProduct.productNotFound");
+		}
 	}
 	
 }

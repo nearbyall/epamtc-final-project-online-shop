@@ -30,15 +30,32 @@ public class SQLQueriesStorage {
 			"value (?, ?, ?, ?, ?, ?, ?, ?)";
 	public static final String INSERT_PRODUCT_CATEGORY = "INSERT INTO product_categories (name, imgPath) value (?, ?)";
 	
+	public static final String FIND_PRODUCT_BY_ID = "SELECT products.id, products.title, products.description, products.price, products.imgPath, " +
+			"products.createdAt, products.updatedAt, products.count," +
+			"product_categories.id as \"product_categories.id\", product_categories.name as \"product_categories.name\", product_categories.imgPath as \"product_categories.imgPath\"" +
+			"FROM products " +
+			"LEFT JOIN product_categories ON products.categoryId = product_categories.id " +
+			"WHERE products.id = (?)";
+	public static final String FIND_PRODUCTS_COUNT = "SELECT COUNT(products.id) FROM products";
+	public static final String FIND_PRODUCTS_COUNT_BY_CATEGORY_ID = "SELECT COUNT(products.id) FROM products WHERE categoryId = (?)";
 	public static final String FIND_ALL_PRODCUTS = "SELECT products.id, products.title, products.description, products.price, products.imgPath, " +
 			"products.createdAt, products.updatedAt, products.count," +
 			"product_categories.id as \"product_categories.id\", product_categories.name as \"product_categories.name\", product_categories.imgPath as \"product_categories.imgPath\"" +
 			"FROM products " +
 			"LEFT JOIN product_categories ON products.categoryId = product_categories.id ";
-	public static final String FIND_ALL_PRODUCTS_BY_CATEGORY_ID = "";
-	public static final String FIND_PRODUCTS_COUNT = "SELECT COUNT(products.id) FROM products";
+	public static final String FIND_ALL_PRODUCTS_BY_CATEGORY_ID = "SELECT products.id, products.title, products.description, products.price, products.imgPath, " +
+			"products.createdAt, products.updatedAt, products.count," +
+			"product_categories.id as \"product_categories.id\", product_categories.name as \"product_categories.name\", product_categories.imgPath as \"product_categories.imgPath\"" +
+			"FROM products " +
+			"LEFT JOIN product_categories ON products.categoryId = product_categories.id " +
+			"WHERE products.categoryId = (?)";
 	
-	public static final String FIND_REVIEWS_BY_PRODUCT_ID = "";
+	
+	public static final String INSERT_REVIEW = "INSERT INTO reviews " +
+			"(productId, userId, review, createdAt, updatedAt) " +
+			"value (?, ?, ?, ?, ?)";
+	
+	public static final String FIND_REVIEWS_BY_PRODUCT_ID = "SELECT * FROM reviews WHERE productId = (?)";
 	
 	public static final String FIND_ALL_PRODUCT_CATEGORIES = "SELECT * FROM product_categories";
 	

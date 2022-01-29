@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.epamtc.melnikov.onlineshop.bean.Product;
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
+import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
 /**
@@ -39,20 +40,33 @@ public interface ProductService {
 	ProductCategory addProductCategory(ProductCategory category) throws ServiceException;
 	
 	/**
-	 * Finds total count of {@link Product}s via DAO layer.
+	 * Finds {@link Product} by id via DAO layer.
 	 * 
-	 * @return count of {@link Product} into data source
+	 * @param id {@link Product}'s id
+	 * @return a {@link Product} which has been found
 	 * @throws ServiceException if DAO layer throw their {@link DAOException}
 	 */
-	int findProductsCount() throws ServiceException;
+	Product findProductById(int id) throws ServiceException;
 	
 	/**
-	 * Finds all {@link Product}s via DAO layer.
+	 * Finds all {@link Product}s on the current page via DAO layer.
 	 * 
-	 * @return {@link List} of {@link Product}s.
+	 * @param currentPage current client page number
+	 * @param recordsPerPage records per client page
+	 * @return {@link List} of {@link Product}s
 	 * @throws ServiceException if DAO layer throw their {@link DAOException}
 	 */
 	List<Product> findAllProductsPerPage(int currentPage, int recordsPerPage) throws ServiceException;
+	
+	/**
+	 * Finds all {@link Product}s on the current page by {@link ProductCategory}'s id via DAO layer.
+	 * 
+	 * @param currentPage current client page number
+	 * @param recordsPerPage records per client page
+	 * @return {@link List} of {@link Product}s
+	 * @throws ServiceException if DAO layer throw their {@link DAOException}
+	 */
+	List<Product> findAllProductsByCategoryIdPerPage(int currentPage, int recordsPerPage, int categoryId) throws ServiceException;
 	
 	/**
 	 * Finds all {@link ProductCategory}s via DAO layer.
@@ -61,5 +75,22 @@ public interface ProductService {
 	 * @throws ServiceException if DAO layer throw their {@link DAOException}
 	 */
 	List<ProductCategory> findAllProductCategories() throws ServiceException;
+	
+	/**
+	 * Finds total count of {@link Product}s via DAO layer.
+	 * 
+	 * @return count of {@link Product} into data source
+	 * @throws ServiceException if DAO layer throw their {@link DAOException}
+	 */
+	int findProductsCount() throws ServiceException;
+	
+	/**
+	 * Finds total count of {@link Product}s by <tt>categoryId</tt> via DAO layer.
+	 * 
+	 * @param categoryId {@link ProductCategory}'s id
+	 * @return count of {@link Product}s into data source
+	 * @throws ServiceException if DAO layer throw their {@link DAOException}
+	 */
+	int findProductsCountByCategoryId(int categoryId) throws ServiceException;
 	
 }

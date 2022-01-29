@@ -54,6 +54,19 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public Product findProductById(int id) throws ServiceException {
+		
+		//TODO validate id
+		
+		try {
+			return productDAO.findProductById(id);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+	}
+	
+	@Override
 	public ProductCategory addProductCategory(ProductCategory category) throws ServiceException {
 		
 		try {
@@ -74,17 +87,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int findProductsCount() throws ServiceException {
-		
-		try {
-			return productDAO.findProductsCount();
-		} catch (DAOException e) {
-			throw new ServiceException(e.getMessage(), e);
-		}
-		
-	}
-	
-	@Override
 	public List<Product> findAllProductsPerPage(int currentPage, int recordsPerPage) throws ServiceException {
 		
 		if (currentPage < 1 || recordsPerPage < 1) {
@@ -95,6 +97,28 @@ public class ProductServiceImpl implements ProductService {
 		
 		try {
 			products = productDAO.findAllProductsPerPage(currentPage, recordsPerPage);
+			if (products.isEmpty()) {
+				throw new ServiceException("query.product.getProducts.productsNotFound");
+			}
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return products;
+		
+	}
+	
+	@Override
+	public List<Product> findAllProductsByCategoryIdPerPage(int currentPage, int recordsPerPage, int categoryId) throws ServiceException {
+		
+		if (currentPage < 1 || recordsPerPage < 1) {
+			throw new ServiceException("validation.pagination");
+		}
+		
+		List<Product> products;
+		
+		try {
+			products = productDAO.findAllProductsByCategoryIdPerPage(currentPage, recordsPerPage, categoryId);
 			if (products.isEmpty()) {
 				throw new ServiceException("query.product.getProducts.productsNotFound");
 			}
@@ -121,6 +145,28 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 		return categories;
+		
+	}
+	
+	@Override
+	public int findProductsCount() throws ServiceException {
+		
+		try {
+			return productDAO.findProductsCount();
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+	}
+
+	@Override
+	public int findProductsCountByCategoryId(int categoryId) throws ServiceException {
+		
+		try {
+			return productDAO.findProductsCountByCategoryId(categoryId);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
 		
 	}
 

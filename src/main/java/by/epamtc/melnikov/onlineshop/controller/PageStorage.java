@@ -24,5 +24,6 @@ public class PageStorage {
 	public final static String USERS_LIST = "/jsp/admin/usersList.jsp";
 	public final static String PROFILE = "/jsp/user/profile.jsp";
 	public final static String TOP_UP_BALANCE = "/jsp/user/topUpBalance.jsp";
+	public static final String CART = "/jsp/user/cart.jsp";
 	
 }

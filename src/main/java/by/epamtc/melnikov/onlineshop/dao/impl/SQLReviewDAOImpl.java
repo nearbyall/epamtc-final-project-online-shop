@@ -1,6 +1,5 @@
 package by.epamtc.melnikov.onlineshop.dao.impl;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -49,8 +48,8 @@ public class SQLReviewDAOImpl extends SQLBaseDAO implements ReviewDAO {
 		
 		try (Connection connection = pool.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.INSERT_REVIEW)) {
-				preparedStatement.setBigDecimal(1, new BigDecimal(review.getProductId()));
-				preparedStatement.setBigDecimal(2, new BigDecimal(review.getUserId()));
+				preparedStatement.setInt(1, review.getProductId());
+				preparedStatement.setInt(2, review.getUserId());
 				preparedStatement.setString(3, review.getText());
 				preparedStatement.setTimestamp(4, review.getCreatedAt());
 				preparedStatement.setTimestamp(5, review.getUpdatedAt());
@@ -87,7 +86,7 @@ public class SQLReviewDAOImpl extends SQLBaseDAO implements ReviewDAO {
 		
 		try (Connection connection = pool.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_REVIEWS_BY_PRODUCT_ID)) {
-			preparedStatement.setBigDecimal(1, new BigDecimal(productId));
+			preparedStatement.setInt(1, productId);
 			resultSet = preparedStatement.executeQuery();
 			if (!resultSet.isBeforeFirst()) {
 				logger.info("Reviews is empty");

@@ -2,36 +2,33 @@ package by.epamtc.melnikov.onlineshop.bean;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
-
-import by.epamtc.melnikov.onlineshop.bean.type.OrderType;
 
 /**
- * Java bean class which describes the order.
+ * Java bean class which describes the cart.
  * 
  * @author nearbyall
  *
  */
-public class Order implements Serializable {
+public class CartItem implements Serializable {
 
-	private static final long serialVersionUID = 7945020562538111893L;
+	private static final long serialVersionUID = -3137939788290186007L;
 	
 	private int id;
+	private int userId;
+	private int count;
 	private double totalPrice;
-	private OrderType status;
-	private User user;
-	private List<OrderItem> orderItems;
+	private Product product;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 	
-	public Order() {}
+	public CartItem() {}
 
-	public Order(int id, double totalPrice, OrderType status, User user, List<OrderItem> orderItems, Timestamp createdAt, Timestamp updatedAt) {
+	public CartItem(int id, int userId, int count, double totalPrice, Product product, Timestamp createdAt, Timestamp updatedAt) {
 		this.id = id;
+		this.userId = userId;
+		this.count = count;
 		this.totalPrice = totalPrice;
-		this.status = status;
-		this.user = user;
-		this.orderItems = orderItems;
+		this.product = product;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
@@ -44,6 +41,22 @@ public class Order implements Serializable {
 		this.id = id;
 	}
 
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
 	public double getTotalPrice() {
 		return totalPrice;
 	}
@@ -52,28 +65,12 @@ public class Order implements Serializable {
 		this.totalPrice = totalPrice;
 	}
 
-	public OrderType getStatus() {
-		return status;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setStatus(OrderType status) {
-		this.status = status;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public Timestamp getCreatedAt() {
@@ -94,23 +91,23 @@ public class Order implements Serializable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [id=" + id + ", totalPrice=" + totalPrice + ", status=" + status + ", user=" + user
-				+ ", orderItems=" + orderItems + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
+		return getClass().getSimpleName() + " [id=" + id + ", userId=" + userId + ", count=" + count + ", totalPrice=" + totalPrice
+				+ ", product=" + product + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + count;
 		result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((orderItems == null) ? 0 : orderItems.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(totalPrice);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + userId;
 		return result;
 	}
 
@@ -122,7 +119,9 @@ public class Order implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		CartItem other = (CartItem) obj;
+		if (count != other.count)
+			return false;
 		if (createdAt == null) {
 			if (other.createdAt != null)
 				return false;
@@ -130,12 +129,10 @@ public class Order implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
-		if (orderItems == null) {
-			if (other.orderItems != null)
+		if (product == null) {
+			if (other.product != null)
 				return false;
-		} else if (!orderItems.equals(other.orderItems))
-			return false;
-		if (status != other.status)
+		} else if (!product.equals(other.product))
 			return false;
 		if (Double.doubleToLongBits(totalPrice) != Double.doubleToLongBits(other.totalPrice))
 			return false;
@@ -144,12 +141,9 @@ public class Order implements Serializable {
 				return false;
 		} else if (!updatedAt.equals(other.updatedAt))
 			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
+		if (userId != other.userId)
 			return false;
 		return true;
 	}
-
+	
 }

@@ -53,6 +53,8 @@ public class JSPAttributeStorage {
 	public static final String REVIEW = "review";
 	public static final String REVIEWS_LIST = "reviews";
 	
+	public static final String CART_ITEMS_LIST = "cartItems";
+	
 	public static final String FILE = "file";
     
 	public static final String PAGINATION_CURRENT_PAGE = "currentPage";

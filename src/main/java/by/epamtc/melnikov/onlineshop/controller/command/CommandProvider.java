@@ -64,6 +64,7 @@ public class CommandProvider {
 		commands.put("openCatalogByCategoryPage", new CommandOpenCatalogByCategoryPage());
 		commands.put("openProductPage", new CommandOpenProductPage());
 		commands.put("openEditProductPage", new CommandOpenEditProductPage());
+		commands.put("openCartPage", new CommandOpenCartPage());
 
 	}
 	

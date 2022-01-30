@@ -1,6 +1,5 @@
 package by.epamtc.melnikov.onlineshop.dao.impl;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +14,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.Product;
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
-import by.epamtc.melnikov.onlineshop.bean.builder.ProductBuilder;
 import by.epamtc.melnikov.onlineshop.dao.ProductDAO;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.dao.pool.exception.ConnectionPoolException;
@@ -31,39 +29,6 @@ import by.epamtc.melnikov.onlineshop.dao.sql.SQLQueriesStorage;
 public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 
 	private final static Logger logger = LogManager.getLogger();
-	
-	/** Field responsible for the uniqueness of {@link Product}'s title in the database */
-	private static final String UNIQUE_PRODUCT_TITLE_MESSAGE = "products.title_UNIQUE";
-	/** Field responsible for the uniqueness of {@link Product}'s imgPath in the database */
-	private static final String UNIQUE_PRODUCT_IMG_PATH_MESSAGE = "products.imgPath_UNIQUE";
-	/** Field responsible for the uniqueness of {@link ProductCategory}'s name in the database */
-	private static final String UNIQUE_NAME_MESSAGE = "product_categories.name_UNIQUE";
-	/** Field responsible for the uniqueness of {@link ProductCategory}'s imgPath in the database */
-	private static final String UNIQUE_IMG_PATH_MESSAGE = "product_categories.imgPath_UNIQUE";
-	
-	/** Field contains the column name of {@link ProductCategory}'s id*/
-	private static final String PRODUCT_CATEGORY_ID_COLUMN_NAME = "product_categories.id";
-	/** Field contains the column name of {@link ProductCategory}'s name*/
-	private static final String PRODUCT_CATEGORY_NAME_COLUMN_NAME = "product_categories.name";
-	/** Field contains the column name of {@link ProductCategory}'s imgPath*/
-	private static final String PRODUCT_CATEGORY_IMG_PATH_COLUMN_NAME = "product_categories.imgPath";
-    
-	/** Field contains the column name of {@link Product}'s id*/
-	private static final String PRODUCT_ID_COLUMN_NAME = "products.id";
-	/** Field contains the column name of {@link Product}'s imgPath*/
-	private static final String PRODUCT_IMG_PATH_COLUMN_NAME = "products.imgPath";
-	/** Field contains the column name of {@link Product}'s title*/
-	private static final String PRODUCT_TITLE_COLUMN_NAME = "products.title";
-	/** Field contains the column name of {@link Product}'s description*/
-	private static final String PRODUCT_DESCRIPTION_COLUMN_NAME = "products.description";
-	/** Field contains the column name of {@link Product}'s updatedAt*/
-	private static final String PRODUCT_UPDATED_AT_COLUMN_NAME = "products.updatedAt";
-	/** Field contains the column name of {@link Product}'s createdAt*/
-	private static final String PRODUCT_CREATED_AT_COLUMN_NAME = "products.createdAt";
-	/** Field contains the column name of {@link Product}'s count*/
-	private static final String PRODUCT_COUNT_COLUMN_NAME = "products.count";
-	/** Field contains the column name of {@link Product}'s price*/
-	private static final String PRODUCT_PRICE_COLUMN_NAME = "products.price";
     
 	@Override
 	public Product addProduct(Product product) throws DAOException {
@@ -77,7 +42,7 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			preparedStatement.setTimestamp(5, product.getUpdatedt());
 			preparedStatement.setString(6, product.getDescription());
 			preparedStatement.setString(7, product.getImgPath());
-			preparedStatement.setBigDecimal(8, new BigDecimal(product.getCategory().getId()));
+			preparedStatement.setInt(8, product.getCategory().getId());
 			preparedStatement.executeUpdate();
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getMessage().contains(UNIQUE_PRODUCT_TITLE_MESSAGE)) {
@@ -124,14 +89,14 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 	}
 	
 	@Override
-	public Product findProductById(int id) throws DAOException {
+	public Product findProductById(int productId) throws DAOException {
 		
 		Product product = null;
 		ResultSet resultSet = null;
 		
 		try (Connection connection = pool.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_PRODUCT_BY_ID)) {
-			preparedStatement.setBigDecimal(1, new BigDecimal(id));
+			preparedStatement.setInt(1, productId);
 			resultSet = preparedStatement.executeQuery();
 			product = extractFoundedProductFromResultSet(resultSet);
 		} catch (SQLException | ConnectionPoolException e) {
@@ -187,7 +152,7 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 		
 		try (Connection connection = pool.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ALL_PRODUCTS_BY_CATEGORY_ID + SQLQueriesStorage.LIMIT_OFFSET_STATEMENT)) {
-			preparedStatement.setBigDecimal(1, new BigDecimal(categoryId));
+			preparedStatement.setInt(1, categoryId);
 			preparedStatement.setInt(2, recordsPerPage);
 			preparedStatement.setInt(3, (currentPage - 1) * recordsPerPage);
 			resultSet = preparedStatement.executeQuery();
@@ -270,7 +235,7 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 		
 		try (Connection connection = pool.getConnection();
 			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_PRODUCTS_COUNT_BY_CATEGORY_ID)) {
-			preparedStatement.setBigDecimal(1, new BigDecimal(categoryId));
+			preparedStatement.setInt(1, categoryId);
 			resultSet = preparedStatement.executeQuery();
 			resultSet.next();
 			return resultSet.getInt(1);
@@ -281,63 +246,6 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			closeResultSet(resultSet);
 		}
 		
-	}
-	
-	/**
-	 * Constructs {@link ProductCategory} from <tt>resultSet</tt>.
-	 * Throws SQLException if the column label is not valid
-	 * 
-	 * @param resultSet {@link ResultSet} which includes {@link ProductCategory}
-	 * @return an {@link ProductCategory} which has been constructed
-	 * @throws SQLException if the column label is not valid
-	 */
-	private ProductCategory constructProductCategoryByResultSet(ResultSet resultSet) throws SQLException {
-		ProductCategory category = new ProductCategory();
-		category.setId(resultSet.getInt(PRODUCT_CATEGORY_ID_COLUMN_NAME));
-		category.setName(resultSet.getString(PRODUCT_CATEGORY_NAME_COLUMN_NAME));
-		category.setImgPath(resultSet.getString(PRODUCT_CATEGORY_IMG_PATH_COLUMN_NAME));
-		return category;
-	}
-    
-	/**
-	 * Constructs {@link Product} from <tt>resultSet</tt>.
-	 * Throws SQLException if the column label is not valid
-	 * 
-	 * @param resultSet {@link ResultSet} which includes {@link Product}
-	 * @return an {@link Product} which has been constructed
-	 * @throws SQLException if the column label is not valid
-	 */
-	private Product constructProductByResultSet(ResultSet resultSet) throws SQLException {
-		
-		return new ProductBuilder()
-				.withId(resultSet.getInt(PRODUCT_ID_COLUMN_NAME))
-				.withTitle(resultSet.getString(PRODUCT_TITLE_COLUMN_NAME))
-				.withPrice(resultSet.getDouble(PRODUCT_PRICE_COLUMN_NAME))
-				.withCount(resultSet.getInt(PRODUCT_COUNT_COLUMN_NAME))
-				.withDescription(resultSet.getString(PRODUCT_DESCRIPTION_COLUMN_NAME))
-				.withImgPath(resultSet.getString(PRODUCT_IMG_PATH_COLUMN_NAME))
-				.withCreatedAt(resultSet.getTimestamp(PRODUCT_CREATED_AT_COLUMN_NAME))
-				.withUpdatedAt(resultSet.getTimestamp(PRODUCT_UPDATED_AT_COLUMN_NAME))
-				.withCategory(constructProductCategoryByResultSet(resultSet))
-				.build();
-		
-	}
-	
-	/**
-	 * Extracts founded {@link Product} from <tt>resultSet</tt>.
-	 * Throws SQLException and DAOException.
-	 * 
-	 * @param resultSet {@link ResultSet} which includes {@link Product}
-	 * @return an {@link Product} which has been extracted
-	 * @throws SQLException @see {@link SQLProductDAOImpl#constructProductByResultSet(ResultSet)}
-	 * @throws DAOException if {@link Product} is not found
-	 */
-	private Product extractFoundedProductFromResultSet(ResultSet resultSet) throws SQLException, DAOException {
-		if (resultSet.next()) {
-			return constructProductByResultSet(resultSet);
-		} else {
-			throw new DAOException("query.product.getProduct.productNotFound");
-		}
 	}
 	
 }

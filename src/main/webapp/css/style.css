@@ -519,3 +519,61 @@ table, .form-wrapper-search {
 	white-space: pre-wrap;
 	overflow: auto;
 }
+
+/*Cart*/
+.floating-button {
+  text-decoration: none;
+  display: inline-block;
+  width: 300px;
+  height: 45px;
+  line-height: 45px;
+  border-radius: 45px;
+  margin: 10px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: 600;
+  color: #524f4e;
+  background: white;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, .1);
+  transition: .3s;
+}
+.floating-button:hover {
+  background: #2EE59D;
+  box-shadow: 0 15px 20px rgba(46, 229, 157, .4);
+  color: white;
+  transform: translateY(-3px);
+}
+
+.animated-button {
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 20px;
+  padding: 15px 30px;
+  overflow: hidden;
+  border: 2px solid;
+  border-bottom-width: 4px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: rgba(30, 255, 188, 1);
+  background: rgba(60, 60, 60, 1);
+  transition: color .3s, background .5s;
+}
+.animated-button:hover {
+  animation: stripes .75s infinite linear;
+  background: linear-gradient(45deg, rgba(30, 255, 188, 1) 25%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 1) 50%, rgba(30, 255, 188, 1) 50%, rgba(30, 255, 188, 1) 75%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, 1));
+  background-size: 10px 10px;
+  color: #FF50E5;
+}
+@keyframes stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 50px 0;
+  }
+}

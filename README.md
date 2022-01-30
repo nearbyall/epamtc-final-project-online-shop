@@ -3,6 +3,7 @@
 ## [DATA BASE INFO](https://github.com/nearbyall/epamtc-final-project-online-shop/tree/master/db) 
 - [scheme.png](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/scheme.png)
 - [script.sql](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/script.sql)
+- [model.mvb]()
 
 ###### Website visitors are provided with the following services:
 ***
@@ -22,10 +23,10 @@
 - view catalog list (with pagination context)
 - view catalog list by specific category (with pagination context)
 - search catalog (in process)
-- construct cart (in process)
-- make order (in process)
+- construct cart
+- edit cart
+- make order
 - view all own orders list
-- cancel own orders (in process)
 - log out
 - update profile data
 - write reviews 

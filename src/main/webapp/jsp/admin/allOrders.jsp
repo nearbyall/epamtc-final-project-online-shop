@@ -43,7 +43,7 @@
 				</c:forEach>
 			</table>
 			<center>
-				<a href="${pageContext.request.contextPath}/Controller?action=constructOrder&userId=${userId}&redirectPageCommand=openMainPage" class="floating-button">
+				<a href="${pageContext.request.contextPath}/Controller?action=constructOrder&userId=${userId}&redirectPageCommand=openOrderPage" class="floating-button">
 					<fmt:message bundle="${locale}" key="cart.constructOrder"/>
 				</a>				
 			</center>

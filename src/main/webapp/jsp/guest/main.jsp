@@ -9,7 +9,7 @@
 		</div>
 	</c:if>
     
-	<a class="product-search" href="${pageContext.request.contextPath}/Controller?action=openCatalogPage&recordsPerPage=9&currentPage=1">
+	<a class="floating-button" href="${pageContext.request.contextPath}/Controller?action=openCatalogPage&recordsPerPage=9&currentPage=1">
 		<fmt:message bundle="${locale}"  key="product.btn.catalog"/>
 	</a>
     

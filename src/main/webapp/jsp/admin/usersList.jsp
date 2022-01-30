@@ -41,7 +41,6 @@
 									<c:if test = "${not user.isBanned()}">
 										<input class="btn" type="submit" value=<fmt:message bundle="${locale}" key="admin.btn.banUser"/>>
 									</c:if>
-
 								</form>
 							</c:if>
 						</td>

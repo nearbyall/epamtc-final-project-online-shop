@@ -54,7 +54,7 @@
 				<div class="admin-bar">                    
 					<ul>
 						<li>
-							<a href="${pageContext.request.contextPath}/Controller?action=updateProductData">
+							<a class="animated-button" href="${pageContext.request.contextPath}/Controller?action=updateProductData">
 								<fmt:message bundle="${locale}" key="product.editProduct" />
 							</a>
 						</li>   
@@ -68,7 +68,7 @@
 				<div class="admin-bar">                    
 					<ul>
 						<li>
-							<a class="active" href="${pageContext.request.contextPath}/Controller?action=addProductToCart?productId=${product.id}&userId=${userId}">
+							<a class="animated-button" href="${pageContext.request.contextPath}/Controller?action=addProductToCart&productId=${product.id}&userId=${userId}&redirectPageCommand=openCartPage">
 								<fmt:message bundle="${locale}" key="product.addToCart"/>
 							</a>
 						</li>

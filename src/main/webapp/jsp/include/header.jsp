@@ -54,7 +54,7 @@
 			<li><a href="${pageContext.request.contextPath}/Controller?action=userOrdersPage&recordsPerPage=10&currentPage=1">
 				<fmt:message bundle="${locale}" key="header.userOrdersPage"/>
 			</a></li>
-			<li><a href="${pageContext.request.contextPath}/Controller?action=userCartPage">
+			<li><a href="${pageContext.request.contextPath}/Controller?action=openCartPage">
 				<fmt:message bundle="${locale}" key="header.userCartPage"/>
 			</a></li>
 			<li><a href="${pageContext.request.contextPath}/Controller?action=topUpBalancePage">

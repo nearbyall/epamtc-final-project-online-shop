@@ -1,10 +1,12 @@
-# ONLINE SHOP final project. EPAMTC Java Web Development. Group 34
+# ONLINE SHOP final project
+# Java Web Development. Group 34
+
 ## [DATA BASE INFO](https://github.com/nearbyall/epamtc-final-project-online-shop/tree/master/db) 
 - [scheme.png](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/scheme.png)
 - [script.sql](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/script.sql)
-- [model.mwb](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/model.mwb)
 
 ###### Website visitors are provided with the following services:
+***
 ### *Guest:*
 - logination
 - forget password function (in process)
@@ -22,7 +24,6 @@
 - view catalog list by specific category (with pagination context)
 - search catalog (in process)
 - construct cart
-- edit cart
 - make order
 - view all own orders list
 - log out
@@ -33,7 +34,7 @@
 ### *Admin:*
 - __all user's allowed services__
 - add the product and product categories
-- edit products (in process)
+- edit products
 - delete reviews (in process)
 - approve or reject user's orders
 - ban or unban users

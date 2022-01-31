@@ -20,7 +20,6 @@
 					<th><fmt:message bundle="${locale}" key="order.items"/></th>
 					<th><fmt:message bundle="${locale}" key="order.totalPrice"/></th>
 					<th><fmt:message bundle="${locale}" key="order.accepted"/></th>
-					<th><fmt:message bundle="${locale}" key="order.confirmed"/></th>
 				</tr>
 				<c:forEach var="order" items="${orders}">
 					<tr>
@@ -44,18 +43,6 @@
 						</td>
 						<td>
 							${order.status.type}
-						</td>
-						<td>
-							<c:if test = "${order.isConfirmed()}">
-								<a class="animated-button" href="${pageContext.request.contextPath}/Controller?action=confirmOrder&orderId=${order.id}&statusId=${order.status.id}&redirectPageCommand=openAllOrdersPage">
-									<fmt:message bundle="${locale}" key="order.decline" />
-								</a>
-							</c:if>
-							<c:if test = "${not order.isConfirmed()}">
-								<a class="animated-button" href="${pageContext.request.contextPath}/Controller?action=confirmOrder&orderId=${order.id}&statusId=${order.status.id}&redirectPageCommand=openAllOrdersPage">
-									<fmt:message bundle="${locale}" key="order.confirm" />
-								</a>
-							</c:if>
 						</td>
 					</tr>
 				</c:forEach>

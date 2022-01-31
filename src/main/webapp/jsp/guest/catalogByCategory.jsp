@@ -15,7 +15,7 @@
 						<c:forEach var="product" items="${products}">
 							<div class="grid-item">
 								<center>
-									<a href="">
+									<a href="${pageContext.request.contextPath}/Controller?action=openProductPage&productId=${product.id}">
 										<img class="grid-image-item" align="middle" src="${pageContext.request.contextPath}${product.imgPath}" width="180" height="170" alt="">
 									</a>
 								</center>

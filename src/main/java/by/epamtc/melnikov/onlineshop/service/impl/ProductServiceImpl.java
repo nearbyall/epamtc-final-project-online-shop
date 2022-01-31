@@ -52,11 +52,29 @@ public class ProductServiceImpl implements ProductService {
 		return product;
 		
 	}
+	
+	@Override
+	public Product updateProduct(Product product) throws ServiceException {
+		
+		try {
+			validator.validateProduct(product);
+		} catch (ValidatorException e) {
+			logger.info(String.format("invalid %s %n product data %s", product, e.getMessage()));
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		try {
+			productDAO.updateProduct(product);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return product;
+		
+	}
 
 	@Override
 	public Product findProductById(int id) throws ServiceException {
-		
-		//TODO validate id
 		
 		try {
 			return productDAO.findProductById(id);

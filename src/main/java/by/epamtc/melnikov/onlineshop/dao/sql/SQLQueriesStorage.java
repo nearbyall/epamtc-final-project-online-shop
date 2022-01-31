@@ -67,6 +67,11 @@ public class SQLQueriesStorage {
 	
 	public static final String FIND_ALL_PRODUCT_CATEGORIES = "SELECT * FROM product_categories";
 	
+	public static final String UPDATE_PRODUCT_COUNT_BY_PRODUCT_ID = "UPDATE products SET count = (?), updatedAt = (?) WHERE id = (?)";
+	
+	public static final String UPDATE_PRODUCT_BY_ID = "UPDATE products SET title = (?), price = (?), count = (?), " +
+			"updatedAt = (?), description = (?), imgPath = (?), categoryId = (?) WHERE id = (?)";
+	
 	/*
 	 * Review queries
 	 */

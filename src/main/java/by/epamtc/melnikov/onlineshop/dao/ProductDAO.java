@@ -36,6 +36,16 @@ public interface ProductDAO {
 	ProductCategory addProductCategory(ProductCategory category) throws DAOException;
 	
 	/**
+	 * Updates the <tt>product</tt> in data source by id. Throws DAOException
+	 * if an error occurs while writing a <tt>product</tt>.
+	 * 
+	 * @param product the {@link Product} that should be updated in data source
+	 * @return an {@link Product} which has been updated
+	 * @throws DAOException if an error occurs while writing a <tt>product</tt> 
+	 */
+	Product updateProduct(Product product) throws DAOException;
+	
+	/**
 	 * Retrieves and returns {@link Product} by <tt>id</tt>. Throws DAOException
 	 * if an error occurs while getting a <tt>product</tt>.
 	 * 

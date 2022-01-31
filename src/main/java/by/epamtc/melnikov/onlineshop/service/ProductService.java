@@ -30,7 +30,7 @@ public interface ProductService {
 	
 	/**
 	 * Gets a {@link ProductCategory} as a parameter, validates it and
-	 * adds to data source via DAO layer
+	 * adds to data source via DAO layer.
 	 * 
 	 * @param category {@link ProductCategory} which should be added
 	 * @return {@link ProductCategory} which has been added
@@ -38,6 +38,17 @@ public interface ProductService {
 	 * or DAO layer throw their {@link DAOException}
 	 */
 	ProductCategory addProductCategory(ProductCategory category) throws ServiceException;
+	
+	/**
+	 * Gets a {@link Product} as a parameter, validates it and
+	 * update in data source via DAO layer.
+	 * 
+	 * @param product {@link Product} which should be updated
+	 * @return {@link Product} which has been updated
+	 * @throws ServiceException if validation by {@link ProductValidator} has not been passed,
+	 * or DAO layer throw their {@link DAOException}
+	 */
+	Product updateProduct(Product product) throws ServiceException;
 	
 	/**
 	 * Finds {@link Product} by id via DAO layer.

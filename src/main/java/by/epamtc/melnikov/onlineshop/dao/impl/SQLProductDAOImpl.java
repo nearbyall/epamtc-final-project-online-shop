@@ -46,16 +46,16 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			preparedStatement.executeUpdate();
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getMessage().contains(UNIQUE_PRODUCT_TITLE_MESSAGE)) {
-				throw new DAOException("query.product.category.addition.nameAlreadyExist", e);
+				throw new DAOException("query.product.addition.titleAlreadyExist", e);
 			}
 			if (e.getMessage().contains(UNIQUE_PRODUCT_IMG_PATH_MESSAGE)) {
-				throw new DAOException("query.product.category.addition.imgPathAlreadyExist", e);
+				throw new DAOException("query.product.addition.imgPathAlreadyExist", e);
 			}
-			logger.warn(String.format("ProductCategory %s addition common error", product), e);
-			throw new DAOException("query.product.category.addition.commonError", e);
+			logger.warn(String.format("Product %s addition common error", product), e);
+			throw new DAOException("query.product.addition.commonError", e);
 		} catch (SQLException | ConnectionPoolException e) {
-			logger.warn(String.format("ProductCategory %s addition common error", product), e);
-			throw new DAOException("query.product.category.addition.commonError", e);
+			logger.warn(String.format("Product %s addition common error", product), e);
+			throw new DAOException("query.product.addition.commonError", e);
 		}
 		
 		return product;
@@ -72,20 +72,52 @@ public class SQLProductDAOImpl extends SQLBaseDAO implements ProductDAO {
 			preparedStatement.executeUpdate();
 		} catch (SQLIntegrityConstraintViolationException e) {
 			if (e.getMessage().contains(UNIQUE_NAME_MESSAGE)) {
-				throw new DAOException("query.product.addition.titleAlreadyExist", e);
+				throw new DAOException("query.product.category.addition.nameAlreadyExist", e);
 			}
 			if (e.getMessage().contains(UNIQUE_IMG_PATH_MESSAGE)) {
-				throw new DAOException("query.product.addition.imgPathAlreadyExist", e);
+				throw new DAOException("query.product.category.addition.imgPathAlreadyExist", e);
 			}
-			logger.warn(String.format("Product %s addition common error", category), e);
-			throw new DAOException("query.product.addition.commonError", e);
+			logger.warn(String.format("ProductCategory %s addition common error", category), e);
+			throw new DAOException("query.product.category.addition.commonError", e);
 		} catch (SQLException | ConnectionPoolException e) {
-			logger.warn(String.format("Product %s addition common error", category), e);
-			throw new DAOException("query.product.addition.commonError", e);
+			logger.warn(String.format("ProductCategory %s addition common error", category), e);
+			throw new DAOException("query.product.category.addition.commonError", e);
 		}
 		
 		return category;
 		
+	}
+	
+	@Override
+	public Product updateProduct(Product product) throws DAOException {
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_PRODUCT_BY_ID)) {
+			preparedStatement.setString(1, product.getTitle());
+			preparedStatement.setDouble(2, product.getPrice());
+			preparedStatement.setInt(3, product.getCount());
+			preparedStatement.setTimestamp(4, product.getUpdatedt());
+			preparedStatement.setString(5, product.getDescription());
+			preparedStatement.setString(6, product.getImgPath());
+			preparedStatement.setInt(7, product.getCategory().getId());
+			preparedStatement.setInt(8, product.getId());
+			preparedStatement.executeUpdate();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			if (e.getMessage().contains(UNIQUE_PRODUCT_TITLE_MESSAGE)) {
+				throw new DAOException("query.product.updating.titleAlreadyExist", e);
+			}
+			if (e.getMessage().contains(UNIQUE_PRODUCT_IMG_PATH_MESSAGE)) {
+					throw new DAOException("query.product.updating.imgPathAlreadyExist", e);
+			}
+			logger.warn(String.format("Product %s addition common error", product), e);
+			throw new DAOException("query.product.updating.commonError", e);
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("Product %s addition common error", product), e);
+			throw new DAOException("query.product.updating.commonError", e);
+		}
+			
+		return product;
+			
 	}
 	
 	@Override

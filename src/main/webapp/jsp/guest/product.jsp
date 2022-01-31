@@ -54,7 +54,7 @@
 				<div class="admin-bar">                    
 					<ul>
 						<li>
-							<a class="animated-button" href="${pageContext.request.contextPath}/Controller?action=updateProductData">
+							<a class="animated-button" href="${pageContext.request.contextPath}/Controller?action=openEditProductPage&productId=${product.id}">
 								<fmt:message bundle="${locale}" key="product.editProduct" />
 							</a>
 						</li>   

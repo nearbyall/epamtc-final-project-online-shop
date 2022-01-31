@@ -26,8 +26,6 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public CartItem addCartItem(CartItem cartItem) throws ServiceException {
 		
-		//TODO validate cartItem
-		
 		try {
 			int count = cartDAO.findCartItemCount(cartItem.getUserId(), cartItem.getProduct().getId());
 			System.out.println(count);
@@ -47,7 +45,6 @@ public class CartServiceImpl implements CartService {
 	
 	@Override
 	public CartItem deleteCartItem(CartItem cartItem) throws ServiceException {
-		//TODO validate cartItem
 		
 		try {
 			int count = cartDAO.findCartItemCount(cartItem.getUserId(), cartItem.getProduct().getId());
@@ -68,8 +65,6 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public List<CartItem> findAllCartItemsByUserId(int userId) throws ServiceException {
-		
-		//TODO validate userId
 		
 		List<CartItem> cartItems;
 		

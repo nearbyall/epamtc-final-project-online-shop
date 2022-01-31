@@ -31,7 +31,7 @@ import by.epamtc.melnikov.onlineshop.dao.pool.exception.ConnectionPoolException;
  */
 public class ConnectionPool {
 	
-	private static final Logger logger = LogManager.getLogger(ConnectionPool.class);
+	private static final Logger logger = LogManager.getLogger();
 
 	private static final String DB_CONNECTION_POOL_PROPERTIES = "connectionPool.properties";
 	private static final String URL_PROPERTY_NAME = "url";

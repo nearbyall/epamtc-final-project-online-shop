@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
 
 /**
@@ -66,18 +65,6 @@ public interface Command {
 	 */
 	default String getRedirectURL(HttpServletRequest request, String commandName) {
 		return request.getContextPath() + "/Controller" + "?" + JSPAttributeStorage.COMMAND + "=" + commandName;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	default boolean checkRole(HttpServletRequest request, UserType userType) {
-		if(request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE).equals(userType.getName())) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 	
 }

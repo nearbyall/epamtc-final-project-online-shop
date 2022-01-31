@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl.page;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.user;
 
 import java.io.IOException;
 

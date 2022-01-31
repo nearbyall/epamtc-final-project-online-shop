@@ -8,11 +8,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.CartItem;
+import by.epamtc.melnikov.onlineshop.bean.Order;
+import by.epamtc.melnikov.onlineshop.bean.OrderItem;
 import by.epamtc.melnikov.onlineshop.bean.Product;
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
+import by.epamtc.melnikov.onlineshop.bean.Review;
 import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.builder.ProductBuilder;
 import by.epamtc.melnikov.onlineshop.bean.builder.UserBuilder;
+import by.epamtc.melnikov.onlineshop.bean.type.OrderType;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
@@ -82,6 +86,29 @@ public abstract class SQLBaseDAO {
 	protected static final String CART_ITEMS_CREATED_AT = "cart_items.createdAt";
 	protected static final String CART_ITEMS_UPDATED_AT = "cart_items.updatedAt";
 	
+	/*
+	 * Order
+	 */
+	protected static final String ORDER_ID = "orders.id";
+	protected static final String ORDER_USER_ID = "orders.userId";
+	protected static final String ORDER_STATUS_ID = "orders.statusId";
+	protected static final String ORDER_CREATED_AT = "orders.createdAt";
+	protected static final String ORDER_UPDATED_AT = "orders.updatedAt";
+	
+	protected static final String ORDER_ITEM_ID = "order_items.id";
+	protected static final String ORDER_ITEM_PRODUCT_ID = "order_items.productId";
+	protected static final String ORDER_ITEM_COUNT = "order_items.count";
+	protected static final String ORDER_ITEM_TOTAL_PRICE = "order_items.totalPrice";
+	
+	/*
+	 * Reviews
+	 */
+	protected static final String REVIEW_ID_COLUMN_NAME = "reviews.id";
+	protected static final String REVIEW_USER_ID_COLUMN_NAME = "reviews.userId";
+	protected static final String REVIEW_PRODUCT_ID_COLUMN_NAME = "reviews.productId";
+	protected static final String REVIEW_TEXT_COLUMN_NAME = "reviews.review";
+	protected static final String REVIEW_CREATED_AT_COLUMN_NAME = "reviews.createdAt";
+	protected static final String REVIEW_UPDATED_AT_COLUMN_NAME = "reviews.updatedAt";
 	
 	protected SQLBaseDAO(){
 		pool = ConnectionPool.getInstance();
@@ -256,6 +283,79 @@ public abstract class SQLBaseDAO {
 		cartItem.setCreatedAt(resultSet.getTimestamp(CART_ITEMS_CREATED_AT));
 		cartItem.setUpdatedAt(resultSet.getTimestamp(CART_ITEMS_UPDATED_AT));
 		return cartItem;
+	}
+	
+	/**
+	 * Constructs {@link Order} from <tt>resultSet</tt>.
+	 * Throws SQLException if the column label is not valid
+	 * 
+	 * @param resultSet {@link ResultSet} which includes {@link Order}
+	 * @return an {@link Order} which has been constructed
+	 * @throws SQLException if the column label is not valid
+	 */
+	protected Order constructOrderByResultSet(ResultSet resultSet) throws SQLException {
+		Order order = new Order();
+		order.setId(resultSet.getInt(ORDER_ID));
+		order.setUser(constructUserByResultSetForOrder(resultSet));
+		order.setStatus(OrderType.getTypeById(resultSet.getInt(ORDER_STATUS_ID)));
+		order.setCreatedAt(resultSet.getTimestamp(ORDER_CREATED_AT));
+		order.setUpdatedAt(resultSet.getTimestamp(ORDER_UPDATED_AT));
+		return order;
+	}
+	
+	/**
+	 * Constructs user from <tt>resultSet</tt> for {@link Order}.
+	 * Throws SQLException if the column label is not valid
+	 * 
+	 * @param resultSet {@link ResultSet} which includes {@link User}
+	 * @return an {@link User} which has been constructed
+	 * @throws SQLException if the column label is not valid
+	 */
+	protected User constructUserByResultSetForOrder(ResultSet resultSet) throws SQLException {
+		return new UserBuilder().withId(resultSet.getInt(USER_ID_COLUMN_NAME))
+				.withEmail(resultSet.getString(USER_EMAIL_COLUMN_NAME))
+				.build();
+	}
+	
+	/**
+	 * Constructs {@link OrderItem} from <tt>resultSet</tt>.
+	 * Throws SQLException if the column label is not valid
+	 * 
+	 * @param resultSet {@link ResultSet} which includes {@link OrderItem}
+	 * @return an {@link OrderItem} which has been constructed
+	 * @throws SQLException if the column label is not valid
+	 */
+	protected OrderItem constructOrderItemsByResultSet (ResultSet resultSet) throws SQLException {
+		OrderItem orderItem = new OrderItem();
+		orderItem.setId(resultSet.getInt(ORDER_ITEM_ID));
+		orderItem.setProduct(constructProductByResultSet(resultSet));
+		orderItem.setCount(resultSet.getInt(ORDER_ITEM_COUNT));
+		orderItem.setTotalPrice(resultSet.getDouble(ORDER_ITEM_TOTAL_PRICE));
+		return orderItem;
+	}
+	
+	
+	/**
+	 * Constructs {@link Review} from <tt>resultSet</tt>.
+	 * Throws SQLException if the column label is not valid
+	 * 
+	 * @param resultSet {@link ResultSet} which includes {@link Review}
+	 * @return an {@link Review} which has been constructed
+	 * @throws SQLException if the column label is not valid
+	 */
+	protected Review constructReviewByResultSet(ResultSet resultSet) throws SQLException {
+		
+		Review review = new Review();
+		
+		review.setId(resultSet.getInt(REVIEW_ID_COLUMN_NAME));
+		review.setProductId(resultSet.getInt(REVIEW_USER_ID_COLUMN_NAME));
+		review.setUserId(resultSet.getInt(REVIEW_PRODUCT_ID_COLUMN_NAME));
+		review.setText(resultSet.getString(REVIEW_TEXT_COLUMN_NAME));
+		review.setCreatedAt(resultSet.getTimestamp(REVIEW_CREATED_AT_COLUMN_NAME));
+		review.setUpdatedAt(resultSet.getTimestamp(REVIEW_UPDATED_AT_COLUMN_NAME));
+		
+		return review;
+		
 	}
 	
 }

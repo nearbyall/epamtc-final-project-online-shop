@@ -92,6 +92,14 @@ public class Order implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
+	public boolean isConfirmed() {
+		if (status == OrderType.ACCEPTED) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + " [id=" + id + ", totalPrice=" + totalPrice + ", status=" + status + ", user=" + user

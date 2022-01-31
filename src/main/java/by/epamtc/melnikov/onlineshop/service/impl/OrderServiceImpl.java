@@ -2,7 +2,6 @@ package by.epamtc.melnikov.onlineshop.service.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,8 +39,6 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public Order addOrder(int userId) throws ServiceException {
-
-		//TODO userId
 		
 		Order order = new Order();
 
@@ -64,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		order.setId(orderId);
 		order.setUser(new UserBuilder().withId(userId).build());
-		order.setStatus(OrderType.PAID);
+		order.setStatus(OrderType.NOTACCEPTED);
 		order.setOrderItems(orderItems);
 		order.setCreatedAt(currentTimestamp);
 		order.setUpdatedAt(currentTimestamp);
@@ -99,6 +96,55 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		return orderItems;
+		
+	}
+	
+	@Override
+	public List<Order> findAllOrders() throws ServiceException {
+		
+		List<Order> orders = new ArrayList<>();
+		
+		try {
+			orders = orderDAO.findAllOrders();
+			if (orders.isEmpty()) {
+				throw new ServiceException("query.ordets.getOrders.ordersNotFound");
+			}
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return orders;
+		
+	}
+	
+	@Override
+	public List<Order> findAllOrdersByUserId(int userId) throws ServiceException {
+		
+		List<Order> orders = new ArrayList<>();
+		
+		try {
+			orders = orderDAO.findAllOrdersByUserId(userId);
+			if (orders.isEmpty()) {
+				throw new ServiceException("query.ordets.getOrders.ordersNotFound");
+			}
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return orders;
+		
+	}
+
+	@Override
+	public int updateOrderStatusByOrderId(int orderId, int statusId) throws ServiceException {
+		
+		try {
+			orderDAO.updateOrderStatusByOrderId(orderId, statusId);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		return statusId;
 		
 	}
 

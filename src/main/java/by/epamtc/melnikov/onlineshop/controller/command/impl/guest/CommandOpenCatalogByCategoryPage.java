@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl.page;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.guest;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,12 +19,12 @@ import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
 /**
  * The implementation of the {@link Command} interface that is responsible
- * for open {@link PageStorage#CATALOG} page.
+ * for open {@link PageStorage#CATALOG} page with products with specific category.
  * 
  * @author nearbyall
  *
  */
-public class CommandOpenCatalogPage implements Command {
+public class CommandOpenCatalogByCategoryPage implements Command {
 
 	private static final ProductService productService = ServiceProvider.getInstance().getProductService();
 	
@@ -35,12 +35,13 @@ public class CommandOpenCatalogPage implements Command {
 		
 		int currentPage = Integer.parseInt(request.getParameter(JSPAttributeStorage.PAGINATION_CURRENT_PAGE));
 		int recordsPerPage = Integer.parseInt(request.getParameter(JSPAttributeStorage.PAGINATION_RECORDS_PER_PAGE));
+		int categoryId = Integer.parseInt(request.getParameter(JSPAttributeStorage.PRODUCT_CATEGORY_ID));
 		
 		try {
-			definePaginationContext(request, productService.findProductsCount(), currentPage, recordsPerPage);
-			List<Product> products = productService.findAllProductsPerPage(currentPage, recordsPerPage);
+			definePaginationContext(request, productService.findProductsCountByCategoryId(categoryId), currentPage, recordsPerPage);
+			List<Product> products = productService.findAllProductsByCategoryIdPerPage(currentPage, recordsPerPage, categoryId);
 			request.setAttribute(JSPAttributeStorage.PRODUCT_LIST, products);
-			result.setPage(PageStorage.CATALOG);
+			result.setPage(PageStorage.CATALOG_BY_CATEGORY);
 			result.setDirection(Direction.FORWARD);
 		} catch (ServiceException e) {
 			setErrorMessage(request, e.getMessage());

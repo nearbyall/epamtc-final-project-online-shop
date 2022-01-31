@@ -33,7 +33,6 @@ public class SQLQueriesStorage {
 	public static final String UPDATE_USER_PROFILE_DATA = "UPDATE users SET passwordEncrypted = (?), name = (?), surname = (?)," +
 			"  mobile = (?) WHERE id = (?)";
 	
-
 	/*
 	 * Product queries
 	 */
@@ -116,13 +115,35 @@ public class SQLQueriesStorage {
 			"(productId, orderId, count, totalPrice) " +
 			"value (?, ?, ?, ?)";
 	
-	public static final String DELETE_ORDER = "";
+	public static final String DELETE_ORDER_BY_ID = "DELETE FROM orders WHERE id = (?)";
 	
-	public static final String DELETE_ORDER_ITEMS_BY_ORDER_ID = "";
+	public static final String DELETE_ORDER_ITEMS_BY_ORDER_ID = "DELETE FROM order_items WHERE id = (?)";
 	
-	public static final String FIND_ALL_ORDERS = "";
+	public static final String FIND_ALL_ORDERS = "SELECT orders.id, orders.userId, orders.statusId, orders.createdAt, orders.updatedAt, " +
+			"users.id as \"users.id\", users.email as\"users.email\" " +
+			"FROM orders " +
+			"LEFT JOIN users ON users.id = orders.userId ";
 	
-	public static final String FIND_ALL_ORDERS_BY_USER_ID = "";
+	public static final String FIND_ALL_ORDERS_BY_USER_ID = "SELECT orders.id, orders.userId, orders.statusId, orders.createdAt, orders.updatedAt, " +
+			"users.id as \"users.id\", users.email as\"users.email\" " +
+			"FROM orders " +
+			"LEFT JOIN users ON users.id = orders.userId " +
+			"WHERE orders.userId = (?) ";
+	
+	public static final String FIND_ALL_ORDER_ITEMS_BY_ORDER_ID = "SELECT order_items.id, order_items.productId, " +
+			"order_items.count, order_items.totalPrice, " +
+			"products.id as \"products.id\", products.title as \"products.title\", products.imgPath as \"products.imgPath\", " +
+			"products.count as \"products.count\", products.price as \"products.price\", products.description as \"products.description\", " +
+			"products.categoryId as \"products.categoryId\", products.createdAt as \"products.createdAt\", products.updatedAt as \"products.updatedAt\", " +
+			"product_categories.id as \"product_categories.id\", product_categories.name as \"product_categories.name\", product_categories.imgPath as \"product_categories.imgPath\" " +
+			"FROM order_items " +
+			"LEFT JOIN products ON order_items.productId = products.id " +
+			"LEFT JOIN product_categories ON products.categoryId = product_categories.id " +
+			"WHERE order_items.orderId = (?)";
+	
+	public static final String FIND_ORDER_ITEMS_COUNT_BY_ORDER_ID = "SELECT COUNT(order_items.id) FROM order_items WHERE orderId = (?)";
+	
+	public static final String UPDATE_ORDER_STATUS = "UPDATE orders SET statusId = (?) WHERE id = (?)";
 	
 	private SQLQueriesStorage() {}
 	

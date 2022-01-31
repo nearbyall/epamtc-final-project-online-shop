@@ -18,7 +18,8 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
 /**
- * 
+ * The implementation of the {@link Command} interface that is responsible
+ * for review writing process.
  * 
  * @author nearbyall
  *

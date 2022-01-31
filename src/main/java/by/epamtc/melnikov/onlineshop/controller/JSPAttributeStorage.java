@@ -55,11 +55,14 @@ public class JSPAttributeStorage {
 	
 	public static final String CART_ITEMS_LIST = "cartItems";
 	
+	public static final String ORDERS_LIST = "orders";
+	public static final String ORDER_ID = "orderId";
+	public static final String ORDER_STATUS_ID = "statusId";
+	
 	public static final String FILE = "file";
     
 	public static final String PAGINATION_CURRENT_PAGE = "currentPage";
 	public static final String PAGINATION_RECORDS_PER_PAGE = "recordsPerPage";
 	public static final String PAGINATION_PAGES_QUANTITY = "pagesQuantity";
-
 	
 }

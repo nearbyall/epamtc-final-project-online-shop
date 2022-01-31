@@ -1,4 +1,4 @@
-package by.epamtc.melnikov.onlineshop.controller.command.impl.page;
+package by.epamtc.melnikov.onlineshop.controller.command.impl.admin;
 
 import java.io.IOException;
 
@@ -13,12 +13,12 @@ import by.epamtc.melnikov.onlineshop.controller.command.Direction;
 
 /**
  * The implementation of the {@link Command} interface that is responsible
- * for open {@link PageStorage#PROFILE} page.
+ * for open {@link PageStorage#ADD_PRODUCT_CATEGORY} page.
  * 
  * @author nearbyall
  *
  */
-public class CommandOpenProfilePage implements Command {
+public class CommandOpenAddProductCategoryPage implements Command {
 
 	@Override
 	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class CommandOpenProfilePage implements Command {
 		CommandResult result = new CommandResult();
 		
 		result.setDirection(Direction.FORWARD);
-		result.setPage(PageStorage.PROFILE);
+		result.setPage(PageStorage.ADD_PRODUCT_CATEGORY);
 		
 		return result;
 		

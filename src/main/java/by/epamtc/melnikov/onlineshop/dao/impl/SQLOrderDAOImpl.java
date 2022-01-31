@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +33,6 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 	public Order addOrder(Order order) throws DAOException {
 		
 		Connection connection;
-		ResultSet resultSet;
 		
 		try {
 			connection = pool.getConnection();
@@ -47,15 +49,11 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 			preparedStatement.setTimestamp(4, order.getCreatedAt());
 			preparedStatement.setTimestamp(5, order.getUpdatedAt());
 			preparedStatement.executeUpdate();
-			
 			for (OrderItem orderItem : order.getOrderItems()) {
 				addOrderItem(orderItem, connection);
 			}
-			
 			deleteCartItemsByUserId(order.getUser().getId(), connection);
-			
 			connection.commit();
-			
 		} catch (SQLException e) {
 			connectionsRollback(connection);
 			logger.warn(String.format("Order: %s addition error", order), e);
@@ -68,8 +66,191 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 		return order;
 		
 	}
+	
+	@Override
+	public List<Order> findAllOrders() throws DAOException {
+		
+		Connection connection;
+		ResultSet resultSet;
+		List<Order> orders = Collections.emptyList();
+		
+		try {
+			connection = pool.getConnection();
+		} catch (ConnectionPoolException e) {
+			logger.warn("Orders list finding error", e);
+			throw new DAOException("query.orders.finding.error", e);			
+		}
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ALL_ORDERS)) {
+			 connection.setAutoCommit(false);
+			 
+			resultSet = preparedStatement.executeQuery();
+			if (!resultSet.isBeforeFirst()) {
+				logger.info("Orders is empty");
+			} else {
+				resultSet.last();
+				int listSize = resultSet.getRow();
+				resultSet.beforeFirst();
+				orders = new ArrayList<>(listSize);
+				while (resultSet.next()) {
+					orders.add(constructOrderByResultSet(resultSet));
+				}
+			}
+			
+			for (Order order : orders) {
+				order.setOrderItems(findAllOrderItemsByOrderId(order.getId(), connection));
+			}
+			
+			
+			System.out.println(orders);
+			
+			connection.commit();
+		} catch (SQLException e) {
+			connectionsRollback(connection);
+			logger.warn("Orders finding error", e);
+			throw new DAOException("query.orders.finding.error", e);
+		} finally {
+			connectionSetAutoCommit(connection, true);
+			closeConnection(connection);
+		}
+		
+		return orders;
+		
+	}
+	
 
 	@Override
+	public List<Order> findAllOrdersByUserId(int userId) throws DAOException {
+
+		Connection connection;
+		ResultSet resultSet;
+		List<Order> orders = Collections.emptyList();
+		
+		try {
+			connection = pool.getConnection();
+		} catch (ConnectionPoolException e) {
+			logger.warn("Orders list finding error", e);
+			throw new DAOException("query.orders.finding.error", e);			
+		}
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ALL_ORDERS_BY_USER_ID)) {
+			 connection.setAutoCommit(false);
+			preparedStatement.setInt(1, userId); 
+			resultSet = preparedStatement.executeQuery();
+			if (!resultSet.isBeforeFirst()) {
+				logger.info("Orders is empty");
+			} else {
+				resultSet.last();
+				int listSize = resultSet.getRow();
+				resultSet.beforeFirst();
+				orders = new ArrayList<>(listSize);
+				while (resultSet.next()) {
+					orders.add(constructOrderByResultSet(resultSet));
+				}
+			}
+			
+			for (Order order : orders) {
+				order.setOrderItems(findAllOrderItemsByOrderId(order.getId(), connection));
+			}
+			
+			
+			System.out.println(orders);
+			
+			connection.commit();
+		} catch (SQLException e) {
+			connectionsRollback(connection);
+			logger.warn("Orders finding error", e);
+			throw new DAOException("query.orders.finding.error", e);
+		} finally {
+			connectionSetAutoCommit(connection, true);
+			closeConnection(connection);
+		}
+		
+		return orders;
+		
+	}
+	
+
+	
+	@Override
+	public int updateOrderStatusByOrderId(int orderId, int statusId) throws DAOException {
+		try (Connection connection = pool.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_ORDER_STATUS)) {
+			preparedStatement.setInt(1, statusId);
+			preparedStatement.setInt(2, orderId);
+			preparedStatement.executeUpdate();
+		} catch(SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("Order %d id status update error", orderId), e);
+			throw new DAOException("service.commonError", e);
+		}
+			
+		return statusId;
+	}
+	
+	/**
+	 * Removes all {@link CartItem}s in data source by userId.
+	 * The method does not have its own connection to data source, 
+	 * so need to put it as a parameter.
+	 * Throws DAOException if an error occurs while removing <tt>cartItem</tt>.
+	 * 
+	 * @param userId the {@link CartItem}'s userId that should be removed
+	 * @param connection {@link Connection} to contact with data source
+	 * @return userId whose cart has been emptied
+	 * @throws DAOException if an error occurs while removing <tt>cartItem</tt>.
+	 */
+	public int deleteCartItemsByUserId(int userId, Connection connection) throws DAOException {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.CLEAR_CART_ITEMS_BY_USER_ID)) {
+			preparedStatement.setInt(1, userId);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			logger.warn(String.format("CartItems removing by userId %d error", userId), e);
+			throw new DAOException("query.cartItem.removing.commonError", e);
+		}
+				
+		return userId;
+		
+	}
+
+	/**
+	 * Finds count of {@link OrderItem} in data source by orderId.
+	 * The method does not have its own connection to data source, 
+	 * so need to put it as a parameter.
+	 * Throws DAOException if an error occurs while getting count of <tt>orderItem</tt>.
+	 * 
+	 * @param orderId the {@link Order}'s id which includes order items
+	 * @param connection {@link Connection} to contact with data source
+	 * @return count of {@link OrderItem}s in data source by orderId
+	 * @throws DAOException if an error occurs while getting count of <tt>orderItem</tt>.
+	 */
+	public int findOrderItemsCountByOrderId(int orderId, Connection connection) throws DAOException {
+		
+		ResultSet resultSet = null;
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ORDER_ITEMS_COUNT_BY_ORDER_ID)) {
+			preparedStatement.setInt(1, orderId);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			return resultSet.getInt(1);
+		} catch (SQLException e) {
+			logger.warn("Order items count finding error", e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
+		}
+		
+	}
+	
+	/**
+	 * Saves the <tt>orderItem</tt> into data source. 
+	 * The method does not have its own connection to data source, 
+	 * so need to put it as a parameter.
+	 * Throws DAOException if an error occurs while writing a <tt>orderItem</tt>.
+	 * 
+	 * @param orderItem the {@link OrderItem} that should added to data source
+	 * @param connection {@link Connection} to contact with data source
+	 * @return {@link OrderItem} which has been added
+	 * @throws DAOException if an error occurs while writing a <tt>orderItem</tt>
+	 */
 	public OrderItem addOrderItem(OrderItem orderItem, Connection connection) throws DAOException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.INSERT_ORDER_ITEM)) {
 			preparedStatement.setInt(1, orderItem.getProduct().getId());
@@ -84,18 +265,45 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 		return orderItem;
 	}
 	
-	@Override
-	public int deleteCartItemsByUserId(int userId, Connection connection) throws DAOException {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.CLEAR_CART_ITEMS_BY_USER_ID)) {
-			preparedStatement.setInt(1, userId);
-			preparedStatement.executeUpdate();
+	/**
+	 * Retrieves and returns {@link List} of {@link OrderItem}s into data source.
+	 * The method does not have its own connection to data source, 
+	 * so need to put it as a parameter. 
+	 * If no such order items contains into data source returns empty {@link List} collection.
+	 * 
+	 * @param orderId the {@link OrderItem}'s orderId
+	 * @param connection {@link Connection} to contact with data source
+	 * @return {@link List} of {@link OrderItem}s
+	 * @throws DAOException if an error occurs while getting a <tt>orderItem</tt>
+	 */
+	public List<OrderItem> findAllOrderItemsByOrderId(int orderId, Connection connection) throws DAOException {
+		
+		ResultSet resultSet = null;
+		List<OrderItem> orderItems = Collections.emptyList();
+		
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_ALL_ORDER_ITEMS_BY_ORDER_ID)) {
+			preparedStatement.setInt(1, orderId);
+			resultSet = preparedStatement.executeQuery();
+			if (!resultSet.isBeforeFirst()) {
+				logger.info("Order items is empty");
+			} else {
+				resultSet.last();
+				int listSize = resultSet.getRow();
+				resultSet.beforeFirst();
+				orderItems = new ArrayList<>(listSize);
+				while (resultSet.next()) {
+					orderItems.add(constructOrderItemsByResultSet(resultSet));
+				}
+			}
+			
 		} catch (SQLException e) {
-			logger.warn(String.format("CartItems removing by userId %d error", userId), e);
-			throw new DAOException("query.cartItem.removing.commonError", e);
+			logger.warn("Order items List finding error", e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
 		}
-				
-		return userId;
+		
+		return orderItems;
 		
 	}
 

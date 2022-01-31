@@ -28,21 +28,7 @@ import by.epamtc.melnikov.onlineshop.dao.sql.SQLQueriesStorage;
 public class SQLReviewDAOImpl extends SQLBaseDAO implements ReviewDAO {
 
 	private static final Logger logger = LogManager.getLogger();
-	
-	/** Field contains the column name of {@link Review}'s id*/
-	private static final String REVIEW_ID_COLUMN_NAME = "reviews.id";
-	/** Field contains the column name of {@link Review}'s userId*/
-	private static final String REVIEW_USER_ID_COLUMN_NAME = "reviews.userId";
-	/** Field contains the column name of {@link Review}'s productId*/
-	private static final String REVIEW_PRODUCT_ID_COLUMN_NAME = "reviews.productId";
-	/** Field contains the column name of {@link Review}'s review*/
-	private static final String REVIEW_TEXT_COLUMN_NAME = "reviews.review";
-	/** Field contains the column name of {@link Review}'s createdAt*/
-	private static final String REVIEW_CREATED_AT_COLUMN_NAME = "reviews.createdAt";
-	/** Field contains the column name of {@link Review}'s updatedAt*/
-	private static final String REVIEW_UPDATED_AT_COLUMN_NAME = "reviews.updatedAt";
-
-	
+		
 	@Override
 	public Review addReview(Review review) throws DAOException {
 		
@@ -68,13 +54,15 @@ public class SQLReviewDAOImpl extends SQLBaseDAO implements ReviewDAO {
 
 	@Override
 	public Review editReview(Review review) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return review;
+		
 	}
 
 	@Override
-	public void removeReviewById(int id) throws DAOException {
-		// TODO Auto-generated method stub
+	public int removeReviewById(int id) throws DAOException {
+		
+		return id;
 		
 	}
 
@@ -108,35 +96,6 @@ public class SQLReviewDAOImpl extends SQLBaseDAO implements ReviewDAO {
 		}
 		
 		return reviews;
-		
-	}
-
-	@Override
-	public int findReviewsCountByProductId(int productId) throws DAOException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	/**
-	 * Constructs {@link Review} from <tt>resultSet</tt>.
-	 * Throws SQLException if the column label is not valid
-	 * 
-	 * @param resultSet {@link ResultSet} which includes {@link Review}
-	 * @return an {@link Review} which has been constructed
-	 * @throws SQLException if the column label is not valid
-	 */
-	private Review constructReviewByResultSet(ResultSet resultSet) throws SQLException {
-		
-		Review review = new Review();
-		
-		review.setId(resultSet.getInt(REVIEW_ID_COLUMN_NAME));
-		review.setProductId(resultSet.getInt(REVIEW_USER_ID_COLUMN_NAME));
-		review.setUserId(resultSet.getInt(REVIEW_PRODUCT_ID_COLUMN_NAME));
-		review.setText(resultSet.getString(REVIEW_TEXT_COLUMN_NAME));
-		review.setCreatedAt(resultSet.getTimestamp(REVIEW_CREATED_AT_COLUMN_NAME));
-		review.setUpdatedAt(resultSet.getTimestamp(REVIEW_UPDATED_AT_COLUMN_NAME));
-		
-		return review;
 		
 	}
 	

@@ -9,6 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for product change process.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandEditProduct implements Command {
 
 	@Override

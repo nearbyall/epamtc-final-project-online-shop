@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 public enum OrderType {
 
-	PAID(1, "paid"),
-	NOTPAID(2, "notpaid");
+	ACCEPTED(1, "ACCEPTED"),
+	NOTACCEPTED(2, "NOTACCEPTED");
 	
 	private static final Logger logger = LogManager.getLogger();
 	

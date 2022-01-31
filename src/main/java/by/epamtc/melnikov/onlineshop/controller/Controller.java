@@ -1,7 +1,7 @@
 package by.epamtc.melnikov.onlineshop.controller;
 
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
-import by.epamtc.melnikov.onlineshop.controller.command.CommandProvider;
+import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
 import by.epamtc.melnikov.onlineshop.dao.pool.ConnectionPool;
@@ -30,7 +30,6 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final Logger logger = LogManager.getLogger();
-	private CommandProvider commandProvider = new CommandProvider();
 	
 	public Controller() {
 		super();
@@ -70,8 +69,7 @@ public class Controller extends HttpServlet {
 		SessionRequestContent content = new SessionRequestContent(request);
 		logger.info(content);
 		
-		Command command = commandProvider.getCommand(request.getParameter(JSPAttributeStorage.COMMAND));
-		
+		Command command = CommandHolder.getCommandByName(request.getParameter(JSPAttributeStorage.COMMAND));
 		CommandResult result = command.execute(request, response);
 		
 		if (result.getDirection() == Direction.FORWARD)

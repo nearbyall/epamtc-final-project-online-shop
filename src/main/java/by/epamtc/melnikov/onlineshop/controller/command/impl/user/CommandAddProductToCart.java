@@ -19,6 +19,8 @@ import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
 /**
+ * The implementation of the {@link Command} interface that is responsible
+ * for product addition to cart process.
  * 
  * @author nearbyall
  *

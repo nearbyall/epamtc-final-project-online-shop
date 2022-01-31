@@ -18,6 +18,13 @@ import by.epamtc.melnikov.onlineshop.service.CartService;
 import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
+/**
+ * The implementation of the {@link Command} interface that is responsible
+ * for product deleting from cart process.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CommandDeleteProductFromCart implements Command {
 
 	private static final CartService cartService = ServiceProvider.getInstance().getCartService();

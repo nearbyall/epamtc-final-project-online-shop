@@ -20,6 +20,7 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 /**
+ * Custom {@link Connection} implementation
  * 
  * @author nearbyall
  *

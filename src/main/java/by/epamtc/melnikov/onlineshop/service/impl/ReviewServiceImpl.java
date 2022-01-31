@@ -11,6 +11,7 @@ import by.epamtc.melnikov.onlineshop.dao.ReviewDAO;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.service.ReviewService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
+import by.epamtc.melnikov.onlineshop.service.validation.ReviewValidator;
 
 /**
  * {@link ReviewService} interface implementation.
@@ -19,8 +20,6 @@ import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
  *
  */
 public class ReviewServiceImpl implements ReviewService {
-
-	private static final Logger logger = LogManager.getLogger();
 	
 	private final ReviewDAO reviewDAO;
 	
@@ -45,8 +44,6 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public List<Review> findAllReviewsByProductId(int productId) throws ServiceException {
-		
-		//TODO validate productId
 		
 		List<Review> reviews;
 		

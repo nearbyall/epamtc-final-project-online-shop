@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
 import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.builder.UserBuilder;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;

@@ -35,6 +35,15 @@ public interface UserDAO {
 	User findUserByEmail(String email) throws DAOException;
 	
 	/**
+	 * 
+	 * @param userId
+	 * @param token
+	 * @return
+	 * @throws DAOException
+	 */
+	User findUserByIdAndToken(int userId, String token) throws DAOException;
+	
+	/**
 	 * Retrieves and returns {@link List} of {@link User}s into data source.
 	 * If no such users contains into data source returns empty {@link List} collection.
 	 * 
@@ -72,5 +81,30 @@ public interface UserDAO {
 	 * @throws DAOException if an error occurs while writing a <tt>user</tt>
 	 */
 	User updateUserBalance(User user) throws DAOException;
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param token
+	 * @return
+	 * @throws DAOException
+	 */
+	String updateUserRememberToken(int userId, String token) throws DAOException;
+	
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DAOException
+	 */
+	double findUserBalance(int userId) throws DAOException;
+
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws DAOException
+	 */
+	int deleteUserRememberToken(int userId) throws DAOException;
 	
 }

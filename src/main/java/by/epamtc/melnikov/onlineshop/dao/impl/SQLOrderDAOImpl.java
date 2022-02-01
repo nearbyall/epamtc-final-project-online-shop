@@ -52,6 +52,7 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 			for (OrderItem orderItem : order.getOrderItems()) {
 				addOrderItem(orderItem, connection);
 			}
+			updateUserBalance(order.getUser().getBalance(), order.getUser().getId(), connection);
 			deleteCartItemsByUserId(order.getUser().getId(), connection);
 			connection.commit();
 		} catch (SQLException e) {
@@ -173,18 +174,19 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 
 	
 	@Override
-	public int updateOrderStatusByOrderId(int orderId, int statusId) throws DAOException {
+	public Order updateOrderStatus(Order order) throws DAOException {
 		try (Connection connection = pool.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_ORDER_STATUS)) {
-			preparedStatement.setInt(1, statusId);
-			preparedStatement.setInt(2, orderId);
+			preparedStatement.setInt(1, order.getStatus().getId());
+			preparedStatement.setTimestamp(2, order.getUpdatedAt());
+			preparedStatement.setInt(3, order.getId());
 			preparedStatement.executeUpdate();
 		} catch(SQLException | ConnectionPoolException e) {
-			logger.warn(String.format("Order %d id status update error", orderId), e);
+			logger.warn(String.format("Order status update error" + order), e);
 			throw new DAOException("service.commonError", e);
 		}
 			
-		return statusId;
+		return order;
 	}
 	
 	/**
@@ -305,6 +307,26 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 		
 		return orderItems;
 		
+	}
+	
+	/**
+	 * 
+	 * @param newBalance
+	 * @param userId
+	 * @param connection
+	 * @return
+	 * @throws DAOException
+	 */
+	public double updateUserBalance(double newBalance, int userId, Connection connection) throws DAOException {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_USER_BALANCE)) {
+			preparedStatement.setDouble(1, newBalance);
+			preparedStatement.setInt(2, userId);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			logger.warn("Balance updating error " + newBalance, e);
+			throw new DAOException("query.balance.updating.error", e);
+		}
+		return newBalance;
 	}
 
 }

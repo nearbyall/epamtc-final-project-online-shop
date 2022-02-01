@@ -3,6 +3,7 @@ package by.epamtc.melnikov.onlineshop.controller.command.impl.guest;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +26,8 @@ import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
  */
 public class CommandLogIn implements Command {
 
+	private static final int COOKIE_MAX_AGE_21_DAY = 60*60*24*21;
+	
 	private static final UserService userService = ServiceProvider.getInstance().getUserService();
 	
 	@Override
@@ -34,6 +37,7 @@ public class CommandLogIn implements Command {
 		
 		String email = request.getParameter(JSPAttributeStorage.USER_EMAIL);
 		String password = request.getParameter(JSPAttributeStorage.USER_PASSWORD);
+		String rememberToken = request.getParameter(JSPAttributeStorage.GENERATE_REMEMBER_USER_TOKEN);
 		
 		try {
 			
@@ -43,6 +47,15 @@ public class CommandLogIn implements Command {
 			request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
 			request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
 			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
+			
+			if (rememberToken != null) {
+				Cookie rememberTokenCookie = new Cookie(
+						JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN, userService.findUpdatedUserRememberToken(user.getId())
+				);
+				rememberTokenCookie.setPath(request.getContextPath());
+				rememberTokenCookie.setMaxAge(COOKIE_MAX_AGE_21_DAY);
+				response.addCookie(rememberTokenCookie);
+			}
 			
 			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);

@@ -47,11 +47,10 @@ public interface OrderDAO {
 	 * Updates status of {@link Order} in a data source.
 	 * Throws DAOException if an error occurs while writing a <tt>order</tt>.
 	 * 
-	 * @param orderId the {@link Order}'s id that ban status is updating
-	 * @param statusId the {@link Order}'s statusId that to be updated
-	 * @return new statusId
+	 * @param the {@link Order} that ban status is updating
+	 * @return {@link Order} which has been updated
 	 * @throws DAOException if an error occurs while writing a <tt>order</tt>
 	 */
-	int updateOrderStatusByOrderId(int orderId, int statusId) throws DAOException;
+	Order updateOrderStatus(Order order) throws DAOException;
 	
 }

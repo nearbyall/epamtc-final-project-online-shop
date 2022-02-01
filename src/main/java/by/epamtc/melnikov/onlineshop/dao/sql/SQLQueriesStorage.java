@@ -22,6 +22,10 @@ public class SQLQueriesStorage {
 	
 	public static final String FIND_USER_BY_ID = "SELECT * FROM users WHERE id = (?)";
 	
+	public static final String FIND_USER_BY_ID_AND_LOG_IN_TOKEN = "SELECT * FROM users WHERE id = (?) AND logInToken = (?)";
+	
+	public static final String FIND_USER_BALANCE_BY_ID = "SELECT balance FROM users WHERE id = (?)";
+	
 	public static final String FIND_ALL_USERS = "SELECT * FROM users";
 	
 	public static final String UPDATE_USER_BALANCE = "UPDATE users SET balance = (?) WHERE id = (?)";
@@ -29,6 +33,10 @@ public class SQLQueriesStorage {
 	public static final String UPDATE_USER_BAN_STATUS = "UPDATE users SET statusId = (?) WHERE id = (?)";
 	
 	public static final String UPDATE_USER_LAST_LOGIN_AT = "UPDATE users SET lastLoginAt = (?) WHERE id = (?)";
+	
+	public static final String UPDATE_USER_LOG_IN_TOKEN = "UPDATE users SET logInToken = (?) WHERE id = (?)";
+	
+	public static final String UPDATE_USER_LOG_IN_TOKEN_TO_NULL = "UPDATE users SET logInToken = NULL WHERE id = (?)";
 	
 	public static final String UPDATE_USER_PROFILE_DATA = "UPDATE users SET passwordEncrypted = (?), name = (?), surname = (?)," +
 			"  mobile = (?) WHERE id = (?)";
@@ -148,7 +156,7 @@ public class SQLQueriesStorage {
 	
 	public static final String FIND_ORDER_ITEMS_COUNT_BY_ORDER_ID = "SELECT COUNT(order_items.id) FROM order_items WHERE orderId = (?)";
 	
-	public static final String UPDATE_ORDER_STATUS = "UPDATE orders SET statusId = (?) WHERE id = (?)";
+	public static final String UPDATE_ORDER_STATUS = "UPDATE orders SET statusId = (?), updatedAt = (?) WHERE id = (?)";
 	
 	private SQLQueriesStorage() {}
 	

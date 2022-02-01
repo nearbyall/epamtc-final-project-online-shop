@@ -28,5 +28,6 @@ public class PageStorage {
 	public final static String ALL_ORDERS = "/jsp/admin/allOrders.jsp";
 	public final static String USER_ORDERS = "/jsp/user/userOrders.jsp";
 	public final static String EDIT_PRODUCT = "/jsp/admin/editProduct.jsp";
+	public final static String FORGET_PASSWORD = "/jsp/guest/forgetPassword.jsp";
 	
 }

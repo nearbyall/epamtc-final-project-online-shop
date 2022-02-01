@@ -39,6 +39,14 @@ public interface UserService {
 	User logInByPassword(String email, String password) throws ServiceException;
 	
 	/**
+	 * 
+	 * @param token
+	 * @return
+	 * @throws ServiceException
+	 */
+	User logInByToken(String token) throws ServiceException;
+	
+	/**
 	 * Gets <tt>email</tt> as a parameter and does finding process.
 	 * 
 	 * @param email the {@link User}'s field email
@@ -85,5 +93,28 @@ public interface UserService {
 	 * or <tt>user</tt> is null
 	 */
 	User updateUserBalance(User user) throws ServiceException;
+	
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws ServiceException
+	 */
+	String findUpdatedUserRememberToken(int userId) throws ServiceException;
+
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 * @throws ServiceException
+	 */
+	int deleteUserRememberToken(int userId) throws ServiceException;
+	
+	/**
+	 * 
+	 * @param email
+	 * @param string
+	 */
+	void sendLogInTokenIfForgetPassword(String email, String string) throws ServiceException;
 	
 }

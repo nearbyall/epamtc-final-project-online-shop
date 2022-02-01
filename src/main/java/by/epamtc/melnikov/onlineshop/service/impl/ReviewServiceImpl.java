@@ -11,7 +11,6 @@ import by.epamtc.melnikov.onlineshop.dao.ReviewDAO;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.service.ReviewService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
-import by.epamtc.melnikov.onlineshop.service.validation.ReviewValidator;
 
 /**
  * {@link ReviewService} interface implementation.
@@ -29,8 +28,6 @@ public class ReviewServiceImpl implements ReviewService {
 	
 	@Override
 	public Review addReview(Review review) throws ServiceException {
-		
-		//TODO validate review
 		
 		try {
 			reviewDAO.addReview(review);

@@ -4,9 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import by.epamtc.melnikov.onlineshop.bean.CartItem;
 import by.epamtc.melnikov.onlineshop.bean.Order;
 import by.epamtc.melnikov.onlineshop.bean.OrderItem;
@@ -15,6 +12,7 @@ import by.epamtc.melnikov.onlineshop.bean.type.OrderType;
 import by.epamtc.melnikov.onlineshop.dao.CartDAO;
 import by.epamtc.melnikov.onlineshop.dao.DAOProvider;
 import by.epamtc.melnikov.onlineshop.dao.OrderDAO;
+import by.epamtc.melnikov.onlineshop.dao.UserDAO;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
 import by.epamtc.melnikov.onlineshop.service.OrderService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
@@ -26,22 +24,21 @@ import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
  *
  */
 public class OrderServiceImpl implements OrderService {
-
-	private static final Logger logger = LogManager.getLogger();
 	
 	private final OrderDAO orderDAO;
 	private final CartDAO cartDAO;
+	private final UserDAO userDAO;
 	
 	public OrderServiceImpl() {
 		orderDAO = DAOProvider.getInstance().getOrderDAO();
 		cartDAO = DAOProvider.getInstance().getCartDAO();
+		userDAO = DAOProvider.getInstance().getUserDAO();
 	}
 	
 	@Override
 	public Order addOrder(int userId) throws ServiceException {
-		
-		Order order = new Order();
 
+		//Order items constructing
 		List<CartItem> cartItems;
 		try {
 			cartItems = cartDAO.findAllCartItemsByUserId(userId);
@@ -51,28 +48,37 @@ public class OrderServiceImpl implements OrderService {
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}
-
 		int orderId = (int) (Math.random() * Integer.MAX_VALUE);
-		
 		List<OrderItem> orderItems = constructOrderItemsByCartItems(cartItems, orderId);
 		
-		java.util.Date incomingValue = new java.util.Date(System.currentTimeMillis());
-		Timestamp currentTimestamp = new Timestamp(incomingValue.getTime());
-		
-		order.setId(orderId);
-		order.setUser(new UserBuilder().withId(userId).build());
-		order.setStatus(OrderType.NOTACCEPTED);
-		order.setOrderItems(orderItems);
-		order.setCreatedAt(currentTimestamp);
-		order.setUpdatedAt(currentTimestamp);
-		
+		//Order constructing
+		double totalPrice = calculateTotalPrice(orderItems);
+		double userBalance;
 		try {
-			orderDAO.addOrder(order);
-		} catch (DAOException e) {
-			throw new ServiceException(e.getMessage(), e);
+			userBalance = userDAO.findUserBalance(userId);
+		} catch (DAOException e1) {
+			throw new ServiceException("service.commonError");
 		}
-		
-		return order;
+		if (checkOpportunityForBuy(userId, totalPrice)) {
+			java.util.Date incomingValue = new java.util.Date(System.currentTimeMillis());
+			Timestamp currentTimestamp = new Timestamp(incomingValue.getTime());
+			Order order = new Order();
+			order.setId(orderId);
+			order.setUser(new UserBuilder().withId(userId).withBalance(userBalance - totalPrice).build());
+			order.setStatus(OrderType.NOTACCEPTED);
+			order.setOrderItems(orderItems);
+			order.setCreatedAt(currentTimestamp);
+			order.setUpdatedAt(currentTimestamp);
+			order.setTotalPrice(totalPrice);
+			try {
+				orderDAO.addOrder(order);
+			} catch (DAOException e) {
+				throw new ServiceException(e.getMessage(), e);
+			}
+			return order;
+		} else {
+			throw new ServiceException("query.orders.addOrder.notEnoughMoney");
+		}
 		
 	}
 	
@@ -107,7 +113,7 @@ public class OrderServiceImpl implements OrderService {
 		try {
 			orders = orderDAO.findAllOrders();
 			if (orders.isEmpty()) {
-				throw new ServiceException("query.ordets.getOrders.ordersNotFound");
+				throw new ServiceException("query.orders.getOrders.ordersNotFound");
 			}
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage(), e);
@@ -136,15 +142,63 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int updateOrderStatusByOrderId(int orderId, int statusId) throws ServiceException {
+	public int updateOrderStatus(int orderId, int statusId) throws ServiceException {
+		
+		Order order = new Order();
+		java.util.Date incomingValue = new java.util.Date(System.currentTimeMillis());
+		Timestamp currentTimestamp = new Timestamp(incomingValue.getTime());
+		order.setId(orderId);
+		order.setStatus(OrderType.getTypeById(statusId));
+		order.setUpdatedAt(currentTimestamp);
 		
 		try {
-			orderDAO.updateOrderStatusByOrderId(orderId, statusId);
+			orderDAO.updateOrderStatus(order);
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}
 		
 		return statusId;
+		
+	}
+	
+	/**
+	 * 
+	 * @param orderItems
+	 * @return
+	 */
+	private double calculateTotalPrice(List<OrderItem> orderItems) {
+		
+		double price = 0;
+		
+		for(OrderItem orderItem : orderItems) {
+			price += orderItem.getTotalPrice();
+		}
+		
+		return price;
+		
+	}
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param totalPrice
+	 * @return
+	 * @throws ServiceException
+	 */
+	private boolean checkOpportunityForBuy(int userId, double totalPrice) throws ServiceException {
+		
+		double userBalance;
+		try {
+			userBalance = userDAO.findUserBalance(userId);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+		if (userBalance > totalPrice) {
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 

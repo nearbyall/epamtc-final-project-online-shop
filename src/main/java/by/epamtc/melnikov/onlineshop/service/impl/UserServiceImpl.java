@@ -1,12 +1,15 @@
 package by.epamtc.melnikov.onlineshop.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
+import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 import by.epamtc.melnikov.onlineshop.dao.DAOProvider;
 import by.epamtc.melnikov.onlineshop.dao.UserDAO;
 import by.epamtc.melnikov.onlineshop.dao.exception.DAOException;
@@ -14,7 +17,10 @@ import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 import by.epamtc.melnikov.onlineshop.service.validation.UserValidator;
 import by.epamtc.melnikov.onlineshop.service.validation.exception.ValidatorException;
-import by.epamtc.melnikov.onlineshop.util.HashGenerator;
+import by.epamtc.melnikov.onlineshop.util.hash.HashGenerator;
+import by.epamtc.melnikov.onlineshop.util.email.EmailDistributor;
+import by.epamtc.melnikov.onlineshop.util.email.EmailMessageLocalizationDispatcher;
+import by.epamtc.melnikov.onlineshop.util.email.EmailMessageType;
 import by.epamtc.melnikov.onlineshop.util.exception.UtilException;
 
 /**
@@ -25,16 +31,23 @@ import by.epamtc.melnikov.onlineshop.util.exception.UtilException;
  */
 public class UserServiceImpl implements UserService {
 
+	private static final int TOKEN_VALUE_COOKIE_INDEX = 0;
+	private static final int USER_ID_COOKIE_INDEX = 1;
+	
 	private final static Logger logger = LogManager.getLogger();
 	
 	private final UserDAO userDAO;
 	private final UserValidator validator;
 	private final HashGenerator hashGenerator;
+	private final EmailDistributor emailDistributor;
+	private final EmailMessageLocalizationDispatcher emailLocalizationDispatcher;
 	
 	public UserServiceImpl() {
 		userDAO = DAOProvider.getInstance().getUserDAO();
 		validator = new UserValidator();
 		hashGenerator = new HashGenerator();
+		emailDistributor = new EmailDistributor();
+		emailLocalizationDispatcher = new EmailMessageLocalizationDispatcher();
 	}
 	
 	
@@ -86,6 +99,55 @@ public class UserServiceImpl implements UserService {
 			throw new ServiceException(e.getMessage(), e);
 		}
 
+	}
+	
+	@Override
+	public User logInByToken(String token) throws ServiceException {
+		
+		if (token == null) {
+			logger.warn("token is null");
+			throw new ServiceException("service.commonError");
+		}
+		
+		try {
+			String[] tokenComponents = token.split(JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
+			int userId = Integer.parseInt(tokenComponents[USER_ID_COOKIE_INDEX]);
+			String tokenValue = tokenComponents[TOKEN_VALUE_COOKIE_INDEX];
+			User user = userDAO.findUserByIdAndToken(userId, tokenValue);
+			if (user != null) {
+				if (user.isBanned()) {
+					throw new ServiceException("validation.user.login.isBanned");
+				}
+				return user;
+			}
+			logger.warn(String.format("Cant use token %s for log in", token));
+			throw new ServiceException("service.commonError");
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+		
+	}
+	
+	@Override
+	public void sendLogInTokenIfForgetPassword(String email, String pageRootURL) throws ServiceException {
+		
+		if (StringUtils.isAnyBlank(email, pageRootURL)) {
+			throw new ServiceException("service.commonError");
+		}
+        
+		try {
+			User user = userDAO.findUserByEmail(email);
+			String token = findUpdatedUserRememberToken(user.getId());
+			String userLogInLink = constructLogInLink(CommandHolder.FORGET_PASSWORD_LOG_IN.getCommandName(), pageRootURL, token);
+			String messageTitle = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.TITLE_FORGET_PASSWORD);
+			String messageText = emailLocalizationDispatcher.getLocalizedMessage(EmailMessageType.MESSAGE_FORGET_PASSWORD, userLogInLink);
+			emailDistributor.addEmailToSendingQueue(messageTitle, messageText, email);
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		} catch (UtilException e) {
+			throw new ServiceException("service.commonError", e);
+		}
+        
 	}
 	
 	@Override
@@ -188,6 +250,41 @@ public class UserServiceImpl implements UserService {
 		
 		return user;
 		
+	}
+
+
+	@Override
+	public String findUpdatedUserRememberToken(int userId) throws ServiceException {
+		String token = UUID.randomUUID().toString();
+		try {
+			userDAO.updateUserRememberToken(userId, token);
+			return token + JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN_DIVIDER + userId;
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+	}
+
+
+	@Override
+	public int deleteUserRememberToken(int userId) throws ServiceException {
+		try {
+			userDAO.deleteUserRememberToken(userId);
+			return userId;
+		} catch (DAOException e) {
+			throw new ServiceException(e.getMessage(), e);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param commandName
+	 * @param pageRootUrl
+	 * @param token
+	 * @return
+	 */
+	private String constructLogInLink(String commandName, String pageRootUrl, String token) {
+		return pageRootUrl + '?' +JSPAttributeStorage.COMMAND + '=' + commandName
+				+ '&' + JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN + '=' + token;
 	}
 
 }

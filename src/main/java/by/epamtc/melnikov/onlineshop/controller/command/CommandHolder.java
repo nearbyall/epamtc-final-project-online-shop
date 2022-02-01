@@ -19,6 +19,8 @@ public enum CommandHolder {
 	 */
 	LOG_IN("logIn", new CommandLogIn()),
 	REGISTRATION("registration", new CommandRegistration()),
+	SEND_FORGET_PASSWORD_DATA("sendForgetPasswordData", new CommandSendForgetPasswordData()),
+	FORGET_PASSWORD_LOG_IN("logInByTokenLink", new CommandLogInByTokenLink()),
 	SWITCH_LANGUAGE("switchLanguage", new CommandSwitchLanguage()),
 	
 	/*

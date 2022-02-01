@@ -14,6 +14,10 @@ public class JSPAttributeStorage {
 	public static final String COMMAND = "action";
 	public static final String REDIRECT_PAGE_COMMAND = "redirectPageCommand";
 
+	public static final String GENERATE_REMEMBER_USER_TOKEN = "generateRememberUserToken";
+	public static final String COOKIE_REMEMBER_USER_TOKEN = "rememberToken";
+	public static final String COOKIE_REMEMBER_USER_TOKEN_DIVIDER = ":";
+	
 	public static final String LANGUAGE_CURRENT_PAGE = "lang";
 	public static final String LANGUAGE_SWITCH_PARAMETER = "language";
 	public static final String LANGUAGE_PRE_SWITCH_PAGE_PARAMETERS = "currentParameters";

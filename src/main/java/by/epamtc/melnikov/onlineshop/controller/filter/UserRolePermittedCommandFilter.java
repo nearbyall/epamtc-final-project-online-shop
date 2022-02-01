@@ -29,6 +29,8 @@ public class UserRolePermittedCommandFilter implements Filter {
 	private static final Set<CommandHolder> guestCommands = EnumSet.of(
 		CommandHolder.OPEN_MAIN_PAGE,
 		CommandHolder.OPEN_CATALOG_PAGE,
+		CommandHolder.SEND_FORGET_PASSWORD_DATA,
+		CommandHolder.FORGET_PASSWORD_LOG_IN,
 		CommandHolder.OPEN_CATALOG_BY_CATEGORY_PAGE,
 		CommandHolder.OPEN_PRODUCT_PAGE,
 		CommandHolder.LOG_IN,
@@ -39,6 +41,8 @@ public class UserRolePermittedCommandFilter implements Filter {
 	private static final Set<CommandHolder> userCommands = EnumSet.of(
 		CommandHolder.OPEN_MAIN_PAGE,
 		CommandHolder.OPEN_CATALOG_PAGE,
+		CommandHolder.SEND_FORGET_PASSWORD_DATA,
+		CommandHolder.FORGET_PASSWORD_LOG_IN,
 		CommandHolder.OPEN_CATALOG_BY_CATEGORY_PAGE,
 		CommandHolder.OPEN_PRODUCT_PAGE,
 		CommandHolder.LOG_IN,
@@ -61,6 +65,8 @@ public class UserRolePermittedCommandFilter implements Filter {
 	private static final Set<CommandHolder> adminCommands = EnumSet.of(
 		CommandHolder.OPEN_MAIN_PAGE,
 		CommandHolder.OPEN_CATALOG_PAGE,
+		CommandHolder.SEND_FORGET_PASSWORD_DATA,
+		CommandHolder.FORGET_PASSWORD_LOG_IN,
 		CommandHolder.OPEN_CATALOG_BY_CATEGORY_PAGE,
 		CommandHolder.OPEN_PRODUCT_PAGE,
 		CommandHolder.LOG_IN,
@@ -93,7 +99,6 @@ public class UserRolePermittedCommandFilter implements Filter {
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-        
 		UserType userRole = UserType.valueOf(request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE).toString().toUpperCase());
 		Set<CommandHolder> permittedCommands;
 		switch (userRole) {

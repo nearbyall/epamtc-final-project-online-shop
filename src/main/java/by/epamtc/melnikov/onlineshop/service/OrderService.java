@@ -50,6 +50,6 @@ public interface OrderService {
 	 * @return statusId the {@link Order}'s statusId that to be updated
 	 * @throws ServiceException if DAO layer throw their {@link DAOException}
 	 */
-	int updateOrderStatusByOrderId(int orderId, int statusId) throws ServiceException;
+	int updateOrderStatus(int orderId, int statusId) throws ServiceException;
 	
 }

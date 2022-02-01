@@ -35,9 +35,8 @@ public class CommandConfirmOrder implements Command {
 		int orderId = Integer.parseInt(request.getParameter(JSPAttributeStorage.ORDER_ID));
 		int statusId = getReversedOrderStatusId(Integer.parseInt(request.getParameter(JSPAttributeStorage.ORDER_STATUS_ID)));
 		
-		
 		try {
-			orderService.updateOrderStatusByOrderId(orderId, statusId);
+			orderService.updateOrderStatus(orderId, statusId);
 			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);

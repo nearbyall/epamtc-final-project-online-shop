@@ -85,6 +85,26 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO {
 	}
 	
 	@Override
+	public User findUserByIdAndToken(int userId, String token) throws DAOException {
+		
+		ResultSet resultSet = null;
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_USER_BY_ID_AND_LOG_IN_TOKEN)) {
+			preparedStatement.setInt(1, userId);
+			preparedStatement.setString(2, token);
+			resultSet = preparedStatement.executeQuery();
+			return extractFoundedUserFromResultSet(resultSet);
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("User userId: %d, token %s finding error", userId, token), e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
+		}
+		
+	}
+	
+	@Override
 	public List<User> findAllUsers() throws DAOException {
 		
 		List<User> users;
@@ -171,6 +191,59 @@ public class SQLUserDAOImpl extends SQLBaseDAO implements UserDAO {
 		}
 		
 		return user;
+		
+	}
+
+	@Override
+	public String updateUserRememberToken(int userId, String token) throws DAOException {
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_USER_LOG_IN_TOKEN)) {
+			preparedStatement.setString(1, token);
+			preparedStatement.setInt(2, userId);
+			preparedStatement.executeUpdate();
+		} catch(SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("User %s token update error", token), e);
+			throw new DAOException("service.commonError", e);
+		}
+		
+		return token;
+		
+	}
+	
+	@Override
+	public double findUserBalance(int userId) throws DAOException {
+		
+		ResultSet resultSet = null;
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.FIND_USER_BALANCE_BY_ID)) {
+			preparedStatement.setInt(1, userId);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			return resultSet.getDouble(1);
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn("User balance finding error", e);
+			throw new DAOException("service.commonError", e);
+		} finally {
+			closeResultSet(resultSet);
+		}
+
+	}
+
+	@Override
+	public int deleteUserRememberToken(int userId) throws DAOException {
+		
+		try (Connection connection = pool.getConnection();
+			 PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_USER_LOG_IN_TOKEN_TO_NULL)) {
+			preparedStatement.setInt(1, userId);
+			preparedStatement.executeUpdate();
+		} catch (SQLException | ConnectionPoolException e) {
+			logger.warn(String.format("User id: %d, token delete error", userId), e);
+			throw new DAOException("service.commonError", e);
+		}
+		
+		return userId;
 		
 	}
 	

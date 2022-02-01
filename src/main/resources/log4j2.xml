@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="INFO">
+<Configuration status="ERROR">
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-core</artifactId>
+		<version>2.15.0</version>
+	</dependency>
+	<Properties>
+		<property name="pattern_file">
+			%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{10} - %msg%n
+		</property>
+		<property name="pattern_console">
+			%relative %-5level %logger{10} - %msg%n
+		</property>
+	</Properties>
 	<Appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-3level %logger{36} - %msg%n"/>
+			<PatternLayout pattern="${pattern_console}"/>
 		</Console>
-		<RollingFile name="FileLogger" fileName="../library-log/library.log" filePattern="../library-log/library-%d{yyyy-MM-dd}.log">
-			<PatternLayout>
-				<pattern>[%-3level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
-			</PatternLayout>
-			<Policies>
-				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
-			</Policies>
-		</RollingFile>
+		<File name = "File" fileName = "logs/log.txt" bufferedIO="true">
+			<PatternLayout pattern="${pattern_file}"/>
+		</File>
 	</Appenders>
-
 	<Loggers>
-		<Root level="INFO">
-			<AppenderRef ref="Console" />
-			<AppenderRef ref="FileLogger" />
+		<Root level="debug">
+			<AppenderRef ref="File"/>
+			<AppenderRef ref="Console"/>
 		</Root>
 	</Loggers>
 </Configuration>

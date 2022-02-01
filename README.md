@@ -4,13 +4,15 @@
 ## [DATA BASE INFO](https://github.com/nearbyall/epamtc-final-project-online-shop/tree/master/db) 
 - [scheme.png](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/scheme.png)
 - [script.sql](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/script.sql)
+- [model.mwb](https://github.com/nearbyall/epamtc-final-project-online-shop/blob/master/db/model.mwb)
 
 ###### Website visitors are provided with the following services:
 ***
 ### *Guest:*
-- logination
-- forget password function (in process)
-- remember me function (in process)
+- log in by the login\password or login by remember me command next time
+  if checkbox had being activated (cookie token)
+- forget password function (with sending email, which contains single-use auth-token)
+- remember me function
 - registration
 - view categories
 - view catalog list (with pagination context)
@@ -45,7 +47,7 @@
 - Java 11
 - Maven
 - Git
-- JavaEE: Servlet, JSP, JSTL
+- JavaEE: Servlet, JSP, JSTL, JavaMail
 - Server / Servlet container: Tomcat 9
 - Database: MySQL
 - JDBC

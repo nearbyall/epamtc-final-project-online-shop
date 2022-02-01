@@ -1,7 +1,7 @@
 		<footer>
 			<ul>
 				<li>
-					Copyright 2021 JWD EPAMTC by Vladislav Melnikov. All rights reserved.
+					<crt:copyright/>
 				</li>
 			</ul>
 		</footer>

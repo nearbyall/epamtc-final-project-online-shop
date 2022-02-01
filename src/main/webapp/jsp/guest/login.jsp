@@ -51,7 +51,7 @@
             
 		</fieldset>
         
-		<a href="${pageContext.request.contextPath}/jsp/forgetPassword.jsp">
+		<a href="${pageContext.request.contextPath}/jsp/guest/forgetPassword.jsp">
 			<fmt:message bundle="${locale}" key="login.forgetPassword"/>
 		</a>
         

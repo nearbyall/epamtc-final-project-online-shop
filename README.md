@@ -9,7 +9,7 @@
 ###### Website visitors are provided with the following services:
 ***
 ### *Guest:*
-- log in by the login\password or login by remember me command next time
+- log in by the email\password or login by remember me command next time
   if checkbox had being activated (cookie token)
 - forget password function (with sending email, which contains single-use auth-token)
 - remember me function

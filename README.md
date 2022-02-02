@@ -12,7 +12,6 @@
 - log in by the email\password or login by remember me command next time
   if checkbox had being activated (cookie token)
 - forget password function (with sending email, which contains single-use auth-token)
-- remember me function
 - registration
 - view categories
 - view catalog list (with pagination context)

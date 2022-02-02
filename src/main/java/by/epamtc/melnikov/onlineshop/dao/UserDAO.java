@@ -35,10 +35,12 @@ public interface UserDAO {
 	User findUserByEmail(String email) throws DAOException;
 	
 	/**
+	 * Retrieves and returns {@link User}.
+	 * If no such <tt>user</tt> contains into data source throws DAOException.
 	 * 
-	 * @param userId
-	 * @param token
-	 * @return
+	 * @param userId {@link User}'s id
+	 * @param token unique {@link User}'s token
+	 * @return {@link User} which has been found
 	 * @throws DAOException
 	 */
 	User findUserByIdAndToken(int userId, String token) throws DAOException;
@@ -83,27 +85,33 @@ public interface UserDAO {
 	User updateUserBalance(User user) throws DAOException;
 	
 	/**
+	 * Update log in token of {@link User} by id in data source.
+	 * Throws DAOException if an error occurs while writing a <tt>token</tt>.
 	 * 
-	 * @param userId
-	 * @param token
-	 * @return
-	 * @throws DAOException
+	 * @param userId {@link User}'s id that token is updating
+	 * @param token which should be updated
+	 * @return new log in token
+	 * @throws DAOException if an error occurs while writing a <tt>token</tt>
 	 */
 	String updateUserRememberToken(int userId, String token) throws DAOException;
 	
 	/**
+	 * Retrieves and returns {@link User}'s balance by id. Throws DAOException
+	 * if an error occurs while getting <tt>user</tt>
 	 * 
-	 * @param userId
-	 * @return
-	 * @throws DAOException
+	 * @param userId {@link User}'s id that balance is finding
+	 * @return {@link User}'s balance
+	 * @throws DAOException if an error occurs while getting a <tt>user</tt>
 	 */
 	double findUserBalance(int userId) throws DAOException;
 
 	/**
+	 * Removes {@link User}'s log in token by id. Throws DAOException
+	 * if an error occurs while writing <tt>token</tt>
 	 * 
-	 * @param userId
-	 * @return
-	 * @throws DAOException
+	 * @param userId {@link User}'s id that token is removing
+	 * @return {@link User}'s id that token is removed
+	 * @throws DAOException if an error occurs while removing <tt>token</tt>
 	 */
 	int deleteUserRememberToken(int userId) throws DAOException;
 	

@@ -69,7 +69,8 @@ public class UserServiceImpl implements UserService {
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}
-			
+		
+		nullifyUserPassword(user);
 		return user;
 		
 	}
@@ -88,6 +89,7 @@ public class UserServiceImpl implements UserService {
 				if (user.isBanned()) {
 					throw new ServiceException("validation.user.login.isBanned");
 				}
+				nullifyUserPassword(user);
 				return user;
 			} else {
 				throw new ServiceException("validation.user.login.incorrect");
@@ -118,6 +120,7 @@ public class UserServiceImpl implements UserService {
 				if (user.isBanned()) {
 					throw new ServiceException("validation.user.login.isBanned");
 				}
+				nullifyUserPassword(user);
 				return user;
 			}
 			logger.warn(String.format("Cant use token %s for log in", token));
@@ -162,6 +165,7 @@ public class UserServiceImpl implements UserService {
 		
 		try {
 			user = userDAO.findUserByEmail(email);
+			nullifyUserPassword(user);
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}
@@ -178,6 +182,7 @@ public class UserServiceImpl implements UserService {
 			if(userList.isEmpty()) {
 				throw new ServiceException("query.user.getUsers.usersNotFound");
 			} else {
+				nullifyUsersPassword(userList);
 				return userList;
 			}
 		} catch (DAOException e) {
@@ -276,15 +281,36 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	/**
+	 * Constructs link for log in process by token.
 	 * 
-	 * @param commandName
-	 * @param pageRootUrl
-	 * @param token
-	 * @return
+	 * @param commandName log in command in {@link CommandHolder}
+	 * @param pageRootUrl root URL
+	 * @param token single-use token for authorize
+	 * @return new log in link
 	 */
 	private String constructLogInLink(String commandName, String pageRootUrl, String token) {
 		return pageRootUrl + '?' +JSPAttributeStorage.COMMAND + '=' + commandName
 				+ '&' + JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN + '=' + token;
+	}
+	
+	/**
+	 * Nullifies the password of the {@link User}
+	 * 
+	 * @param user
+	 */
+	private void nullifyUserPassword(User user) {
+		user.setEncryptedPassword(StringUtils.EMPTY);
+	}
+	
+	/**
+	 * Resets the password of each user from {@link List} of {@link User}s.
+	 * 
+	 * @param users
+	 */
+	private void nullifyUsersPassword(List<User> users) {
+		for (User user : users) {
+			nullifyUserPassword(user);
+		}
 	}
 
 }

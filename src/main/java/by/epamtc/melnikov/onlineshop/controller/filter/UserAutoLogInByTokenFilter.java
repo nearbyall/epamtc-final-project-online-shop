@@ -22,7 +22,11 @@ import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
 /**
- * Servlet Filter implementation class UserAutoLogInByTokenFilter
+ * Servlet Filter implementation class UserAutoLogInByTokenFilter.
+ * Required to implement the remember me function.
+ * 
+ * @author nearbyall
+ * 
  */
 public class UserAutoLogInByTokenFilter implements Filter {
 	
@@ -47,7 +51,6 @@ public class UserAutoLogInByTokenFilter implements Filter {
 							request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
 							request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
 							request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
-
 							response.sendRedirect(getRedirectURL(request, CommandHolder.OPEN_MAIN_PAGE.getCommandName()));
 							return;
 						} catch (ServiceException e) {

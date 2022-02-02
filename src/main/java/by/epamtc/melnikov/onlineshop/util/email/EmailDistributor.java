@@ -19,6 +19,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * A class that allows you to work with JavaMail.
+ * Required in case you need to send a login link or notify the user of something.
+ * 
+ * @author nearbyall
+ *
+ */
 public class EmailDistributor {
 	
 	private static final Logger logger = LogManager.getLogger();

@@ -22,7 +22,7 @@ public class SessionRequestContent {
 	private Map<String, Object> requestAttributes;
 	private Map<String, String[]> requestParameters;
 	private Map<String, Object> sessionAttributes;
-	private static final Logger log = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger();
 
 	public SessionRequestContent(HttpServletRequest request) {
 		sessionAttributes = new HashMap<>();
@@ -42,8 +42,8 @@ public class SessionRequestContent {
 					sessionAttributes.put(attributeName, currentSession.getAttribute(attributeName));
 				}
 			}
-		} catch (NullPointerException npe) {
-			log.error(npe);
+		} catch (NullPointerException e) {
+			logger.error(e);
 		}
 	}
 

@@ -310,12 +310,16 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 	}
 	
 	/**
+	 * Updates {@link User}'s balance by id in data source.
+	 * The method does not have its own connection to data source, 
+	 * so need to put it as a parameter. 
+	 * Throws DAOException if an error occurs while writing <tt>newBalance</tt>
 	 * 
-	 * @param newBalance
-	 * @param userId
-	 * @param connection
-	 * @return
-	 * @throws DAOException
+	 * @param newBalance {@link User}'s balance which should be updated
+	 * @param userId {@link User}'s id that balance should be updated
+	 * @param connection {@link Connection} to contact with data source
+	 * @return new {@link User}'s balance
+	 * @throws DAOException if an error occurs while writing <tt>newBalance</tt>
 	 */
 	public double updateUserBalance(double newBalance, int userId, Connection connection) throws DAOException {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_USER_BALANCE)) {

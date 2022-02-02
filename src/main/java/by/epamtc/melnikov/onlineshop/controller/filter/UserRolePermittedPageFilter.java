@@ -22,11 +22,14 @@ import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 
 /**
- * Servlet Filter implementation class UserRolePermittedPageFilter
+ * Servlet Filter implementation class UserRolePermittedPageFilter.
+ * Needed to check if the user has the right to go to the page specified in the request.
+ * 
+ * @author nearbyall
  */
 public class UserRolePermittedPageFilter implements Filter {
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(UserRolePermittedPageFilter.class);
 
 	private static final Set<String> adminPages = new HashSet<>();
 	private static final Set<String> userPages = new HashSet<>();

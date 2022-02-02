@@ -7,6 +7,12 @@ import javax.servlet.jsp.tagext.TagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Custom jsp tag for footer.
+ * 
+ * @author nearbyall
+ *
+ */
 public class CopyrightTag extends TagSupport {
 	
 	private static final long serialVersionUID = -4801513380481335550L;

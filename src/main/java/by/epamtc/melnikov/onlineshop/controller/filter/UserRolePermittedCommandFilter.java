@@ -18,13 +18,14 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
- * Servlet Filter implementation class UserRolePermittedCommandFilter
+ * Servlet Filter implementation class UserRolePermittedCommandFilter.
+ * Needed to check if the user has the right to execute the command received in the request.
  * 
  * @author nearbyall
  */
 public class UserRolePermittedCommandFilter implements Filter {
 
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(UserRolePermittedCommandFilter.class);
 	
 	private static final Set<CommandHolder> guestCommands = EnumSet.of(
 		CommandHolder.OPEN_MAIN_PAGE,

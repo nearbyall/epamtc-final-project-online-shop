@@ -8,6 +8,12 @@ import by.epamtc.melnikov.onlineshop.util.exception.UtilException;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+/**
+ * The class is required for the correct localization of an email message.
+ * 
+ * @author nearbyall
+ *
+ */
 public class EmailMessageLocalizationDispatcher {
 	
 	private static final String RESOURCE_NAME = "emailMessages";

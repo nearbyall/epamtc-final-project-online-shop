@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
@@ -13,6 +14,7 @@ import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
 import by.epamtc.melnikov.onlineshop.controller.command.Direction;
 import by.epamtc.melnikov.onlineshop.service.OrderService;
 import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
+import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 
 /**
@@ -25,14 +27,18 @@ import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
 public class CommandConstructOrder implements Command {
 
 	private static final OrderService orderService = ServiceProvider.getInstance().getOrderService();
+	private static final UserService userService = ServiceProvider.getInstance().getUserService();
 	
 	@Override
 	public CommandResult execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		CommandResult result = new CommandResult();
+		User user;
 		
 		try {
 			orderService.addOrder(Integer.parseInt(request.getParameter(JSPAttributeStorage.USER_ID)));
+			user = userService.findUserByEmail((String) request.getSession().getAttribute(JSPAttributeStorage.USER_EMAIL));
+			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
 			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);

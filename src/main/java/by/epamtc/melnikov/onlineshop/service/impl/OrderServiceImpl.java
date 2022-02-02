@@ -82,28 +82,7 @@ public class OrderServiceImpl implements OrderService {
 		
 	}
 	
-	private List<OrderItem> constructOrderItemsByCartItems(List<CartItem> cartItems, int orderId) {
-		
-		List<OrderItem> orderItems = new ArrayList<>();
-		
-		for (CartItem cartItem : cartItems) {
-			
-			OrderItem orderItem = new OrderItem();
-			
-			orderItem.setOrderId(orderId);
-			orderItem.setCount(cartItem.getCount());
-			orderItem.setProduct(cartItem.getProduct());
-			orderItem.setTotalPrice(cartItem.getTotalPrice());
-			orderItem.setCreatedAt(cartItem.getCreatedAt());
-			orderItem.setUpdatedAt(cartItem.getUpdatedAt());
-			
-			orderItems.add(orderItem);
-			
-		}
-		
-		return orderItems;
-		
-	}
+
 	
 	@Override
 	public List<Order> findAllOrders() throws ServiceException {
@@ -162,9 +141,10 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	/**
+	 * Calculates total price of {@link OrderItem}s
 	 * 
-	 * @param orderItems
-	 * @return
+	 * @param orderItems {@link List} of {@link OrderItem}
+	 * @return total price of cart
 	 */
 	private double calculateTotalPrice(List<OrderItem> orderItems) {
 		
@@ -179,11 +159,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	/**
+	 * Checks if the user has enough money to construct an order.
 	 * 
-	 * @param userId
-	 * @param totalPrice
-	 * @return
-	 * @throws ServiceException
+	 * @param userId {@link User}'s id
+	 * @param totalPrice price of order
+	 * @return true if the {@link User} can construct an order, false otherwise
+	 * @throws ServiceException if DAO layer throw their {@link DAOException}
 	 */
 	private boolean checkOpportunityForBuy(int userId, double totalPrice) throws ServiceException {
 		
@@ -199,6 +180,37 @@ public class OrderServiceImpl implements OrderService {
 		} else {
 			return false;
 		}
+		
+	}
+	
+	/**
+	 * Constructs {@link List} of {@link OrderItem}s by {@link List} of {@link CartItem}s
+	 * and {@link Order}'s id.
+	 * 
+	 * @param cartItems {@link List} of {@link CartItem}s
+	 * @param orderId {@link Order}'s id
+	 * @return {@link List} of {@link OrderItem}s
+	 */
+	private List<OrderItem> constructOrderItemsByCartItems(List<CartItem> cartItems, int orderId) {
+		
+		List<OrderItem> orderItems = new ArrayList<>();
+		
+		for (CartItem cartItem : cartItems) {
+			
+			OrderItem orderItem = new OrderItem();
+			
+			orderItem.setOrderId(orderId);
+			orderItem.setCount(cartItem.getCount());
+			orderItem.setProduct(cartItem.getProduct());
+			orderItem.setTotalPrice(cartItem.getTotalPrice());
+			orderItem.setCreatedAt(cartItem.getCreatedAt());
+			orderItem.setUpdatedAt(cartItem.getUpdatedAt());
+			
+			orderItems.add(orderItem);
+			
+		}
+		
+		return orderItems;
 		
 	}
 

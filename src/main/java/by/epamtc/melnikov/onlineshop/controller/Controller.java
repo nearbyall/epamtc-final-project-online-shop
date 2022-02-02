@@ -29,7 +29,7 @@ public class Controller extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private static final Logger logger = LogManager.getLogger();
+	private static final Logger logger = LogManager.getLogger(Controller.class);
 	
 	public Controller() {
 		super();

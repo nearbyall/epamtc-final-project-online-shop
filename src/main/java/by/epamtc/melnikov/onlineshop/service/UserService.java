@@ -39,10 +39,12 @@ public interface UserService {
 	User logInByPassword(String email, String password) throws ServiceException;
 	
 	/**
+	 * Gets <tt>token</tt> as a parameter and
+	 * does log in process by log in token.
 	 * 
-	 * @param token
-	 * @return
-	 * @throws ServiceException
+	 * @param token which needed to log in
+	 * @return {@link User} which has been authorize
+	 * @throws ServiceException if DAO layer throw their {@link DAOException}
 	 */
 	User logInByToken(String token) throws ServiceException;
 	

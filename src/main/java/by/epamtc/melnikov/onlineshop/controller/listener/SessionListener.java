@@ -7,7 +7,8 @@ import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
 
 /**
- * Application Lifecycle Listener implementation class SessionListener
+ * Application Lifecycle Listener implementation class SessionListener.
+ * Needed to initialize and clear data when creating and destroying a session.
  *
  * @author nearbyall
  */

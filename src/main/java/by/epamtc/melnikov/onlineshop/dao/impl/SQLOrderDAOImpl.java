@@ -52,6 +52,7 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 			for (OrderItem orderItem : order.getOrderItems()) {
 				addOrderItem(orderItem, connection);
 			}
+			updateProductsCount(order.getOrderItems(), connection);
 			updateUserBalance(order.getUser().getBalance(), order.getUser().getId(), connection);
 			deleteCartItemsByUserId(order.getUser().getId(), connection);
 			connection.commit();
@@ -331,6 +332,29 @@ public class SQLOrderDAOImpl extends SQLBaseDAO implements OrderDAO {
 			throw new DAOException("query.balance.updating.error", e);
 		}
 		return newBalance;
+	}
+	
+	/**
+	 * Updates {@link Product}'s count in data source by id, which includes <tt>orderItems</tt>.
+	 * The method does not have its own connection to data source, 
+	 * so need to put it as a parameter. 
+	 * Throws DAOException if an error occurs while writing <tt>product</tt>
+	 * 
+	 * @param orderItems {@link List} of {@link OrderItem}s
+	 * @param connection {@link Connection} to contact with data source
+	 */
+	public void updateProductsCount(List<OrderItem> orderItems, Connection connection) throws DAOException {
+		for (OrderItem item : orderItems) {
+			try (PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesStorage.UPDATE_PRODUCT_COUNT_BY_PRODUCT_ID)) {
+				preparedStatement.setInt(1, item.getProduct().getCount() - item.getCount());
+				preparedStatement.setTimestamp(2, item.getUpdatedAt());
+				preparedStatement.setInt(3, item.getProduct().getId());
+				preparedStatement.executeUpdate();
+			} catch (SQLException e) {
+				logger.warn("Product count updating error ", e);
+				throw new DAOException("query.product.updating.error", e);
+			}
+		}
 	}
 
 }

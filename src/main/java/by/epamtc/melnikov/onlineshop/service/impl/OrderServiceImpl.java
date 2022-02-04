@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
 		} catch (DAOException e1) {
 			throw new ServiceException("service.commonError");
 		}
-		if (checkOpportunityForBuy(userId, totalPrice)) {
+		if (checkBalanceForBuy(userId, totalPrice) & checkCountForBuy(orderItems)) {
 			java.util.Date incomingValue = new java.util.Date(System.currentTimeMillis());
 			Timestamp currentTimestamp = new Timestamp(incomingValue.getTime());
 			Order order = new Order();
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
 			}
 			return order;
 		} else {
-			throw new ServiceException("query.orders.addOrder.notEnoughMoney");
+			throw new ServiceException("query.orders.addOrder.commonError");
 		}
 		
 	}
@@ -141,6 +141,39 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	/**
+	 * Constructs {@link List} of {@link OrderItem}s by {@link List} of {@link CartItem}s
+	 * and {@link Order}'s id.
+	 * 
+	 * @param cartItems {@link List} of {@link CartItem}s
+	 * @param orderId {@link Order}'s id
+	 * @return {@link List} of {@link OrderItem}s
+	 */
+	private List<OrderItem> constructOrderItemsByCartItems(List<CartItem> cartItems, int orderId) {
+		
+		java.util.Date incomingValue = new java.util.Date(System.currentTimeMillis());
+		Timestamp currentTimestamp = new Timestamp(incomingValue.getTime());
+		List<OrderItem> orderItems = new ArrayList<>();
+		
+		for (CartItem cartItem : cartItems) {
+			
+			OrderItem orderItem = new OrderItem();
+			
+			orderItem.setOrderId(orderId);
+			orderItem.setCount(cartItem.getCount());
+			orderItem.setProduct(cartItem.getProduct());
+			orderItem.setTotalPrice(cartItem.getTotalPrice());
+			orderItem.setCreatedAt(currentTimestamp);
+			orderItem.setUpdatedAt(currentTimestamp);
+			
+			orderItems.add(orderItem);
+			
+		}
+		
+		return orderItems;
+		
+	}
+	
+	/**
 	 * Calculates total price of {@link OrderItem}s
 	 * 
 	 * @param orderItems {@link List} of {@link OrderItem}
@@ -166,7 +199,7 @@ public class OrderServiceImpl implements OrderService {
 	 * @return true if the {@link User} can construct an order, false otherwise
 	 * @throws ServiceException if DAO layer throw their {@link DAOException}
 	 */
-	private boolean checkOpportunityForBuy(int userId, double totalPrice) throws ServiceException {
+	private boolean checkBalanceForBuy(int userId, double totalPrice) throws ServiceException {
 		
 		double userBalance;
 		try {
@@ -184,34 +217,18 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	/**
-	 * Constructs {@link List} of {@link OrderItem}s by {@link List} of {@link CartItem}s
-	 * and {@link Order}'s id.
+	 * Checks if the product has enough count to be sell
 	 * 
-	 * @param cartItems {@link List} of {@link CartItem}s
-	 * @param orderId {@link Order}'s id
-	 * @return {@link List} of {@link OrderItem}s
+	 * @param orderItems {@link List} of {@link OrderItem}s
+	 * @return true if count is enough, false otherwise
 	 */
-	private List<OrderItem> constructOrderItemsByCartItems(List<CartItem> cartItems, int orderId) {
-		
-		List<OrderItem> orderItems = new ArrayList<>();
-		
-		for (CartItem cartItem : cartItems) {
-			
-			OrderItem orderItem = new OrderItem();
-			
-			orderItem.setOrderId(orderId);
-			orderItem.setCount(cartItem.getCount());
-			orderItem.setProduct(cartItem.getProduct());
-			orderItem.setTotalPrice(cartItem.getTotalPrice());
-			orderItem.setCreatedAt(cartItem.getCreatedAt());
-			orderItem.setUpdatedAt(cartItem.getUpdatedAt());
-			
-			orderItems.add(orderItem);
-			
+	private boolean checkCountForBuy(List<OrderItem> orderItems) {
+		for (OrderItem item : orderItems) {
+			if (item.getProduct().getCount() < item.getCount()) {
+				return false;
+			}
 		}
-		
-		return orderItems;
-		
+		return true;
 	}
 
 }

@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
+import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 
 /**
  * Servlet Filter implementation class UserRolePermittedPageFilter.
@@ -27,7 +28,7 @@ import by.epamtc.melnikov.onlineshop.controller.PageStorage;
  * 
  * @author nearbyall
  */
-public class UserRolePermittedPageFilter implements Filter {
+public class UserRolePermittedPageFilter extends AbstractFilter implements Filter {
 	
 	private static final Logger logger = LogManager.getLogger(UserRolePermittedPageFilter.class);
 
@@ -35,44 +36,6 @@ public class UserRolePermittedPageFilter implements Filter {
 	private static final Set<String> userPages = new HashSet<>();
 	private static final Set<String> guestPages = new HashSet<>();
 
-	@Override
-	public void init(FilterConfig filterConfig) {
-		fillPermittedAdminPages();
-		fillPermittedUserPages();
-		fillPermittedGuestPages();
-	}
-
-	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest) servletRequest;
-		HttpServletResponse response = (HttpServletResponse) servletResponse;
-
-		UserType userRole = UserType.valueOf(request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE).toString().toUpperCase());
-		Set<String> permittedPages;
-		switch (userRole) {
-			case ADMIN:
-				permittedPages = adminPages;
-				break;
-			case USER:
-				permittedPages = userPages;
-				break;
-			case GUEST:
-				permittedPages = guestPages;
-				break;
-			default:
-				permittedPages = Collections.emptySet();
-		}
-
-		String requestPage = request.getRequestURI().replace(request.getContextPath(), "");
-
-		if (permittedPages.contains(requestPage)) {
-			filterChain.doFilter(servletRequest, servletResponse);
-		} else {
-			logger.info(String.format("Page is not in %s's Role scope: %s", userRole.name(), requestPage));
-			request.getRequestDispatcher(PageStorage.HOME).forward(request, response);
-		}
-	}
-    
 	private void fillPermittedAdminPages() {
 		guestPages.add(PageStorage.ROOT);
 		guestPages.add(PageStorage.HOME);
@@ -116,4 +79,43 @@ public class UserRolePermittedPageFilter implements Filter {
 		guestPages.add(PageStorage.CATALOG_BY_CATEGORY);
 		guestPages.add(PageStorage.FORGET_PASSWORD);
 	}
+	
+	@Override
+	public void init(FilterConfig filterConfig) {
+		fillPermittedAdminPages();
+		fillPermittedUserPages();
+		fillPermittedGuestPages();
+	}
+
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+		HttpServletRequest request = (HttpServletRequest) servletRequest;
+		HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+		UserType userRole = UserType.valueOf(request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE).toString().toUpperCase());
+		Set<String> permittedPages;
+		switch (userRole) {
+			case ADMIN:
+				permittedPages = adminPages;
+				break;
+			case USER:
+				permittedPages = userPages;
+				break;
+			case GUEST:
+				permittedPages = guestPages;
+				break;
+			default:
+				permittedPages = Collections.emptySet();
+		}
+
+		String requestPage = request.getRequestURI().replace(request.getContextPath(), "");
+
+		if (permittedPages.contains(requestPage)) {
+			filterChain.doFilter(servletRequest, servletResponse);
+		} else {
+			logger.info(String.format("Page is not in %s's Role scope: %s", userRole.name(), requestPage));
+			request.getRequestDispatcher(getRedirectURL(request, CommandHolder.OPEN_MAIN_PAGE.name())).forward(request, response);
+		}
+	}
+    
 }

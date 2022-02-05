@@ -28,7 +28,7 @@ import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
  * @author nearbyall
  * 
  */
-public class UserAutoLogInByTokenFilter implements Filter {
+public class UserAutoLogInByTokenFilter extends AbstractFilter implements Filter {
 	
 	private static final Logger logger = LogManager.getLogger(UserAutoLogInByTokenFilter.class);
 
@@ -51,7 +51,7 @@ public class UserAutoLogInByTokenFilter implements Filter {
 							request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
 							request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
 							request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
-							response.sendRedirect(getRedirectURL(request, CommandHolder.OPEN_MAIN_PAGE.getCommandName()));
+							response.sendRedirect(getRedirectURL(request, CommandHolder.OPEN_MAIN_PAGE.name()));
 							return;
 						} catch (ServiceException e) {
 							logger.info(String.format("RememberToken is invalid, %s", token), e);
@@ -65,10 +65,6 @@ public class UserAutoLogInByTokenFilter implements Filter {
 			}
 		}
 		filterChain.doFilter(servletRequest, servletResponse);
-	}
-
-	private String getRedirectURL(HttpServletRequest request, String commandName) {
-		return request.getContextPath() + "/Controller" + "?" + JSPAttributeStorage.COMMAND + "=" + commandName;
 	}
 	
 }

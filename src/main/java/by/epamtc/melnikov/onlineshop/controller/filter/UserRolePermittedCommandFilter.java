@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
 import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
-import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ import java.util.Set;
  * 
  * @author nearbyall
  */
-public class UserRolePermittedCommandFilter implements Filter {
+public class UserRolePermittedCommandFilter extends AbstractFilter implements Filter {
 
 	private static final Logger logger = LogManager.getLogger(UserRolePermittedCommandFilter.class);
 	
@@ -42,12 +41,8 @@ public class UserRolePermittedCommandFilter implements Filter {
 	private static final Set<CommandHolder> userCommands = EnumSet.of(
 		CommandHolder.OPEN_MAIN_PAGE,
 		CommandHolder.OPEN_CATALOG_PAGE,
-		CommandHolder.SEND_FORGET_PASSWORD_DATA,
-		CommandHolder.FORGET_PASSWORD_LOG_IN,
 		CommandHolder.OPEN_CATALOG_BY_CATEGORY_PAGE,
 		CommandHolder.OPEN_PRODUCT_PAGE,
-		CommandHolder.LOG_IN,
-		CommandHolder.REGISTRATION,
 		CommandHolder.SWITCH_LANGUAGE,
 		CommandHolder.ADD_PRODUCT_TO_CART,
 		CommandHolder.CONSTRUCT_ORDER,
@@ -66,12 +61,8 @@ public class UserRolePermittedCommandFilter implements Filter {
 	private static final Set<CommandHolder> adminCommands = EnumSet.of(
 		CommandHolder.OPEN_MAIN_PAGE,
 		CommandHolder.OPEN_CATALOG_PAGE,
-		CommandHolder.SEND_FORGET_PASSWORD_DATA,
-		CommandHolder.FORGET_PASSWORD_LOG_IN,
 		CommandHolder.OPEN_CATALOG_BY_CATEGORY_PAGE,
 		CommandHolder.OPEN_PRODUCT_PAGE,
-		CommandHolder.LOG_IN,
-		CommandHolder.REGISTRATION,
 		CommandHolder.SWITCH_LANGUAGE,
 		CommandHolder.ADD_PRODUCT_TO_CART,
 		CommandHolder.CONSTRUCT_ORDER,
@@ -128,7 +119,8 @@ public class UserRolePermittedCommandFilter implements Filter {
 			filterChain.doFilter(servletRequest, servletResponse);
 		} else {
 			logger.info(String.format("Command is not in %s's Role scope: %s", userRole.name(), commandName));
-			request.getRequestDispatcher(PageStorage.HOME).forward(request, response);
+			request.getRequestDispatcher(getRedirectURL(request, CommandHolder.OPEN_MAIN_PAGE.name())).forward(request, response);
 		}
 	}
+	
 }

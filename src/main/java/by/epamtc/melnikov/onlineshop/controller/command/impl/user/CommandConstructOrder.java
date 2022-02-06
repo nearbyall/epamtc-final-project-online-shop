@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -36,10 +36,10 @@ public class CommandConstructOrder implements Command {
 		User user;
 		
 		try {
-			orderService.addOrder(Integer.parseInt(request.getParameter(JSPAttributeStorage.USER_ID)));
-			user = userService.findUserByEmail((String) request.getSession().getAttribute(JSPAttributeStorage.USER_EMAIL));
-			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			orderService.addOrder(Integer.parseInt(request.getParameter(AttributeNameStorage.USER_ID)));
+			user = userService.findUserByEmail((String) request.getSession().getAttribute(AttributeNameStorage.USER_EMAIL));
+			request.getSession().setAttribute(AttributeNameStorage.USER_DATA, user);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);

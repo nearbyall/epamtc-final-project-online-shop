@@ -12,7 +12,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.LocaleStorage;
 
 /**
@@ -35,7 +35,7 @@ public class LocalizationFilter implements Filter {
 	}
 
 	private void setLocalization(HttpServletRequest request, HttpServletResponse response) {
-		Object langAttribute = request.getSession().getAttribute(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE);
+		Object langAttribute = request.getSession().getAttribute(AttributeNameStorage.LANGUAGE_CURRENT_PAGE);
 		if (langAttribute == null) {
 			Cookie[] cookies = request.getCookies();
 			if (cookies == null) {
@@ -43,9 +43,9 @@ public class LocalizationFilter implements Filter {
 			} else {
 				String cookieLang = null;
 				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE)) {
+					if (cookie.getName().equals(AttributeNameStorage.LANGUAGE_CURRENT_PAGE)) {
 						cookieLang = cookie.getValue();
-						request.getSession().setAttribute(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE, cookieLang);
+						request.getSession().setAttribute(AttributeNameStorage.LANGUAGE_CURRENT_PAGE, cookieLang);
 					}
 				}
 				if (cookieLang == null) {
@@ -58,9 +58,9 @@ public class LocalizationFilter implements Filter {
 	private void setLocaleToCookieAndSession(HttpServletRequest request, HttpServletResponse response) {
 		String currentLang = request.getLocale().getLanguage();
 		Locale resultLocale = LocaleStorage.getLocaleFromLanguage(currentLang).getLocale();
-		Cookie langCookie = new Cookie(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE, resultLocale.getLanguage());
+		Cookie langCookie = new Cookie(AttributeNameStorage.LANGUAGE_CURRENT_PAGE, resultLocale.getLanguage());
 		response.addCookie(langCookie);
-		request.getSession().setAttribute(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE, currentLang);
+		request.getSession().setAttribute(AttributeNameStorage.LANGUAGE_CURRENT_PAGE, currentLang);
 	}
 
 }

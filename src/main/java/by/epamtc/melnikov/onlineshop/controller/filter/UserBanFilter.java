@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
 import by.epamtc.melnikov.onlineshop.service.exception.ServiceException;
@@ -34,7 +34,7 @@ public class UserBanFilter implements Filter {
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpSession session = request.getSession();
-		String email = (String) session.getAttribute(JSPAttributeStorage.USER_EMAIL);
+		String email = (String) session.getAttribute(AttributeNameStorage.USER_EMAIL);
 		if (email != null) {
 			UserService userService = ServiceProvider.getInstance().getUserService();
 			User user;

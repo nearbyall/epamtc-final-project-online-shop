@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class UserRolePermittedCommandFilter extends AbstractFilter implements Fi
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		UserType userRole = UserType.valueOf(request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE).toString().toUpperCase());
+		UserType userRole = UserType.valueOf(request.getSession().getAttribute(AttributeNameStorage.USER_ROLE).toString().toUpperCase());
 		Set<CommandHolder> permittedCommands;
 		switch (userRole) {
 			case ADMIN:
@@ -107,7 +107,7 @@ public class UserRolePermittedCommandFilter extends AbstractFilter implements Fi
 				permittedCommands = Collections.emptySet();
 		}
 
-		String commandName = request.getParameter(JSPAttributeStorage.COMMAND);
+		String commandName = request.getParameter(AttributeNameStorage.COMMAND);
 		CommandHolder command;
 		if (commandName != null) {
 			command = CommandHolder.getCommandEnumByName(commandName);

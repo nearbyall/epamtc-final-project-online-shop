@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.Product;
 import by.epamtc.melnikov.onlineshop.bean.Review;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -36,13 +36,13 @@ public class CommandOpenProductPage implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		int productId = Integer.parseInt(request.getParameter(JSPAttributeStorage.PRODUCT_ID));
+		int productId = Integer.parseInt(request.getParameter(AttributeNameStorage.PRODUCT_ID));
 		
 		try {
 			Product product = productService.findProductById(productId);
 			List<Review> reviews = reviewService.findAllReviewsByProductId(productId);
-			request.setAttribute(JSPAttributeStorage.PRODUCT, product);
-			request.setAttribute(JSPAttributeStorage.REVIEWS_LIST, reviews);
+			request.setAttribute(AttributeNameStorage.PRODUCT, product);
+			request.setAttribute(AttributeNameStorage.REVIEWS_LIST, reviews);
 			result.setPage(PageStorage.PRODUCT);
 			result.setDirection(Direction.FORWARD);
 		} catch (NumberFormatException e) {

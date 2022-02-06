@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -37,13 +37,13 @@ public class CommandLogOut implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		int userId = (int) request.getSession().getAttribute(JSPAttributeStorage.USER_ID);
+		int userId = (int) request.getSession().getAttribute(AttributeNameStorage.USER_ID);
 		request.getSession().invalidate();
 		
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie: cookies) {
-				if (cookie.getName().equals(JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN)) {
+				if (cookie.getName().equals(AttributeNameStorage.COOKIE_REMEMBER_USER_TOKEN)) {
 					cookie.setMaxAge(0);
 					cookie.setPath(request.getContextPath());
 					cookie.setValue("");

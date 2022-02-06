@@ -6,7 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
+import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 
 /**
  * Realization of the pattern Command. Interface implementations are in the class {@link CommandProvider}.
@@ -34,7 +35,7 @@ public interface Command {
 	 * @param message which must be setted
 	 */
 	default void setErrorMessage(HttpServletRequest request, String message) {
-		request.setAttribute(JSPAttributeStorage.EXCEPTION_MESSAGE, message);
+		request.setAttribute(AttributeNameStorage.EXCEPTION_MESSAGE, message);
 	}
 
 	/**
@@ -51,9 +52,9 @@ public interface Command {
 		if (pagesQuantity % recordsPerPage > 0) {
 			pagesQuantity++;
 		}
-		request.setAttribute(JSPAttributeStorage.PAGINATION_PAGES_QUANTITY, pagesQuantity);
-		request.setAttribute(JSPAttributeStorage.PAGINATION_CURRENT_PAGE, currentPage);
-		request.setAttribute(JSPAttributeStorage.PAGINATION_RECORDS_PER_PAGE, recordsPerPage);
+		request.setAttribute(AttributeNameStorage.PAGINATION_PAGES_QUANTITY, pagesQuantity);
+		request.setAttribute(AttributeNameStorage.PAGINATION_CURRENT_PAGE, currentPage);
+		request.setAttribute(AttributeNameStorage.PAGINATION_RECORDS_PER_PAGE, recordsPerPage);
 	}
 
 	/**
@@ -64,7 +65,7 @@ public interface Command {
 	 * @return Redirect URL
 	 */
 	default String getRedirectURL(HttpServletRequest request, String commandName) {
-		return request.getContextPath() + "/Controller" + "?" + JSPAttributeStorage.COMMAND + "=" + commandName;
+		return request.getContextPath() + PageStorage.CONTROLLER + "?" + AttributeNameStorage.COMMAND + "=" + commandName;
 	}
 	
 }

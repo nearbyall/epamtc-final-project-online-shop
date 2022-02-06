@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -33,13 +33,13 @@ public class CommandOpenEditProductPage implements Command {
 
 		CommandResult result = new CommandResult();
 					
-		int productId = Integer.parseInt(request.getParameter(JSPAttributeStorage.PRODUCT_ID));
-		request.setAttribute(JSPAttributeStorage.PRODUCT_ID, productId);
+		int productId = Integer.parseInt(request.getParameter(AttributeNameStorage.PRODUCT_ID));
+		request.setAttribute(AttributeNameStorage.PRODUCT_ID, productId);
 		List<ProductCategory> categories;
 		
 		try {
 			categories = productService.findAllProductCategories();
-			request.getSession().setAttribute(JSPAttributeStorage.PRODUCT_CATEGORIES_LIST, categories);
+			request.getSession().setAttribute(AttributeNameStorage.PRODUCT_CATEGORIES_LIST, categories);
 			result.setPage(PageStorage.EDIT_PRODUCT);
 			result.setDirection(Direction.FORWARD);
 		} catch (ServiceException e) {

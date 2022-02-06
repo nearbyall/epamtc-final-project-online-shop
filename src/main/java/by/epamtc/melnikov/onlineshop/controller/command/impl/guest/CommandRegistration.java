@@ -11,7 +11,7 @@ import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.builder.UserBuilder;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -42,12 +42,12 @@ public class CommandRegistration implements Command {
 		try {
 			userService.registration(user);
 
-			request.getSession().setAttribute(JSPAttributeStorage.USER_EMAIL, user.getEmail());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
+			request.getSession().setAttribute(AttributeNameStorage.USER_EMAIL, user.getEmail());
+			request.getSession().setAttribute(AttributeNameStorage.USER_ROLE, user.getRole().getName());
+			request.getSession().setAttribute(AttributeNameStorage.USER_ID, user.getId());
+			request.getSession().setAttribute(AttributeNameStorage.USER_DATA, user);
 
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);
@@ -68,11 +68,11 @@ public class CommandRegistration implements Command {
 		Timestamp currentTimestamp = new Timestamp(incomingValue.getTime());
 		
 		User user = new UserBuilder()
-				.withName(request.getParameter(JSPAttributeStorage.USER_FIRST_NAME).trim())
-				.withSurname(request.getParameter(JSPAttributeStorage.USER_LAST_NAME).trim())
-				.withMobile(request.getParameter(JSPAttributeStorage.USER_MOBILE).trim())
-				.withEmail(request.getParameter(JSPAttributeStorage.USER_EMAIL).trim())
-				.withPasswordEncrypted(request.getParameter(JSPAttributeStorage.USER_PASSWORD).trim())
+				.withName(request.getParameter(AttributeNameStorage.USER_FIRST_NAME).trim())
+				.withSurname(request.getParameter(AttributeNameStorage.USER_LAST_NAME).trim())
+				.withMobile(request.getParameter(AttributeNameStorage.USER_MOBILE).trim())
+				.withEmail(request.getParameter(AttributeNameStorage.USER_EMAIL).trim())
+				.withPasswordEncrypted(request.getParameter(AttributeNameStorage.USER_PASSWORD).trim())
 				.withRegisteredAt(currentTimestamp)
 				.withLastLoginAt(currentTimestamp)
 				.withStatusType(StatusType.VALID)

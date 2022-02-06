@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.Product;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -33,13 +33,13 @@ public class CommandOpenCatalogPage implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		int currentPage = Integer.parseInt(request.getParameter(JSPAttributeStorage.PAGINATION_CURRENT_PAGE));
-		int recordsPerPage = Integer.parseInt(request.getParameter(JSPAttributeStorage.PAGINATION_RECORDS_PER_PAGE));
+		int currentPage = Integer.parseInt(request.getParameter(AttributeNameStorage.PAGINATION_CURRENT_PAGE));
+		int recordsPerPage = Integer.parseInt(request.getParameter(AttributeNameStorage.PAGINATION_RECORDS_PER_PAGE));
 		
 		try {
 			definePaginationContext(request, productService.findProductsCount(), currentPage, recordsPerPage);
 			List<Product> products = productService.findAllProductsPerPage(currentPage, recordsPerPage);
-			request.setAttribute(JSPAttributeStorage.PRODUCT_LIST, products);
+			request.setAttribute(AttributeNameStorage.PRODUCT_LIST, products);
 			result.setPage(PageStorage.CATALOG);
 			result.setDirection(Direction.FORWARD);
 		} catch (ServiceException e) {

@@ -4,7 +4,7 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 
 /**
  * Application Lifecycle Listener implementation class SessionListener.
@@ -16,15 +16,15 @@ public class SessionListener implements HttpSessionListener {
 
 	@Override
 	public void sessionCreated(HttpSessionEvent se) {
-		se.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, UserType.GUEST.getName());
+		se.getSession().setAttribute(AttributeNameStorage.USER_ROLE, UserType.GUEST.getName());
 	}
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-		se.getSession().removeAttribute(JSPAttributeStorage.USER_DATA);
-		se.getSession().removeAttribute(JSPAttributeStorage.USER_EMAIL);
-		se.getSession().removeAttribute(JSPAttributeStorage.USER_ROLE);
-		se.getSession().removeAttribute(JSPAttributeStorage.USER_ID);
+		se.getSession().removeAttribute(AttributeNameStorage.USER_DATA);
+		se.getSession().removeAttribute(AttributeNameStorage.USER_EMAIL);
+		se.getSession().removeAttribute(AttributeNameStorage.USER_ROLE);
+		se.getSession().removeAttribute(AttributeNameStorage.USER_ID);
 	}
 	
 }

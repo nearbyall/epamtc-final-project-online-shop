@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -35,29 +35,29 @@ public class CommandLogIn implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		String email = request.getParameter(JSPAttributeStorage.USER_EMAIL);
-		String password = request.getParameter(JSPAttributeStorage.USER_PASSWORD);
-		String rememberToken = request.getParameter(JSPAttributeStorage.GENERATE_REMEMBER_USER_TOKEN);
+		String email = request.getParameter(AttributeNameStorage.USER_EMAIL);
+		String password = request.getParameter(AttributeNameStorage.USER_PASSWORD);
+		String rememberToken = request.getParameter(AttributeNameStorage.GENERATE_REMEMBER_USER_TOKEN);
 		
 		try {
 			
 			User user = userService.logInByPassword(email, password);
 			
-			request.getSession().setAttribute(JSPAttributeStorage.USER_EMAIL, email);
-			request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
+			request.getSession().setAttribute(AttributeNameStorage.USER_EMAIL, email);
+			request.getSession().setAttribute(AttributeNameStorage.USER_ROLE, user.getRole().getName());
+			request.getSession().setAttribute(AttributeNameStorage.USER_ID, user.getId());
+			request.getSession().setAttribute(AttributeNameStorage.USER_DATA, user);
 			
 			if (rememberToken != null) {
 				Cookie rememberTokenCookie = new Cookie(
-						JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN, userService.findUpdatedUserRememberToken(user.getId())
+						AttributeNameStorage.COOKIE_REMEMBER_USER_TOKEN, userService.findUpdatedUserRememberToken(user.getId())
 				);
 				rememberTokenCookie.setPath(request.getContextPath());
 				rememberTokenCookie.setMaxAge(COOKIE_MAX_AGE_21_DAY);
 				response.addCookie(rememberTokenCookie);
 			}
 			
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);

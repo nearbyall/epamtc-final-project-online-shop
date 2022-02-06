@@ -14,7 +14,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.lang3.StringUtils;
 
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -73,13 +73,13 @@ public class CommandAddProductCategory implements Command {
 		try {
 			formItems = upload.parseRequest(request);
 			for (FileItem fileItem : formItems) {
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_CATEGORY_NAME)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.PRODUCT_CATEGORY_NAME)) {
 					categoryName = fileItem.getString();
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.REDIRECT_PAGE_COMMAND)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.REDIRECT_PAGE_COMMAND)) {
 					redirectCommand = fileItem.getString();
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.FILE)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.FILE)) {
 					String fileName = new File(fileItem.getName()).getName();
 					filePath = uploadPath + File.separator + fileName;
 					File storeFile = new File(filePath);

@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import by.epamtc.melnikov.onlineshop.bean.Product;
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
 import by.epamtc.melnikov.onlineshop.bean.builder.ProductBuilder;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -82,28 +82,28 @@ public class CommandEditProduct implements Command {
 		try {
 			formItems = upload.parseRequest(request);
 			for (FileItem fileItem : formItems) {
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_TITLE)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.PRODUCT_TITLE)) {
 					productTitle = fileItem.getString();
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_DESCRIPTION)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.PRODUCT_DESCRIPTION)) {
 					productDescription = fileItem.getString();
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_CATEGORY)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.PRODUCT_CATEGORY)) {
 					categoryId = Integer.parseInt(fileItem.getString());
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_COUNT)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.PRODUCT_COUNT)) {
 					productCount = Integer.parseInt(fileItem.getString());
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_PRICE)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.PRODUCT_PRICE)) {
 					productPrice = Double.parseDouble(fileItem.getString());
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.PRODUCT_ID)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.PRODUCT_ID)) {
 					productId = Integer.parseInt(fileItem.getString());
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.REDIRECT_PAGE_COMMAND)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.REDIRECT_PAGE_COMMAND)) {
 					redirectCommand = fileItem.getString();
 				}
-				if (fileItem.getFieldName().equals(JSPAttributeStorage.FILE)) {
+				if (fileItem.getFieldName().equals(AttributeNameStorage.FILE)) {
 					String fileName = new File(fileItem.getName()).getName();
 					filePath = uploadPath + File.separator + fileName;
 					File storeFile = new File(filePath);

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
- * Java bean class which describes the cart.
+ * Java bean class which describes the cart item.
  * 
  * @author nearbyall
  *

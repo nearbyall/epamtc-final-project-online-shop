@@ -18,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 
@@ -92,7 +92,7 @@ public class UserRolePermittedPageFilter extends AbstractFilter implements Filte
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-		UserType userRole = UserType.valueOf(request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE).toString().toUpperCase());
+		UserType userRole = UserType.valueOf(request.getSession().getAttribute(AttributeNameStorage.USER_ROLE).toString().toUpperCase());
 		Set<String> permittedPages;
 		switch (userRole) {
 			case ADMIN:

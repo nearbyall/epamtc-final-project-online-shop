@@ -7,9 +7,9 @@ package by.epamtc.melnikov.onlineshop.controller;
  * @author nearbyall
  *
  */
-public class JSPAttributeStorage {
+public class AttributeNameStorage {
 
-	private JSPAttributeStorage(){}
+	private AttributeNameStorage(){}
 	
 	public static final String COMMAND = "action";
 	public static final String REDIRECT_PAGE_COMMAND = "redirectPageCommand";

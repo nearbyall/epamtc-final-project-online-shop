@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -32,7 +32,7 @@ public class CommandUpdateUserInfo implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		String email = (String) request.getSession().getAttribute(JSPAttributeStorage.USER_EMAIL);
+		String email = (String) request.getSession().getAttribute(AttributeNameStorage.USER_EMAIL);
 		User updatedUser;
 		
 		try {
@@ -48,7 +48,7 @@ public class CommandUpdateUserInfo implements Command {
 			updateUserInfo(request, updatedUser);
 			userService.updateUserProfileData(updatedUser);
 			setUserInfoToRequest(request, updatedUser);
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);
@@ -60,16 +60,16 @@ public class CommandUpdateUserInfo implements Command {
 			return result;
         }
 		
-		request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, updatedUser);
+		request.getSession().setAttribute(AttributeNameStorage.USER_DATA, updatedUser);
 		return result;
 		
 	}
 	
 	private void updateUserInfo(HttpServletRequest request, User currentUser) {
-		String password = request.getParameter(JSPAttributeStorage.USER_PASSWORD);
-		String phoneNumber = request.getParameter(JSPAttributeStorage.USER_MOBILE).trim();
-		String name = request.getParameter(JSPAttributeStorage.USER_FIRST_NAME);
-		String surname = request.getParameter(JSPAttributeStorage.USER_LAST_NAME);
+		String password = request.getParameter(AttributeNameStorage.USER_PASSWORD);
+		String phoneNumber = request.getParameter(AttributeNameStorage.USER_MOBILE).trim();
+		String name = request.getParameter(AttributeNameStorage.USER_FIRST_NAME);
+		String surname = request.getParameter(AttributeNameStorage.USER_LAST_NAME);
 		currentUser.setEncryptedPassword(password);
 		currentUser.setMobile(phoneNumber);
 		currentUser.setName(name);
@@ -77,7 +77,7 @@ public class CommandUpdateUserInfo implements Command {
 	}
 
 	private void setUserInfoToRequest(HttpServletRequest request, User user) {
-		request.setAttribute(JSPAttributeStorage.USER_DATA, user);
+		request.setAttribute(AttributeNameStorage.USER_DATA, user);
 	}
     
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
+ * Java bean class which describes the order item.
  * 
  * @author nearbyall
  *

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.CartItem;
 import by.epamtc.melnikov.onlineshop.bean.Product;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -38,7 +38,7 @@ public class CommandDeleteProductFromCart implements Command {
 		
 		try {
 			cartService.deleteCartItem(constructCartItemForRemoving(request));
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);
@@ -59,11 +59,11 @@ public class CommandDeleteProductFromCart implements Command {
 		java.util.Date incomingValue = new java.util.Date(System.currentTimeMillis());
 		Timestamp currentTimestamp = new Timestamp(incomingValue.getTime());
 
-		product.setId(Integer.parseInt(request.getParameter(JSPAttributeStorage.PRODUCT_ID)));
+		product.setId(Integer.parseInt(request.getParameter(AttributeNameStorage.PRODUCT_ID)));
 		cartItem.setCreatedAt(currentTimestamp);
 		cartItem.setUpdatedAt(currentTimestamp);
 		cartItem.setProduct(product);
-		cartItem.setUserId(Integer.parseInt(request.getParameter(JSPAttributeStorage.USER_ID)));
+		cartItem.setUserId(Integer.parseInt(request.getParameter(AttributeNameStorage.USER_ID)));
 		cartItem.setCount(DEFAULT_COUNT);
 		
 		return cartItem;

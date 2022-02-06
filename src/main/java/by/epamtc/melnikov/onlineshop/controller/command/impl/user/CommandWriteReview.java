@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.Review;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -35,7 +35,7 @@ public class CommandWriteReview implements Command {
 		
 		try {
 			reviewService.addReview(constructReview(request));
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);
@@ -56,9 +56,9 @@ public class CommandWriteReview implements Command {
 		
 		Review review = new Review();
 		
-		review.setProductId(Integer.parseInt(request.getParameter(JSPAttributeStorage.PRODUCT_ID)));
-		review.setUserId(Integer.parseInt(request.getParameter(JSPAttributeStorage.USER_ID)));
-		review.setText(request.getParameter(JSPAttributeStorage.REVIEW).replaceAll("(\r\n|\n)", "<br>"));
+		review.setProductId(Integer.parseInt(request.getParameter(AttributeNameStorage.PRODUCT_ID)));
+		review.setUserId(Integer.parseInt(request.getParameter(AttributeNameStorage.USER_ID)));
+		review.setText(request.getParameter(AttributeNameStorage.REVIEW).replaceAll("(\r\n|\n)", "<br>"));
 		review.setCreatedAt(currentTimestamp);
 		review.setUpdatedAt(currentTimestamp);
 		

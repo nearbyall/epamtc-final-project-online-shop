@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.type.UserType;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 import by.epamtc.melnikov.onlineshop.service.ServiceProvider;
 import by.epamtc.melnikov.onlineshop.service.UserService;
@@ -38,19 +38,19 @@ public class UserAutoLogInByTokenFilter extends AbstractFilter implements Filter
 	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) servletRequest;
 		HttpServletResponse response = (HttpServletResponse) servletResponse;
-		String userRole = (String) request.getSession().getAttribute(JSPAttributeStorage.USER_ROLE);
+		String userRole = (String) request.getSession().getAttribute(AttributeNameStorage.USER_ROLE);
 		if(userRole.equals(UserType.GUEST.getName())) {
 			Cookie[] cookies = request.getCookies();
 			if (cookies != null) {
 				for (Cookie cookie: cookies) {
-					if (cookie.getName().equals(JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN)) {
+					if (cookie.getName().equals(AttributeNameStorage.COOKIE_REMEMBER_USER_TOKEN)) {
 						String token = cookie.getValue();
 						try {
 							User user = userService.logInByToken(token);
-							request.getSession().setAttribute(JSPAttributeStorage.USER_EMAIL, user.getEmail());
-							request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
-							request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
-							request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
+							request.getSession().setAttribute(AttributeNameStorage.USER_EMAIL, user.getEmail());
+							request.getSession().setAttribute(AttributeNameStorage.USER_ROLE, user.getRole().getName());
+							request.getSession().setAttribute(AttributeNameStorage.USER_ID, user.getId());
+							request.getSession().setAttribute(AttributeNameStorage.USER_DATA, user);
 							response.sendRedirect(getRedirectURL(request, CommandHolder.OPEN_MAIN_PAGE.name()));
 							return;
 						} catch (ServiceException e) {

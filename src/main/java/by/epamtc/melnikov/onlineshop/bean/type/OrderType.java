@@ -3,6 +3,12 @@ package by.epamtc.melnikov.onlineshop.bean.type;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Enum that defines the state of the {@link Order} in the system.
+ * 
+ * @author nearbyall
+ *
+ */
 public enum OrderType {
 
 	ACCEPTED(1, "ACCEPTED"),

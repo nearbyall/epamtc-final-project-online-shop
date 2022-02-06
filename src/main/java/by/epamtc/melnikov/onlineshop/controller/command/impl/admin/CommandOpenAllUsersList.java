@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -35,7 +35,7 @@ public class CommandOpenAllUsersList implements Command {
 		
 		try {
 			List<User> userList = userService.findAllUsers();
-			request.setAttribute(JSPAttributeStorage.ALL_USERS_LIST, userList);
+			request.setAttribute(AttributeNameStorage.ALL_USERS_LIST, userList);
 			result.setPage(PageStorage.USERS_LIST);
 			result.setDirection(Direction.FORWARD);
 		} catch (ServiceException e) {

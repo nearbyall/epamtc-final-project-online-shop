@@ -12,6 +12,7 @@ public class PageStorage {
 	private PageStorage() {}
 	
 	public final static String ROOT = "./";
+	public final static String CONTROLLER = "/Controller";
 	
 	public final static String HOME = "/jsp/guest/main.jsp";
 	public final static String LOG_IN = "/jsp/guest/login.jsp";

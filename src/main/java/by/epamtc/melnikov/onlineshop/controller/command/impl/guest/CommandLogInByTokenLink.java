@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
@@ -33,14 +33,14 @@ public class CommandLogInByTokenLink implements Command {
 		
 		CommandResult result = new CommandResult();
         
-		String token = request.getParameter(JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN);
+		String token = request.getParameter(AttributeNameStorage.COOKIE_REMEMBER_USER_TOKEN);
         
 		try {
 			User user = userService.logInByToken(token);
-			request.getSession().setAttribute(JSPAttributeStorage.USER_EMAIL, user.getEmail());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_ROLE, user.getRole().getName());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_ID, user.getId());
-			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
+			request.getSession().setAttribute(AttributeNameStorage.USER_EMAIL, user.getEmail());
+			request.getSession().setAttribute(AttributeNameStorage.USER_ROLE, user.getRole().getName());
+			request.getSession().setAttribute(AttributeNameStorage.USER_ID, user.getId());
+			request.getSession().setAttribute(AttributeNameStorage.USER_DATA, user);
 			userService.deleteUserRememberToken(user.getId());
 			String redirectURL = getRedirectURL(request, CommandHolder.OPEN_MAIN_PAGE.getCommandName());
 			result.setPage(redirectURL);

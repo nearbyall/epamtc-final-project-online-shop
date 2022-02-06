@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -32,11 +32,11 @@ public class CommandTopUpBalance implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		User user = (User) request.getSession().getAttribute(JSPAttributeStorage.USER_DATA);
-		String cardNumber = request.getParameter(JSPAttributeStorage.CARD_NUMBER);
-		String cardDate = request.getParameter(JSPAttributeStorage.CARD_DATE);
-		String cardCVV = request.getParameter(JSPAttributeStorage.CARD_CVV);
-		String cardSumm = request.getParameter(JSPAttributeStorage.CARD_SUMM);
+		User user = (User) request.getSession().getAttribute(AttributeNameStorage.USER_DATA);
+		String cardNumber = request.getParameter(AttributeNameStorage.CARD_NUMBER);
+		String cardDate = request.getParameter(AttributeNameStorage.CARD_DATE);
+		String cardCVV = request.getParameter(AttributeNameStorage.CARD_CVV);
+		String cardSumm = request.getParameter(AttributeNameStorage.CARD_SUMM);
 		
 		/*
 		 * TODO Check card validity
@@ -46,8 +46,8 @@ public class CommandTopUpBalance implements Command {
 		
 		try {
 			user = userService.updateUserBalance(user);
-			request.getSession().setAttribute(JSPAttributeStorage.USER_DATA, user);
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			request.getSession().setAttribute(AttributeNameStorage.USER_DATA, user);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
 import by.epamtc.melnikov.onlineshop.bean.type.StatusType;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -33,7 +33,7 @@ public class CommandBanUser implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		String email = request.getParameter(JSPAttributeStorage.USER_EMAIL);
+		String email = request.getParameter(AttributeNameStorage.USER_EMAIL);
 		User user;
 		try {
 			user = userService.findUserByEmail(email);
@@ -46,7 +46,7 @@ public class CommandBanUser implements Command {
 		try {
 			user.setStatus(getReversedUserStatusType(user.getStatus()));
 			userService.updateUserBanStatus(user);
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);

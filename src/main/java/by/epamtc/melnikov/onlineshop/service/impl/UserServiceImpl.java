@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import by.epamtc.melnikov.onlineshop.bean.User;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
 import by.epamtc.melnikov.onlineshop.dao.DAOProvider;
 import by.epamtc.melnikov.onlineshop.dao.UserDAO;
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		try {
-			String[] tokenComponents = token.split(JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
+			String[] tokenComponents = token.split(AttributeNameStorage.COOKIE_REMEMBER_USER_TOKEN_DIVIDER);
 			int userId = Integer.parseInt(tokenComponents[USER_ID_COOKIE_INDEX]);
 			String tokenValue = tokenComponents[TOKEN_VALUE_COOKIE_INDEX];
 			User user = userDAO.findUserByIdAndToken(userId, tokenValue);
@@ -263,7 +263,7 @@ public class UserServiceImpl implements UserService {
 		String token = UUID.randomUUID().toString();
 		try {
 			userDAO.updateUserRememberToken(userId, token);
-			return token + JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN_DIVIDER + userId;
+			return token + AttributeNameStorage.COOKIE_REMEMBER_USER_TOKEN_DIVIDER + userId;
 		} catch (DAOException e) {
 			throw new ServiceException(e.getMessage(), e);
 		}
@@ -289,8 +289,8 @@ public class UserServiceImpl implements UserService {
 	 * @return new log in link
 	 */
 	private String constructLogInLink(String commandName, String pageRootUrl, String token) {
-		return pageRootUrl + '?' +JSPAttributeStorage.COMMAND + '=' + commandName
-				+ '&' + JSPAttributeStorage.COOKIE_REMEMBER_USER_TOKEN + '=' + token;
+		return pageRootUrl + '?' +AttributeNameStorage.COMMAND + '=' + commandName
+				+ '&' + AttributeNameStorage.COOKIE_REMEMBER_USER_TOKEN + '=' + token;
 	}
 	
 	/**

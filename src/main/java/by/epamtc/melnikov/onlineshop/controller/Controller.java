@@ -69,7 +69,7 @@ public class Controller extends HttpServlet {
 		SessionRequestContent content = new SessionRequestContent(request);
 		logger.info(content);
 		
-		Command command = CommandHolder.getCommandByName(request.getParameter(JSPAttributeStorage.COMMAND));
+		Command command = CommandHolder.getCommandByName(request.getParameter(AttributeNameStorage.COMMAND));
 		CommandResult result = command.execute(request, response);
 		
 		if (result.getDirection() == Direction.FORWARD)

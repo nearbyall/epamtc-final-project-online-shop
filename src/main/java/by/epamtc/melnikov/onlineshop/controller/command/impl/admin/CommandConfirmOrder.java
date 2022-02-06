@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.type.OrderType;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -32,12 +32,12 @@ public class CommandConfirmOrder implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		int orderId = Integer.parseInt(request.getParameter(JSPAttributeStorage.ORDER_ID));
-		int statusId = getReversedOrderStatusId(Integer.parseInt(request.getParameter(JSPAttributeStorage.ORDER_STATUS_ID)));
+		int orderId = Integer.parseInt(request.getParameter(AttributeNameStorage.ORDER_ID));
+		int statusId = getReversedOrderStatusId(Integer.parseInt(request.getParameter(AttributeNameStorage.ORDER_STATUS_ID)));
 		
 		try {
 			orderService.updateOrderStatus(orderId, statusId);
-			String redirectCommand = request.getParameter(JSPAttributeStorage.REDIRECT_PAGE_COMMAND);
+			String redirectCommand = request.getParameter(AttributeNameStorage.REDIRECT_PAGE_COMMAND);
 			String redirectURL = getRedirectURL(request, redirectCommand);
 			result.setPage(redirectURL);
 			result.setDirection(Direction.REDIRECT);

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.ProductCategory;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -37,7 +37,7 @@ public class CommandOpenAddProductPage implements Command {
 		
 		try {
 			categories = productService.findAllProductCategories();
-			request.getSession().setAttribute(JSPAttributeStorage.PRODUCT_CATEGORIES_LIST, categories);
+			request.getSession().setAttribute(AttributeNameStorage.PRODUCT_CATEGORIES_LIST, categories);
 			result.setDirection(Direction.FORWARD);
 			result.setPage(PageStorage.ADD_PRODUCT);
 		} catch (ServiceException e) {

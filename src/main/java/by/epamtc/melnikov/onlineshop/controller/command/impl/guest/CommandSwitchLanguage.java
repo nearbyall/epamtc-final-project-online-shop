@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.LocaleStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -31,11 +31,11 @@ public class CommandSwitchLanguage implements Command{
 		
 		CommandResult result = new CommandResult();
 
-		String choosenLanguage = request.getParameter(JSPAttributeStorage.LANGUAGE_SWITCH_PARAMETER);
+		String choosenLanguage = request.getParameter(AttributeNameStorage.LANGUAGE_SWITCH_PARAMETER);
 		String resultLanguage = LocaleStorage.getLocaleFromLanguage(choosenLanguage).getLanguage();
-		request.getSession().setAttribute(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE, resultLanguage);
+		request.getSession().setAttribute(AttributeNameStorage.LANGUAGE_CURRENT_PAGE, resultLanguage);
 		
-		Cookie languageCookie = new Cookie(JSPAttributeStorage.LANGUAGE_CURRENT_PAGE, resultLanguage);
+		Cookie languageCookie = new Cookie(AttributeNameStorage.LANGUAGE_CURRENT_PAGE, resultLanguage);
 		languageCookie.setMaxAge(COOKIE_MAX_AGE_21_DAY);
 		languageCookie.setPath(request.getContextPath());
 		response.addCookie(languageCookie);
@@ -47,11 +47,11 @@ public class CommandSwitchLanguage implements Command{
 	}
 	
     private String getRedirectPage(HttpServletRequest request) {
-        String redirectPage = request.getParameter(JSPAttributeStorage.LANGUAGE_PRE_SWITCH_PAGE_PARAMETERS);
+        String redirectPage = request.getParameter(AttributeNameStorage.LANGUAGE_PRE_SWITCH_PAGE_PARAMETERS);
         if (!StringUtils.isBlank(redirectPage)) {
             return request.getContextPath() + request.getServletPath() + "?" + redirectPage;
         }
-        return request.getParameter(JSPAttributeStorage.LANGUAGE_PRE_SWITCH_PAGE_ABSOLUTE_URL);
+        return request.getParameter(AttributeNameStorage.LANGUAGE_PRE_SWITCH_PAGE_ABSOLUTE_URL);
     }
 
 }

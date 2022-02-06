@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.Order;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -35,7 +35,7 @@ public class CommandOpenAllOrdersPage implements Command {
 		
 		try {
 			List<Order> orders = orderService.findAllOrders();
-			request.setAttribute(JSPAttributeStorage.ORDERS_LIST, orders);
+			request.setAttribute(AttributeNameStorage.ORDERS_LIST, orders);
 			result.setPage(PageStorage.ALL_ORDERS);
 			result.setDirection(Direction.FORWARD);
 		} catch (ServiceException e) {

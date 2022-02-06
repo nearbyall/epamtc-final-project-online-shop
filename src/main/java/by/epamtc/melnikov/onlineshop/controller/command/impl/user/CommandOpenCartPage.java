@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.CartItem;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -33,10 +33,10 @@ public class CommandOpenCartPage implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		int userId = (int) request.getSession().getAttribute(JSPAttributeStorage.USER_ID);
+		int userId = (int) request.getSession().getAttribute(AttributeNameStorage.USER_ID);
 		try {
 			List<CartItem> cartItems = cartService.findAllCartItemsByUserId(userId);
-			request.setAttribute(JSPAttributeStorage.CART_ITEMS_LIST, cartItems);
+			request.setAttribute(AttributeNameStorage.CART_ITEMS_LIST, cartItems);
 			result.setPage(PageStorage.CART);
 			result.setDirection(Direction.FORWARD);
 		} catch (ServiceException e) {

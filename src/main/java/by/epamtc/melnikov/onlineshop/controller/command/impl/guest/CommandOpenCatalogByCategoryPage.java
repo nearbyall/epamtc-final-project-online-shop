@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import by.epamtc.melnikov.onlineshop.bean.Product;
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandResult;
@@ -33,14 +33,14 @@ public class CommandOpenCatalogByCategoryPage implements Command {
 		
 		CommandResult result = new CommandResult();
 		
-		int currentPage = Integer.parseInt(request.getParameter(JSPAttributeStorage.PAGINATION_CURRENT_PAGE));
-		int recordsPerPage = Integer.parseInt(request.getParameter(JSPAttributeStorage.PAGINATION_RECORDS_PER_PAGE));
-		int categoryId = Integer.parseInt(request.getParameter(JSPAttributeStorage.PRODUCT_CATEGORY_ID));
+		int currentPage = Integer.parseInt(request.getParameter(AttributeNameStorage.PAGINATION_CURRENT_PAGE));
+		int recordsPerPage = Integer.parseInt(request.getParameter(AttributeNameStorage.PAGINATION_RECORDS_PER_PAGE));
+		int categoryId = Integer.parseInt(request.getParameter(AttributeNameStorage.PRODUCT_CATEGORY_ID));
 		
 		try {
 			definePaginationContext(request, productService.findProductsCountByCategoryId(categoryId), currentPage, recordsPerPage);
 			List<Product> products = productService.findAllProductsByCategoryIdPerPage(currentPage, recordsPerPage, categoryId);
-			request.setAttribute(JSPAttributeStorage.PRODUCT_LIST, products);
+			request.setAttribute(AttributeNameStorage.PRODUCT_LIST, products);
 			result.setPage(PageStorage.CATALOG_BY_CATEGORY);
 			result.setDirection(Direction.FORWARD);
 		} catch (ServiceException e) {

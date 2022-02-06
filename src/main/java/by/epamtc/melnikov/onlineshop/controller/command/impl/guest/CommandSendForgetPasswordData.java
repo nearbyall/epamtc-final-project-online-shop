@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import by.epamtc.melnikov.onlineshop.controller.JSPAttributeStorage;
+import by.epamtc.melnikov.onlineshop.controller.AttributeNameStorage;
 import by.epamtc.melnikov.onlineshop.controller.PageStorage;
 import by.epamtc.melnikov.onlineshop.controller.command.Command;
 import by.epamtc.melnikov.onlineshop.controller.command.CommandHolder;
@@ -32,7 +32,7 @@ public class CommandSendForgetPasswordData implements Command {
     	
 		CommandResult result = new CommandResult();
         
-		String email = request.getParameter(JSPAttributeStorage.USER_EMAIL);
+		String email = request.getParameter(AttributeNameStorage.USER_EMAIL);
         
 		try {
 			userService.sendLogInTokenIfForgetPassword(email, request.getRequestURL().toString());
